@@ -11,13 +11,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController()
+        let navController = UINavigationController(rootViewController: SplashViewController())
+        window.rootViewController = navController
         self.window = window
-        window.makeKeyAndVisible()
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func navigateToHome() {
+        let navController = UINavigationController(rootViewController: HomeViewController())
+        window?.rootViewController = navController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
