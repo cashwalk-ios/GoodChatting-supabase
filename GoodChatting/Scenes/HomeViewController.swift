@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private var helloLabel: UILabel!
-    private var tempRemoveUserDefaultsButton: UIButton!
+    private var tempRemoveLogoutButton: UIButton!
 
     // MARK: - LifeCycles
     
@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupProperties()
         setupView()
+        bindView()
     }
     
     // MARK: - Functions
@@ -42,23 +43,28 @@ class HomeViewController: UIViewController {
             }
         }
         
-        tempRemoveUserDefaultsButton = UIButton().then {
-            $0.titleLabel?.text = "로그아웃"
-            $0.tintColor = UIColor.white
+        tempRemoveLogoutButton = UIButton().then {
+            $0.setTitle("로그아웃", for: .normal)
+            $0.titleLabel?.font = .systemFont(ofSize: 24)
+            $0.titleLabel?.textColor = .white
             $0.backgroundColor = UIColor.red
+            $0.layer.cornerRadius = 15
             view.addSubview($0)
             $0.snp.makeConstraints { make in
                 make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
                 make.left.right.equalToSuperview().inset(20)
+                make.height.equalTo(50)
             }
         }
     }
     
     private func bindView() {
-        tempRemoveUserDefaultsButton.rx.tap
+        tempRemoveLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { _ in
+                print("isLoggedIn UserDefaults 삭제...")
                 UserDefaults.standard.removeObject(forKey: "isLoggedIn")
+                exit(0)
             }).disposed(by: disposeBag)
     }
 
