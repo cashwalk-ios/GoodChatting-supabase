@@ -11,6 +11,7 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    weak var sceneDelegate: SceneDelegate?
     private var kakaoLoginImage: UIImageView!
 
     // MARK: - LifeCycles
@@ -41,14 +42,18 @@ final class LoginViewController: UIViewController {
         }
     }
     
-    @objc private func imageViewTapped() {
-        print("카카오 로그인 이미지 탭...")
-        UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
-    }
-    
     private func setGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         kakaoLoginImage.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func imageViewTapped() {
+        print("카카오 로그인 이미지 탭...")
+        // FIXME: 아래 처리 로그인 완료 이후에 해줄 것
+        UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
+        DispatchQueue.main.async { [weak self] in
+            self?.sceneDelegate?.navigateToHome()
+        }
     }
 
 }
