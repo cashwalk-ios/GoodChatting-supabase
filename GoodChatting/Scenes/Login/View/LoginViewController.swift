@@ -70,7 +70,7 @@ extension LoginViewController {
                 owner.sceneDelegate?.navigateToHome(reactor: reactor)
     
                 // FIXME: 아래 처리 로그인 완료 이후에 해줄 것
-                 UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
+                UserSettings.isLoggedIn = true
                 
             }).disposed(by: disposeBag)
         

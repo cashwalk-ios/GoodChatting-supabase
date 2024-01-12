@@ -79,8 +79,8 @@ extension HomeViewController {
         tempRemoveLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { _ in
+                UserSettings.isLoggedIn = false
                 print("isLoggedIn UserDefaults 삭제...")
-                UserDefaults.standard.removeObject(forKey: "isLoggedIn")
                 exit(0)
             }).disposed(by: disposeBag)
         
