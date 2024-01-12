@@ -50,7 +50,8 @@ final class SplashViewController: UIViewController {
             print("로그인 여부: \(isLoggedIn)")
             
             if isLoggedIn {
-                self?.sceneDelegate?.navigateToHome()
+                let reactor = HomeReactor()
+                self?.sceneDelegate?.navigateToHome(reactor: reactor)
             } else {
                 self?.navigateToLogin()
             }
@@ -58,10 +59,12 @@ final class SplashViewController: UIViewController {
     }
     
     private func navigateToLogin() {
-        let loginVC = LoginViewController()
-        loginVC.sceneDelegate = self.sceneDelegate
-        loginVC.modalPresentationStyle = .fullScreen
-        self.present(loginVC, animated: false)
+        let vc = LoginRouter()
+        let reactor = LoginReactor()
+        if let sceneDelegate = self.sceneDelegate {
+            vc.presentToNextViewController(with: self, reactor: reactor, sceneDelegate: sceneDelegate)
+        }
     }
 
 }
+

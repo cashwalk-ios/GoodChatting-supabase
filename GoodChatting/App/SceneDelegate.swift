@@ -24,8 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func navigateToHome() {
-        let navController = UINavigationController(rootViewController: HomeViewController())
+    func navigateToHome(reactor: HomeReactor) {
+        let vc = HomeViewController()
+        vc.reactor = reactor
+        let navController = UINavigationController(rootViewController: vc)
         window?.rootViewController = navController
     }
 
