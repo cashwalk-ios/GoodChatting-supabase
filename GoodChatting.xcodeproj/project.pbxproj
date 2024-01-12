@@ -16,6 +16,7 @@
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
 		0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F022B4FABAE00639E98 /* RxSwift */; };
 		0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC4F062B4FC45400639E98 /* LoginViewController.swift */; };
+		5C0C12942B50D37D0066FA69 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12932B50D37D0066FA69 /* Log.swift */; };
 		5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EE62B469C3500D75348 /* AppDelegate.swift */; };
 		5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EE82B469C3500D75348 /* SceneDelegate.swift */; };
 		5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5C0D0EE32B469C3500D75348 /* GoodChatting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodChatting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C0D0EE62B469C3500D75348 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C0D0EE82B469C3500D75348 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				5CADF1992B477E1900317C70 /* Extension */,
+				5C0C12932B50D37D0066FA69 /* Log.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
+				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
@@ -355,7 +359,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NDAHSTNV4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -385,7 +389,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NDAHSTNV4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
