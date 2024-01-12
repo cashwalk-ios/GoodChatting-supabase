@@ -11,6 +11,11 @@
 		0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5652B4E82F2009CC320 /* SnapKit */; };
 		0F4BA56B2B4E830C009CC320 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA56A2B4E830C009CC320 /* Then */; };
 		0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */; };
+		0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6EB7E62B50D60A00BB3216 /* Constants.swift */; };
+		0F6EB7EA2B50D9BD00BB3216 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7E92B50D9BD00BB3216 /* KakaoSDK */; };
+		0F6EB7EC2B50D9BD00BB3216 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */; };
+		0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */; };
+		0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */; };
 		0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFC2B4FABAE00639E98 /* RxBlocking */; };
 		0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFE2B4FABAE00639E98 /* RxCocoa */; };
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
@@ -25,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		0F6EB7E62B50D60A00BB3216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C0D0EE32B469C3500D75348 /* GoodChatting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodChatting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C0D0EE62B469C3500D75348 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,12 +47,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */,
+				0F6EB7EA2B50D9BD00BB3216 /* KakaoSDK in Frameworks */,
+				0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */,
 				0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
+				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
 				0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */,
 				0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */,
 				0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */,
+				0F6EB7EC2B50D9BD00BB3216 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				5CADF1992B477E1900317C70 /* Extension */,
+				0F6EB7E62B50D60A00BB3216 /* Constants.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -156,6 +167,10 @@
 				0FAC4EFE2B4FABAE00639E98 /* RxCocoa */,
 				0FAC4F002B4FABAE00639E98 /* RxRelay */,
 				0FAC4F022B4FABAE00639E98 /* RxSwift */,
+				0F6EB7E92B50D9BD00BB3216 /* KakaoSDK */,
+				0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */,
+				0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */,
+				0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -190,6 +205,7 @@
 				0F4BA5642B4E82F2009CC320 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				0F4BA5692B4E830C009CC320 /* XCRemoteSwiftPackageReference "Then" */,
 				0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -220,6 +236,7 @@
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
+				0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */,
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
 			);
@@ -455,6 +472,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.20.0;
+			};
+		};
 		0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -480,6 +505,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F4BA5692B4E830C009CC320 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		0F6EB7E92B50D9BD00BB3216 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 		0FAC4EFC2B4FABAE00639E98 /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;
