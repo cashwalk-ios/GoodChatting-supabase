@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import KakaoSDKCommon
-import KakaoSDKAuth
-import KakaoSDKUser
 
 final class LoginViewController: UIViewController {
     
@@ -52,29 +49,11 @@ final class LoginViewController: UIViewController {
     
     @objc private func imageViewTapped() {
         print("카카오 로그인 이미지 탭...")
-        loginWithKakao()
         // FIXME: 아래 처리 로그인 완료 이후에 해줄 것
-//        UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
-//        DispatchQueue.main.async { [weak self] in
-//            self?.sceneDelegate?.navigateToHome()
-//        }
-    }
-    
-    private func loginWithKakao() {
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("loginWithKakaoTalk() success.")
-
-                    //do something
-                    _ = oauthToken
-                }
-            }
+        UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
+        DispatchQueue.main.async { [weak self] in
+            self?.sceneDelegate?.navigateToHome()
         }
-
     }
 
 }

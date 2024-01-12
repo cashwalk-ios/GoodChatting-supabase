@@ -21,6 +21,15 @@
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
 		0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F022B4FABAE00639E98 /* RxSwift */; };
 		0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC4F062B4FC45400639E98 /* LoginViewController.swift */; };
+		5C0C12942B50D37D0066FA69 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12932B50D37D0066FA69 /* Log.swift */; };
+		5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12972B50D9CB0066FA69 /* LoginView.swift */; };
+		5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12992B50D9D60066FA69 /* LoginReactor.swift */; };
+		5C0C129C2B50DA140066FA69 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C129B2B50DA140066FA69 /* LoginRouter.swift */; };
+		5C0C12A12B50E04B0066FA69 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */; };
+		5C0C12A42B50EAC70066FA69 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 5C0C12A32B50EAC70066FA69 /* RxGesture */; };
+		5C0C12A72B50F0440066FA69 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12A62B50F0440066FA69 /* HomeRouter.swift */; };
+		5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12A82B50F0690066FA69 /* HomeReactor.swift */; };
+		5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */; };
 		5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EE62B469C3500D75348 /* AppDelegate.swift */; };
 		5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EE82B469C3500D75348 /* SceneDelegate.swift */; };
 		5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */; };
@@ -32,6 +41,14 @@
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		0F6EB7E62B50D60A00BB3216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		5C0C12972B50D9CB0066FA69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		5C0C12992B50D9D60066FA69 /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
+		5C0C129B2B50DA140066FA69 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		5C0C12A62B50F0440066FA69 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		5C0C12A82B50F0690066FA69 /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
+		5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		5C0D0EE32B469C3500D75348 /* GoodChatting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoodChatting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C0D0EE62B469C3500D75348 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C0D0EE82B469C3500D75348 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +67,7 @@
 				0F6EB7EA2B50D9BD00BB3216 /* KakaoSDK in Frameworks */,
 				0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */,
 				0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */,
+				5C0C12A42B50EAC70066FA69 /* RxGesture in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
 				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
@@ -66,11 +84,64 @@
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */,
-				5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */,
-				0FAC4F062B4FC45400639E98 /* LoginViewController.swift */,
+				5C0C12A52B50F0350066FA69 /* Home */,
+				5C0C12962B50D96C0066FA69 /* Splash */,
+				5C0C12952B50D94E0066FA69 /* Login */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5C0C12952B50D94E0066FA69 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5C0C129E2B50DC590066FA69 /* View */,
+				5C0C129F2B50DC6A0066FA69 /* Reactor */,
+				5C0C129D2B50DC490066FA69 /* Router */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		5C0C12962B50D96C0066FA69 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		5C0C129D2B50DC490066FA69 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				5C0C129B2B50DA140066FA69 /* LoginRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		5C0C129E2B50DC590066FA69 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5C0C12972B50D9CB0066FA69 /* LoginView.swift */,
+				0FAC4F062B4FC45400639E98 /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5C0C129F2B50DC6A0066FA69 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				5C0C12992B50D9D60066FA69 /* LoginReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		5C0C12A52B50F0350066FA69 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */,
+				5C0C12A82B50F0690066FA69 /* HomeReactor.swift */,
+				5C0C12A62B50F0440066FA69 /* HomeRouter.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		5C0D0EDA2B469C3500D75348 = {
@@ -122,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				5CADF1992B477E1900317C70 /* Extension */,
+				5C0C12932B50D37D0066FA69 /* Log.swift */,
+				5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */,
 				0F6EB7E62B50D60A00BB3216 /* Constants.swift */,
 			);
 			path = Common;
@@ -139,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */,
+				5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -167,6 +241,7 @@
 				0FAC4EFE2B4FABAE00639E98 /* RxCocoa */,
 				0FAC4F002B4FABAE00639E98 /* RxRelay */,
 				0FAC4F022B4FABAE00639E98 /* RxSwift */,
+				5C0C12A32B50EAC70066FA69 /* RxGesture */,
 				0F6EB7E92B50D9BD00BB3216 /* KakaoSDK */,
 				0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */,
 				0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */,
@@ -205,6 +280,7 @@
 				0F4BA5642B4E82F2009CC320 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				0F4BA5692B4E830C009CC320 /* XCRemoteSwiftPackageReference "Then" */,
 				0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
@@ -233,12 +309,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
+				5C0C12A72B50F0440066FA69 /* HomeRouter.swift in Sources */,
+				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
+				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
+				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,
 				0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */,
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,
+				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
+				5C0C129C2B50DA140066FA69 /* LoginRouter.swift in Sources */,
+				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
+				5C0C12A12B50E04B0066FA69 /* UIFont+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +456,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NDAHSTNV4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -402,7 +486,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NDAHSTNV4Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -488,6 +572,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -545,6 +637,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		5C0C12A32B50EAC70066FA69 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
