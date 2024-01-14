@@ -10,12 +10,14 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import ReactorKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, View {
     
     // MARK: - Properties
     
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+    
     private var helloLabel: UILabel!
     private var tempRemoveLogoutButton: UIButton!
 
@@ -25,10 +27,18 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupProperties()
         setupView()
-        bindView()
+        
+        guard let reactor = self.reactor else { return }
+        bind(reactor: reactor)
     }
     
     // MARK: - Functions
+    
+    func bind(reactor: HomeReactor) {
+        guard self.isViewLoaded else { return }
+        self.bindAction(reactor: reactor)
+        self.bindState(reactor: reactor)
+    }
     
     private func setupProperties() {
         self.view.backgroundColor = .designColor(color: .secondGray())
@@ -57,15 +67,27 @@ class HomeViewController: UIViewController {
             }
         }
     }
+
+}
+
+// MARK: - Bind
+
+extension HomeViewController {
     
-    private func bindView() {
+    private func bindAction(reactor: HomeReactor) {
+        
         tempRemoveLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { _ in
+                UserSettings.isLoggedIn = false
                 print("isLoggedIn UserDefaults 삭제...")
-                UserDefaults.standard.removeObject(forKey: "isLoggedIn")
                 exit(0)
             }).disposed(by: disposeBag)
+        
     }
-
+    
+    private func bindState(reactor: HomeReactor) {
+        
+    }
+    
 }
