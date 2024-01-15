@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
-final class HomeViewController: UIViewController, View {
+final class HomeViewController: BaseViewController, View {
     
     // MARK: - Properties
     
@@ -42,6 +42,8 @@ final class HomeViewController: UIViewController, View {
     
     private func setupProperties() {
         self.view.backgroundColor = .designColor(color: .secondGray())
+//        self.title = "Good Chatting"
+        self.navigationItem.title = "Good Chatting"
     }
 
     private func setupView() {

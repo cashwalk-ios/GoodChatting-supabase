@@ -22,6 +22,13 @@ struct Log {
         print("[🐳kkr][\(sourceFileName(filePath: filename))] \(funcName) -> \(any)\n")
         #endif
     }
+    
+    /// Yunoh's Log
+    static func cyo(_ any: Any, filename: String = #file, funcName: String = #function) {
+        #if DEBUG
+        print("[😡cyo][\(sourceFileName(filePath: filename))] \(funcName) -> \(any)\n")
+        #endif
+    }
  
     static func sourceFileName(filePath: String) -> String {
        let components = filePath.components(separatedBy: "/")
