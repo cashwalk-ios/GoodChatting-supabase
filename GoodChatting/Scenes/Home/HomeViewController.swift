@@ -14,13 +14,22 @@ import ReactorKit
 
 final class HomeViewController: BaseViewController, View {
     
+    enum SettingAction: String {
+        case edit = "채팅방 편집"
+        case sort = "채팅방 정렬"
+        case all_read = "모두 읽기"
+    }
+    
     // MARK: - Properties
     
     var disposeBag = DisposeBag()
     
     private var helloLabel: UILabel!
     private var tempLogoutButton: UIButton!
-
+    private var chattingAddButton: UIButton!
+    
+    var settingAction = PublishSubject<SettingAction>()
+    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -74,12 +83,14 @@ final class HomeViewController: BaseViewController, View {
         
         var rightItems: [UIBarButtonItem] = []
         
-        let _ = UIImageView().then {
-            $0.image = UIImage(named: "setting-icon")
-            rightItems.append(UIBarButtonItem(customView: $0))
-            $0.snp.makeConstraints { make in
-                make.size.equalTo(23)
-            }
+        let settingItems: [UIAction] = [
+            UIAction(title: SettingAction.edit.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.edit) }),
+            UIAction(title: SettingAction.sort.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.sort) }),
+            UIAction(title: SettingAction.all_read.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.all_read) })
+        ]
+        
+        let _ = UIMenu(children: settingItems).then {
+            rightItems.append(UIBarButtonItem(image: UIImage(named: "setting-icon")?.withRenderingMode(.alwaysOriginal), menu: $0))
         }
         
         let _ = UIBarButtonItem(systemItem: .fixedSpace).then {
@@ -87,8 +98,8 @@ final class HomeViewController: BaseViewController, View {
             rightItems.append($0)
         }
         
-        let _ = UIImageView().then {
-            $0.image = UIImage(named: "chattingPlus-icon")
+        chattingAddButton = UIButton().then {
+            $0.setImage(UIImage(named: "chattingPlus-icon"), for: .normal)
             rightItems.append(UIBarButtonItem(customView: $0))
             $0.snp.makeConstraints { make in
                 make.size.equalTo(23)
@@ -146,11 +157,36 @@ extension HomeViewController {
                 )
                 owner.present(alert, animated: true)
             }).disposed(by: disposeBag)
+     
+        chattingAddButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                let statusHeight = owner.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+                Log.cyo("chatting plus 누름? \(statusHeight)")
+                
+                let addPopup = ChattingAddPopup(statusHeight: statusHeight)
+                owner.sceneDelegate?.window?.addSubview(addPopup)
+                
+                addPopup.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                
+                if let reactor = owner.reactor {
+                    addPopup.actionSubject
+                        .map { Reactor.Action.chattingAddAction($0) }
+                        .bind(to: reactor.action)
+                        .disposed(by: owner.disposeBag)
+                }
+                
+                addPopup.showAnimation()
+            }.disposed(by: disposeBag)
         
+        settingAction
+            .map { Reactor.Action.settingAction($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: HomeReactor) {
         
     }
-    
 }

@@ -14,13 +14,18 @@ final class ViewRouter {
         source.present(next, animated: animated, completion: nil)
     }
     
-    static func pushToNextViewContoller(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
-        source.navigationController?.pushViewController(next, animated: animated)
-    }
-    
     static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
         next.modalPresentationStyle = .overFullScreen
         source.present(next, animated: animated, completion: nil)
+    }
+    
+    static func pushToNextViewContoller(from source: BaseViewController, to next: BaseViewController, sceneDelegate: SceneDelegate, animated: Bool = true) {
+        next.sceneDelegate = sceneDelegate
+        source.navigationController?.pushViewController(next, animated: animated)
+    }
+    
+    static func pushToNextViewContoller(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
+        source.navigationController?.pushViewController(next, animated: animated)
     }
 }
 

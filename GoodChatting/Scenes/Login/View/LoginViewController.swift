@@ -48,27 +48,27 @@ final class LoginViewController: BaseViewController, View {
     private func loginWithKakao() {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
+                guard let self else { return }
                 if let error = error {
                     let alert = GlobalFunctions.makeAlert(message: error.localizedDescription, firstActionMsg: "확인")
-                    self?.present(alert, animated: true)
+                    self.present(alert, animated: true)
                 }
                 else {
                     Log.kkr("로그인 성공 - oauthToken: \(String(describing: oauthToken))")
-                    let reactor = HomeReactor()
-                    self?.sceneDelegate?.navigateToHome(reactor: reactor)
+                    self.sceneDelegate?.navigateToHome(from: self, animated: true)
                     UserSettings.isLoggedIn = true
                 }
             }
         } else {
             UserApi.shared.loginWithKakaoAccount { [weak self] (oauthToken, error) in
+                guard let self else { return }
                 if let error = error {
                     let alert = GlobalFunctions.makeAlert(message: error.localizedDescription, firstActionMsg: "확인")
-                    self?.present(alert, animated: true)
+                    self.present(alert, animated: true)
                 }
                 else {
                     Log.kkr("로그인 성공 - oauthToken: \(String(describing: oauthToken?.accessToken))")  /// oauthToken: Optional("QYxrN_mOdmQtnUy3IqYZg-PV1nDMMerjkHwKKwzTAAABjQp60RyUJG13ldIf8A")
-                    let reactor = HomeReactor()
-                    self?.sceneDelegate?.navigateToHome(reactor: reactor)
+                    self.sceneDelegate?.navigateToHome(from: self, animated: true)
                     UserSettings.isLoggedIn = true
                 }
             }
