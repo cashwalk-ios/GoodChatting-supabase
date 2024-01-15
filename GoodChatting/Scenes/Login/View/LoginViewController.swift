@@ -21,9 +21,7 @@ final class LoginViewController: UIViewController, View {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     private var loginView: LoginView!
-    
     weak var sceneDelegate: SceneDelegate?
-    private var kakaoLoginImage: UIImageView!
 
     // MARK: - LifeCycles
     
@@ -48,31 +46,34 @@ final class LoginViewController: UIViewController, View {
         self.bindState(reactor: reactor)
     }
     
-    @objc private func imageViewTapped() {
-        print("카카오 로그인 이미지 탭...")
-        loginWithKakao()
-        // FIXME: 아래 처리 로그인 완료 이후에 해줄 것
-//        UserDefaults.standard.setValue(true, forKey: "isLoggedIn")
-//        DispatchQueue.main.async { [weak self] in
-//            self?.sceneDelegate?.navigateToHome()
-//        }
-    }
-    
     private func loginWithKakao() {
         if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+            UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                 if let error = error {
-                    print(error)
+                    let alert = GlobalFunctions.makeAlert(message: error.localizedDescription, firstActionMsg: "확인")
+                    self?.present(alert, animated: true)
                 }
                 else {
-                    print("loginWithKakaoTalk() success.")
-                    
-                    //do something
-                    _ = oauthToken
+                    Log.kkr("로그인 성공 - oauthToken: \(String(describing: oauthToken))")
+                    let reactor = HomeReactor()
+                    self?.sceneDelegate?.navigateToHome(reactor: reactor)
+                    UserSettings.isLoggedIn = true
+                }
+            }
+        } else {
+            UserApi.shared.loginWithKakaoAccount { [weak self] (oauthToken, error) in
+                if let error = error {
+                    let alert = GlobalFunctions.makeAlert(message: error.localizedDescription, firstActionMsg: "확인")
+                    self?.present(alert, animated: true)
+                }
+                else {
+                    Log.kkr("로그인 성공 - oauthToken: \(String(describing: oauthToken?.accessToken))")  /// oauthToken: Optional("QYxrN_mOdmQtnUy3IqYZg-PV1nDMMerjkHwKKwzTAAABjQp60RyUJG13ldIf8A")
+                    let reactor = HomeReactor()
+                    self?.sceneDelegate?.navigateToHome(reactor: reactor)
+                    UserSettings.isLoggedIn = true
                 }
             }
         }
-        
     }
 
 }
@@ -82,17 +83,11 @@ final class LoginViewController: UIViewController, View {
 extension LoginViewController {
     
     private func bindAction(reactor: LoginReactor) {
-        
         self.loginView.kakaoLoginBoxView.rx.tapGesture()
             .when(.recognized)
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                let reactor = HomeReactor()
-                owner.sceneDelegate?.navigateToHome(reactor: reactor)
-    
-                // FIXME: 아래 처리 로그인 완료 이후에 해줄 것
-                UserSettings.isLoggedIn = true
-                
+            .subscribe(with: self, onNext: { owner, _ in
+                Log.kkr("로그인 버튼 탭...")
+                owner.loginWithKakao()
             }).disposed(by: disposeBag)
         
     }
