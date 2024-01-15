@@ -16,12 +16,11 @@ import RxCocoa
 import ReactorKit
 import RxGesture
 
-final class LoginViewController: UIViewController, View {
+final class LoginViewController: BaseViewController, View {
     
     // MARK: - Properties
     var disposeBag = DisposeBag()
     private var loginView: LoginView!
-    weak var sceneDelegate: SceneDelegate?
 
     // MARK: - LifeCycles
     

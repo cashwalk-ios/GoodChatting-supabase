@@ -9,11 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class SplashViewController: UIViewController {
-
-    // MARK: - Properties
-
-    weak var sceneDelegate: SceneDelegate?
+final class SplashViewController: BaseViewController {
 
     // MARK: - LifeCycles
     
@@ -59,10 +55,11 @@ final class SplashViewController: UIViewController {
     }
     
     private func navigateToLogin() {
-        let vc = LoginRouter()
-        let reactor = LoginReactor()
+        let vc = LoginViewController()
+        vc.reactor = LoginReactor()
+        
         if let sceneDelegate = self.sceneDelegate {
-            vc.presentToNextViewController(with: self, reactor: reactor, sceneDelegate: sceneDelegate)
+            ViewRouter.presentToNextViewController(from: self, to: vc, sceneDelegate: sceneDelegate)
         }
     }
 
