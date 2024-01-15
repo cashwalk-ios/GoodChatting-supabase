@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class GlobalFunctions {
     public static func makeAlert(
@@ -40,23 +42,25 @@ class GlobalFunctions {
 
 extension UIViewController {
     func showToast(message: String, duration: TimeInterval = 2.0) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center
-        toastLabel.font = UIFont.systemFont(ofSize: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.view.addSubview(toastLabel)
-
-        toastLabel.translatesAutoresizingMaskIntoConstraints = false
-        toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        toastLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -100).isActive = true
-        toastLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        toastLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
-
+        let toastLabel = UILabel().then {
+            $0.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            $0.textColor = UIColor.white
+            $0.textAlignment = .center
+            $0.font = UIFont.systemFont(ofSize: 12.0)
+            $0.text = message
+            $0.alpha = 1.0
+            $0.layer.cornerRadius = 10
+            $0.clipsToBounds = true
+            self.view.addSubview($0)
+        }
+        
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+        }
+        
         UIView.animate(withDuration: 0.5, delay: duration, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: { _ in

@@ -19,6 +19,12 @@
 		0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */; };
 		0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */; };
 		0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */; };
+		0F84B7B72B54DDCD000EF575 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7B62B54DDCD000EF575 /* Auth */; };
+		0F84B7B92B54DDCD000EF575 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7B82B54DDCD000EF575 /* Functions */; };
+		0F84B7BB2B54DDCD000EF575 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7BA2B54DDCD000EF575 /* PostgREST */; };
+		0F84B7BD2B54DDCD000EF575 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7BC2B54DDCD000EF575 /* Realtime */; };
+		0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7BE2B54DDCD000EF575 /* Storage */; };
+		0F84B7C12B54DDCD000EF575 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7C02B54DDCD000EF575 /* Supabase */; };
 		0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFC2B4FABAE00639E98 /* RxBlocking */; };
 		0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFE2B4FABAE00639E98 /* RxCocoa */; };
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
@@ -69,11 +75,17 @@
 				0F6EB7EA2B50D9BD00BB3216 /* KakaoSDK in Frameworks */,
 				0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */,
 				0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */,
+				0F84B7B92B54DDCD000EF575 /* Functions in Frameworks */,
 				5C0C12A42B50EAC70066FA69 /* RxGesture in Frameworks */,
+				0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
 				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
+				0F84B7B72B54DDCD000EF575 /* Auth in Frameworks */,
+				0F84B7BB2B54DDCD000EF575 /* PostgREST in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
+				0F84B7BD2B54DDCD000EF575 /* Realtime in Frameworks */,
 				0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */,
+				0F84B7C12B54DDCD000EF575 /* Supabase in Frameworks */,
 				0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */,
 				0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */,
 				0F6EB7EC2B50D9BD00BB3216 /* KakaoSDKAuth in Frameworks */,
@@ -241,6 +253,12 @@
 				0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */,
 				0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */,
 				0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */,
+				0F84B7B62B54DDCD000EF575 /* Auth */,
+				0F84B7B82B54DDCD000EF575 /* Functions */,
+				0F84B7BA2B54DDCD000EF575 /* PostgREST */,
+				0F84B7BC2B54DDCD000EF575 /* Realtime */,
+				0F84B7BE2B54DDCD000EF575 /* Storage */,
+				0F84B7C02B54DDCD000EF575 /* Supabase */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -277,6 +295,7 @@
 				0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -560,6 +579,14 @@
 				minimumVersion = 2.20.0;
 			};
 		};
+		0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
 		0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -613,6 +640,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		0F84B7B62B54DDCD000EF575 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		0F84B7B82B54DDCD000EF575 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		0F84B7BA2B54DDCD000EF575 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		0F84B7BC2B54DDCD000EF575 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		0F84B7BE2B54DDCD000EF575 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		0F84B7C02B54DDCD000EF575 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 		0FAC4EFC2B4FABAE00639E98 /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;
