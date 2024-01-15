@@ -26,6 +26,7 @@ final class HomeViewController: BaseViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupProperties()
+        setupNavivationItems()
         setupView()
         
         guard let reactor = self.reactor else { return }
@@ -42,8 +43,59 @@ final class HomeViewController: BaseViewController, View {
     
     private func setupProperties() {
         self.view.backgroundColor = .designColor(color: .secondGray())
-//        self.title = "Good Chatting"
-        self.navigationItem.title = "Good Chatting"
+    }
+    
+    private func setupNavivationItems() {
+        var leftItems: [UIBarButtonItem] = []
+        
+        let _ = UIImageView().then {
+            $0.image = UIImage(named: "launch-icon")
+            leftItems.append(UIBarButtonItem(customView: $0))
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(23)
+            }
+        }
+        
+        let _ = UIBarButtonItem(systemItem: .fixedSpace).then {
+            $0.width = 15
+            leftItems.append($0)
+        }
+        
+        let _ = UILabel().then {
+            $0.text = "Good Chatting"
+            $0.font = .init(name: "AppleSDGothicNeo-Bold", size: 20)
+            leftItems.append(UIBarButtonItem(customView: $0))
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(22)
+            }
+        }
+        
+        self.navigationItem.leftBarButtonItems = leftItems
+        
+        var rightItems: [UIBarButtonItem] = []
+        
+        let _ = UIImageView().then {
+            $0.image = UIImage(named: "setting-icon")
+            rightItems.append(UIBarButtonItem(customView: $0))
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(23)
+            }
+        }
+        
+        let _ = UIBarButtonItem(systemItem: .fixedSpace).then {
+            $0.width = 17
+            rightItems.append($0)
+        }
+        
+        let _ = UIImageView().then {
+            $0.image = UIImage(named: "chattingPlus-icon")
+            rightItems.append(UIBarButtonItem(customView: $0))
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(23)
+            }
+        }
+        
+        self.navigationItem.rightBarButtonItems = rightItems
     }
 
     private func setupView() {
