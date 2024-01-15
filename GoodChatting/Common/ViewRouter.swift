@@ -8,19 +8,19 @@
 import UIKit
 
 final class ViewRouter {
-    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, sceneDelegate: SceneDelegate) {
+    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, sceneDelegate: SceneDelegate, animated: Bool = true) {
         next.sceneDelegate = sceneDelegate
         next.modalPresentationStyle = .overFullScreen
-        source.present(next, animated: true, completion: nil)
+        source.present(next, animated: animated, completion: nil)
     }
     
-    static func pushToNextViewContoller(from source: BaseViewController, to next: BaseViewController) {
-        source.navigationController?.pushViewController(next, animated: true)
+    static func pushToNextViewContoller(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
+        source.navigationController?.pushViewController(next, animated: animated)
     }
     
-    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController) {
+    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
         next.modalPresentationStyle = .overFullScreen
-        source.present(next, animated: true, completion: nil)
+        source.present(next, animated: animated, completion: nil)
     }
 }
 
