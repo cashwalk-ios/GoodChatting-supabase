@@ -25,11 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func navigateToHome(reactor: HomeReactor) {
-        let vc = HomeViewController()
-        vc.reactor = reactor
-        let navController = UINavigationController(rootViewController: vc)
-        window?.rootViewController = navController
+    func navigateToHome(from: BaseViewController, animated: Bool) {
+        let homeVC = HomeViewController()
+        homeVC.reactor = HomeReactor()
+        ViewRouter.pushToNextViewContoller(from: from, to: homeVC, sceneDelegate: self, animated: animated)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

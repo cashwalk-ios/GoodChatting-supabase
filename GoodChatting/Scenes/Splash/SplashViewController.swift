@@ -42,14 +42,14 @@ final class SplashViewController: BaseViewController {
     
     private func checkLoginStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            guard let self else { return }
             let isLoggedIn = UserSettings.isLoggedIn
             Log.kkr("로그인 여부: \(isLoggedIn)")
             
             if isLoggedIn {
-                let reactor = HomeReactor()
-                self?.sceneDelegate?.navigateToHome(reactor: reactor)
+                self.sceneDelegate?.navigateToHome(from: self, animated: false)
             } else {
-                self?.navigateToLogin()
+                self.navigateToLogin()
             }
         })
     }
