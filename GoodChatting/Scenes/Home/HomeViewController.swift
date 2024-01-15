@@ -19,7 +19,7 @@ final class HomeViewController: UIViewController, View {
     var disposeBag = DisposeBag()
     
     private var helloLabel: UILabel!
-    private var tempRemoveLogoutButton: UIButton!
+    private var tempLogoutButton: UIButton!
 
     // MARK: - LifeCycles
     
@@ -53,7 +53,7 @@ final class HomeViewController: UIViewController, View {
             }
         }
         
-        tempRemoveLogoutButton = UIButton().then {
+        tempLogoutButton = UIButton().then {
             $0.setTitle("로그아웃", for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 24)
             $0.titleLabel?.textColor = .white
@@ -76,12 +76,21 @@ extension HomeViewController {
     
     private func bindAction(reactor: HomeReactor) {
         
-        tempRemoveLogoutButton.rx.tap
+        tempLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                UserSettings.isLoggedIn = false
-                print("isLoggedIn UserDefaults 삭제...")
-                exit(0)
+            .subscribe(with: self, onNext: { owner, _ in
+                let alert = GlobalFunctions.makeAlert(
+                    title: "알림",
+                    message: "정말 로그아웃하시겠습니까?",
+                    firstActionMsg: "예",
+                    firstActionHandler: {
+                        UserSettings.isLoggedIn = false
+                        // FIXME: SplashViewController로 연결할 것
+                        owner.showToast(message: "앱을 재시작해주세요.")
+                    },
+                    cancelActionMsg: "취소"
+                )
+                owner.present(alert, animated: true)
             }).disposed(by: disposeBag)
         
     }

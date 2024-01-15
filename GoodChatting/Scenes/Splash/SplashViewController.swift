@@ -47,7 +47,7 @@ final class SplashViewController: UIViewController {
     private func checkLoginStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
             let isLoggedIn = UserSettings.isLoggedIn
-            print("로그인 여부: \(isLoggedIn)")
+            Log.kkr("로그인 여부: \(isLoggedIn)")
             
             if isLoggedIn {
                 let reactor = HomeReactor()

@@ -16,6 +16,7 @@
 		0F6EB7EC2B50D9BD00BB3216 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7EB2B50D9BD00BB3216 /* KakaoSDKAuth */; };
 		0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7F12B50D9BD00BB3216 /* KakaoSDKCommon */; };
 		0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6EB7FF2B50D9BD00BB3216 /* KakaoSDKUser */; };
+		0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */; };
 		0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFC2B4FABAE00639E98 /* RxBlocking */; };
 		0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFE2B4FABAE00639E98 /* RxCocoa */; };
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		0F6EB7E62B50D60A00BB3216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5C0C12972B50D9CB0066FA69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				5C0C12932B50D37D0066FA69 /* Log.swift */,
 				5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */,
 				0F6EB7E62B50D60A00BB3216 /* Constants.swift */,
+				0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
 				5C0C12A72B50F0440066FA69 /* HomeRouter.swift in Sources */,
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
+				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
