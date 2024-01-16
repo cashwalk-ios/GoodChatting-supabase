@@ -28,6 +28,8 @@ final class HomeViewController: BaseViewController, View {
     private var tempLogoutButton: UIButton!
     private var chattingAddButton: UIButton!
     
+    private var chattingListTableView: UITableView!
+    
     var settingAction = PublishSubject<SettingAction>()
     
     // MARK: - LifeCycles
@@ -72,7 +74,7 @@ final class HomeViewController: BaseViewController, View {
         
         let _ = UILabel().then {
             $0.text = "Good Chatting"
-            $0.font = .init(name: "AppleSDGothicNeo-Bold", size: 20)
+            $0.font = UIFont.appleSDGothicNeo(.bold, size: 20)
             leftItems.append(UIBarButtonItem(customView: $0))
             $0.snp.makeConstraints { make in
                 make.height.equalTo(22)
@@ -84,9 +86,9 @@ final class HomeViewController: BaseViewController, View {
         var rightItems: [UIBarButtonItem] = []
         
         let settingItems: [UIAction] = [
-            UIAction(title: SettingAction.edit.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.edit) }),
-            UIAction(title: SettingAction.sort.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.sort) }),
-            UIAction(title: SettingAction.all_read.rawValue, image: nil, handler: { [weak self] _ in self?.settingAction.onNext(.all_read) })
+            UIAction(title: SettingAction.edit.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.edit) }),
+            UIAction(title: SettingAction.sort.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.sort) }),
+            UIAction(title: SettingAction.all_read.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.all_read) })
         ]
         
         let _ = UIMenu(children: settingItems).then {
@@ -110,6 +112,18 @@ final class HomeViewController: BaseViewController, View {
     }
 
     private func setupView() {
+        chattingListTableView = UITableView().then {
+            $0.estimatedRowHeight = 68
+            $0.rowHeight = 68
+            $0.separatorStyle = .none
+            $0.allowsSelection = false
+            $0.register(ChattingListTVCell.self, forCellReuseIdentifier: "listCell")
+            view.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
+        
         helloLabel = UILabel().then {
             $0.text = "Hello, World!"
             view.addSubview($0)
@@ -187,6 +201,9 @@ extension HomeViewController {
     }
     
     private func bindState(reactor: HomeReactor) {
-        
+        reactor.state.map(\.chattingList)
+            .bind(to: chattingListTableView.rx.items(cellIdentifier: "listCell", cellType: ChattingListTVCell.self)) { row , item , cell in
+                cell.configuration(item: item)
+            }.disposed(by: disposeBag)
     }
 }

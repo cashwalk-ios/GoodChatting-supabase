@@ -1,0 +1,30 @@
+
+
+{
+    "list" : [
+        {
+            "image" : "template01",
+            "title" : "최고의 방",
+            "number" : 13,
+            "lastest" : "뭐해 너는?",
+            "update_at" : "14:09",
+            "unRead" : 3
+        },
+        {
+            "image" : "template01",
+            "title" : "대전 핫플방",
+            "number" : 471,
+            "lastest" : "어디야?",
+            "update_at" : "어제",
+            "unRead" : 15
+        },
+        {
+            "image" : "template01",
+            "title" : "인천 모임",
+            "number" : 267,
+            "lastest" : "어서오세요!",
+            "update_at" : "1월 11일",
+            "unRead" : 0
+        }
+    ]
+}
