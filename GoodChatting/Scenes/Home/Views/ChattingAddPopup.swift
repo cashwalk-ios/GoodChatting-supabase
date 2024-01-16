@@ -91,7 +91,7 @@ class ChattingAddPopup: UIView {
         
         let _ = UILabel().then {
             $0.text = "새로운 채팅"
-            $0.font = .init(name: "AppleSDGothicNeo-SemiBold", size: 20)
+            $0.font = UIFont.appleSDGothicNeo(.semiBold, size: 20)
             labelContainer.addSubview($0)
             
             $0.snp.makeConstraints { make in
@@ -166,7 +166,7 @@ class ChattingAddPopup: UIView {
         
         let _ = UILabel().then {
             $0.text = titleStr
-            $0.font = .init(name: "AppleSDGothicNeo-Regular", size: 12)
+            $0.font = UIFont.appleSDGothicNeo(.regular, size: 12)
             container.addSubview($0)
             $0.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
