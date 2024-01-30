@@ -53,7 +53,7 @@ final class SplashViewController: BaseViewController {
                 self.userInfo = try await AuthManager.shared.getCurrentSession()
                 if let userInfo = self.userInfo {
                     Log.kkr("자동 로그인 - uid: \(userInfo.uid), email: \(userInfo.email ?? "이메일 없음")")
-                    self.sceneDelegate?.navigateToHome(from: self, animated: false)
+                    self.sceneDelegate?.navigateToHome()
                 } else {
                     Log.kkr("세션 만료 - LoginViewController ㄱㄱ")
                     self.navigateToLogin()

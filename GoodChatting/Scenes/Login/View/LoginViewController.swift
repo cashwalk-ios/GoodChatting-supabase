@@ -73,6 +73,7 @@ extension LoginViewController {
                     do {
                         let userInfo = try await owner.signInWithApple()
                         Log.kkr("uid: \(userInfo.uid), email: \(userInfo.email)")
+                        owner.sceneDelegate?.navigateToHome()
                     } catch {
                         owner.showToast(message: "애플 로그인 실패")
                     }
