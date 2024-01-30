@@ -56,6 +56,7 @@ final class HomeViewController: BaseViewController, View {
             }
         }
     }
+    
     // MARK: - Functions
     
     func bind(reactor: HomeReactor) {
@@ -198,6 +199,27 @@ final class HomeViewController: BaseViewController, View {
         }
     }
 
+    fileprivate func presentLogoutAlert() {
+        let blackView = BlackView(alphaValue: 0.7)
+        blackView.show(onView: self.view)
+        
+        let alert = GlobalFunctions.makeAlert(
+            title: "알림",
+            message: "정말 로그아웃하시겠습니까?",
+            firstActionMsg: "예",
+            firstActionStyle: .destructive,
+            firstActionHandler: {
+                Task {
+                    try await AuthManager.shared.signOut()
+                    self.sceneDelegate?.navigateToSplash()
+                }
+                blackView.hide()
+            },
+            cancelActionMsg: "취소",
+            cancelActionHandler: { blackView.hide() }
+        )
+        self.present(alert, animated: true)
+    }
 }
 
 // MARK: - Bind
@@ -214,25 +236,7 @@ extension HomeViewController {
         tempLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(with: self, onNext: { owner, _ in
-                let blackView = BlackView(alphaValue: 0.7)
-                blackView.show(onView: owner.view)
-                
-                let alert = GlobalFunctions.makeAlert(
-                    title: "알림",
-                    message: "정말 로그아웃하시겠습니까?",
-                    firstActionMsg: "예",
-                    firstActionStyle: .destructive,
-                    firstActionHandler: {
-                        Task {
-                            try await AuthManager.shared.signOut()
-                            owner.sceneDelegate?.navigateToSplash()
-                        }
-                        blackView.hide()
-                    },
-                    cancelActionMsg: "취소",
-                    cancelActionHandler: { blackView.hide() }
-                )
-                owner.present(alert, animated: true)
+                owner.presentLogoutAlert()
             }).disposed(by: disposeBag)
      
         chattingAddButton.rx.tap
