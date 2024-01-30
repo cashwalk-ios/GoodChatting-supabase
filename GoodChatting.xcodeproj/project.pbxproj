@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C3C612B5518AC0048B539 /* ChattingListTVCell.swift */; };
+		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
 		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		022C3C612B5518AC0048B539 /* ChattingListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListTVCell.swift; sourceTree = "<group>"; };
+		028532462B5769BD0080AC89 /* ChattingListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListManager.swift; sourceTree = "<group>"; };
 		028ABE772B54C19C005DE05A /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		028ABE792B54C29E005DE05A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */,
 				0F6EB7E62B50D60A00BB3216 /* Constants.swift */,
 				0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */,
+				028532462B5769BD0080AC89 /* ChattingListManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
 				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
+				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,
 				028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */,
 				028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */,
 				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,

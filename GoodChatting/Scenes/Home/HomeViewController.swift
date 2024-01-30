@@ -11,6 +11,7 @@ import Then
 import RxSwift
 import RxCocoa
 import ReactorKit
+import Supabase
 
 final class HomeViewController: BaseViewController, View {
     
@@ -30,6 +31,8 @@ final class HomeViewController: BaseViewController, View {
     
     private var chattingListTableView: UITableView!
     
+    private var nothingListView: UIView!
+    
     var settingAction = PublishSubject<SettingAction>()
     
     // MARK: - LifeCycles
@@ -42,8 +45,16 @@ final class HomeViewController: BaseViewController, View {
         
         guard let reactor = self.reactor else { return }
         bind(reactor: reactor)
+        
+        ChattingListManager.shared.subcribeChannel()
+        Task {
+            do {
+                try await ChattingListManager.shared.getChattingList()
+            } catch {
+                Log.cyo("get Room Error \(error.localizedDescription)")
+            }
+        }
     }
-    
     // MARK: - Functions
     
     func bind(reactor: HomeReactor) {
@@ -124,14 +135,6 @@ final class HomeViewController: BaseViewController, View {
             }
         }
         
-        helloLabel = UILabel().then {
-            $0.text = "Hello, World!"
-            view.addSubview($0)
-            $0.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-            }
-        }
-        
         tempLogoutButton = UIButton().then {
             $0.setTitle("로그아웃", for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 24)
@@ -145,6 +148,53 @@ final class HomeViewController: BaseViewController, View {
                 make.height.equalTo(50)
             }
         }
+        
+        nothingListView = UIView().then {
+            $0.backgroundColor = .white
+            $0.isHidden = false
+            view.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
+        
+        let nothingContainer = UIStackView().then {
+            $0.axis = .vertical
+            $0.alignment = .center
+            $0.spacing = 38
+            nothingListView.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.horizontalEdges.equalToSuperview()
+            }
+        }
+        
+        let imageContainer = UIView().then {
+            nothingContainer.addArrangedSubview($0)
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(150)
+            }
+        }
+        
+        _ = UIImageView().then {
+            $0.image = UIImage(named: "nothingMessage")
+            $0.autoresizesSubviews = true
+            imageContainer.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.size.equalTo(150)
+            }
+        }
+        
+        _ = UILabel().then {
+            $0.text = "참여한 채팅방이 없어요."
+            $0.numberOfLines = 0
+            $0.font = .appleSDGothicNeo(.bold, size: 24)
+            nothingContainer.addArrangedSubview($0)
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(29)
+            }
+        }
     }
 
 }
@@ -154,6 +204,11 @@ final class HomeViewController: BaseViewController, View {
 extension HomeViewController {
     
     private func bindAction(reactor: HomeReactor) {
+        
+        ChattingListManager.shared.subject
+            .map({ Reactor.Action.chattingListManagerAction($0) })
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         tempLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
@@ -198,6 +253,9 @@ extension HomeViewController {
             .map { Reactor.Action.settingAction($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        chattingListTableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: HomeReactor) {
@@ -205,5 +263,34 @@ extension HomeViewController {
             .bind(to: chattingListTableView.rx.items(cellIdentifier: "listCell", cellType: ChattingListTVCell.self)) { row , item , cell in
                 cell.configuration(item: item)
             }.disposed(by: disposeBag)
+        
+        reactor.state.map({ $0.chattingList.count > 0 })
+            .bind(to: self.nothingListView.rx.isHidden)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let getOutHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            Log.cyo("Get Out tapped")
+            success(true)
+        }
+        let getOutAction = UIContextualAction(style: .normal, title: "나가기", handler: getOutHandler)
+        
+        getOutAction.image = UIImage(named: "getout")
+        getOutAction.backgroundColor = UIColor.red
+        
+        
+        let notiOffHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            Log.cyo("Noti Off tapped")
+            success(true)
+        }
+        let notiOffAction = UIContextualAction(style: .normal, title: "알림 끄기", handler: notiOffHandler)
+        
+        notiOffAction.image = UIImage(named: "notioff")
+        notiOffAction.backgroundColor = UIColor.init(hexCode: "5955D7")
+        
+        return UISwipeActionsConfiguration(actions: [getOutAction, notiOffAction])
     }
 }

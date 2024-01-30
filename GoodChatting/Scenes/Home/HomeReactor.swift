@@ -7,27 +7,28 @@
 
 import ReactorKit
 import UIKit
+import Supabase
 
 final class HomeReactor: Reactor {
     
     enum Action {
         case chattingAddAction(ChattingAddPopup.ChattingAddPopupAction)
         case settingAction(HomeViewController.SettingAction)
-        case getChattingList
+        case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
     }
     
     enum Mutation {
-        case setChattingList
+        case setChattingList([ChattingList])
     }
     
     struct State {
-        var chattingList: [ChattingListModel.ChattingList] = []
+        var chattingList: [ChattingList] = []
     }
     
     var initialState: State = State()
     
     init() {
-        initialState = State(chattingList: getChattingListTemp())
+        
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -36,6 +37,9 @@ final class HomeReactor: Reactor {
             switch action {
             case .makeRoom:
                 Log.cyo("makeRoom")
+                Task {
+                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
+                }
                 return .empty()
             case .joinRoom:
                 Log.cyo("joinRoom")
@@ -54,9 +58,12 @@ final class HomeReactor: Reactor {
                 return .empty()
             }
             
-        case .getChattingList:
-            //TODO: 아마 supabase 리얼타임 디비 구독하는 형태로 개발이 될 것으로 보임.
-            return .just(.setChattingList)
+        case .chattingListManagerAction(let action):
+            switch action {
+            case .getList(let list):
+                return .just(.setChattingList(list))
+            }
+            
         }
     }
     
@@ -64,14 +71,16 @@ final class HomeReactor: Reactor {
         var newState = state
         
         switch mutation {
-        case .setChattingList:
-            newState.chattingList = getChattingListTemp() // 우선은 더미를 넣읍시당.
+        case .setChattingList(let list):
+            Log.cyo("setChattingList")
+            newState.chattingList = list
         }
         
         return newState
     }
     
-    func getChattingListTemp() -> [ChattingListModel.ChattingList] {
+    func getChattingListTemp() -> [ChattingList] {
+        Log.cyo("getChattingListTemp()")
         let jsonFileName = "ChattingListTempData"
         let extensionType = "json"
         
@@ -80,9 +89,9 @@ final class HomeReactor: Reactor {
             let jsonData = try Data(contentsOf: fileLocation)
             
             let decoder = JSONDecoder()
-            let chattingListData = try decoder.decode(ChattingListModel.self, from: jsonData)
+            let chattingListData = try decoder.decode([ChattingList].self, from: jsonData)
             Log.cyo("getChattingListTemp success")
-            return chattingListData.list
+            return chattingListData
         } catch {
             Log.cyo("getChattingListTemp error = \(error.localizedDescription)")
             return []

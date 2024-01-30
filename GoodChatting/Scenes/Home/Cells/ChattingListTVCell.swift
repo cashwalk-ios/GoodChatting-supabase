@@ -135,16 +135,16 @@ class ChattingListTVCell: UITableViewCell {
         }
     }
     
-    func configuration(item: ChattingListModel.ChattingList) {
-        mainImageView.image = UIImage(named: item.image)
-        dateLabel.text = item.update_at
-        titleLabel.text = item.title
-        lastestMessageLabel.text = item.lastest
-        numberOfPeopleLabel.text = "\(item.number)"
+    func configuration(item: ChattingList) {
+        mainImageView.image = UIImage(named: item.image ?? "")
+        dateLabel.text = "\(item.updated_at ?? Date())"
+        titleLabel.text = item.title ?? ""
+        lastestMessageLabel.text = item.messageCYO?.last?.message ?? ""
+        numberOfPeopleLabel.text = "\(item.people?.count ?? 1)"
         
-        if item.unRead > 0 {
-            unReadLabel.text = "\(item.unRead)"
-            unReadLabel.isHidden = false
-        }
+//        if let unRead = item.unRead, unRead > 0 {
+//            unReadLabel.text = "\(unRead)"
+//            unReadLabel.isHidden = false
+//        }
     }
 }
