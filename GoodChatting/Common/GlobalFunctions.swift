@@ -15,8 +15,10 @@ class GlobalFunctions {
         title: String? = nil,
         message: String? = nil,
         firstActionMsg: String,
+        firstActionStyle: UIAlertAction.Style = .default,
         firstActionHandler: (() -> Void)? = nil,
         cancelActionMsg: String? = nil,
+        cancelActionStyle: UIAlertAction.Style = .cancel,
         cancelActionHandler: (() -> Void)? = nil
     ) -> UIViewController {
         let alertViewController = UIAlertController(
@@ -25,13 +27,13 @@ class GlobalFunctions {
             preferredStyle: .alert
         )
         
-        let firstAction = UIAlertAction(title: firstActionMsg, style: .default) { _ in
+        let firstAction = UIAlertAction(title: firstActionMsg, style: firstActionStyle) { _ in
             firstActionHandler?()
         }
         alertViewController.addAction(firstAction)
         
         if let secondaryActionMsg = cancelActionMsg {
-            let secondaryAction = UIAlertAction(title: secondaryActionMsg, style: .cancel) { _ in
+            let secondaryAction = UIAlertAction(title: secondaryActionMsg, style: cancelActionStyle) { _ in
                 cancelActionHandler?()
             }
             alertViewController.addAction(secondaryAction)
