@@ -11,9 +11,11 @@
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
-		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
+		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
+		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
+		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
 		0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5652B4E82F2009CC320 /* SnapKit */; };
 		0F4BA56B2B4E830C009CC320 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA56A2B4E830C009CC320 /* Then */; };
@@ -30,6 +32,9 @@
 		0F84B7BD2B54DDCD000EF575 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7BC2B54DDCD000EF575 /* Realtime */; };
 		0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7BE2B54DDCD000EF575 /* Storage */; };
 		0F84B7C12B54DDCD000EF575 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0F84B7C02B54DDCD000EF575 /* Supabase */; };
+		0F923CC72B67908000F7E0A0 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 0F923CC62B67908000F7E0A0 /* GoogleSignIn */; };
+		0F923CC92B67908000F7E0A0 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */; };
+		0F923CCB2B679A3100F7E0A0 /* SignInWithGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F923CCA2B679A3100F7E0A0 /* SignInWithGoogle.swift */; };
 		0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFC2B4FABAE00639E98 /* RxBlocking */; };
 		0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4EFE2B4FABAE00639E98 /* RxCocoa */; };
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
@@ -47,6 +52,11 @@
 		5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */; };
 		5C0D0EF02B469C3600D75348 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEF2B469C3600D75348 /* Assets.xcassets */; };
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
+		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
+		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
+		8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */; };
+		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
+		8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6E2B5F834B00008A6D /* ChatReactor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,9 +67,13 @@
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
 		02E447482B56021200002ABE /* ChattingListTempData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ChattingListTempData.json; sourceTree = "<group>"; };
 		02E4474B2B56035300002ABE /* ChattingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListModel.swift; sourceTree = "<group>"; };
+		0F0AD3522B652D8300045E07 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		0F6EB7E62B50D60A00BB3216 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		0F8E4FD12B687C4A001395D2 /* GoodChatting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoodChatting.entitlements; sourceTree = "<group>"; };
+		0F923CCA2B679A3100F7E0A0 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5C0C12972B50D9CB0066FA69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -74,6 +88,11 @@
 		5C0D0EEF2B469C3600D75348 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C0D0EF42B469C3600D75348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
+		8E7DFD142B6875560078230C /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableCell.swift; sourceTree = "<group>"; };
+		8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8EB55B6E2B5F834B00008A6D /* ChatReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatReactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +103,7 @@
 				0FAC4EFF2B4FABAE00639E98 /* RxCocoa in Frameworks */,
 				0F6EB7EA2B50D9BD00BB3216 /* KakaoSDK in Frameworks */,
 				0F6EB8002B50D9BD00BB3216 /* KakaoSDKUser in Frameworks */,
+				0F923CC72B67908000F7E0A0 /* GoogleSignIn in Frameworks */,
 				0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */,
 				0F84B7B92B54DDCD000EF575 /* Functions in Frameworks */,
 				5C0C12A42B50EAC70066FA69 /* RxGesture in Frameworks */,
@@ -95,6 +115,7 @@
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
 				0F84B7BD2B54DDCD000EF575 /* Realtime in Frameworks */,
 				0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */,
+				0F923CC92B67908000F7E0A0 /* GoogleSignInSwift in Frameworks */,
 				0F84B7C12B54DDCD000EF575 /* Supabase in Frameworks */,
 				0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */,
 				0FAC4EFD2B4FABAE00639E98 /* RxBlocking in Frameworks */,
@@ -135,13 +156,25 @@
 				5C0C12A52B50F0350066FA69 /* Home */,
 				5C0C12962B50D96C0066FA69 /* Splash */,
 				5C0C12952B50D94E0066FA69 /* Login */,
+				8EB55B682B5F82E500008A6D /* Chat */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		0F923CCC2B679F7100F7E0A0 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0F0AD3522B652D8300045E07 /* AuthManager.swift */,
+				0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */,
+				0F923CCA2B679A3100F7E0A0 /* SignInWithGoogle.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		5C0C12952B50D94E0066FA69 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				0F923CCC2B679F7100F7E0A0 /* Auth */,
 				5C0C129E2B50DC590066FA69 /* View */,
 				5C0C129F2B50DC6A0066FA69 /* Reactor */,
 			);
@@ -204,6 +237,7 @@
 		5C0D0EE52B469C3500D75348 /* GoodChatting */ = {
 			isa = PBXGroup;
 			children = (
+				0F8E4FD12B687C4A001395D2 /* GoodChatting.entitlements */,
 				5C65DF182B469D0D008BACCA /* Resource */,
 				5C91275B2B46A61B000F027B /* Supporting Files */,
 				5C65DF172B469CE7008BACCA /* App */,
@@ -241,6 +275,7 @@
 				5C0C12AA2B50F8D50066FA69 /* UserSettings.swift */,
 				0F6EB7E62B50D60A00BB3216 /* Constants.swift */,
 				0F84B7B32B54AB7F000EF575 /* GlobalFunctions.swift */,
+				5CBDF3922B688B2B00A28347 /* BlackView.swift */,
 				028532462B5769BD0080AC89 /* ChattingListManager.swift */,
 			);
 			path = Common;
@@ -261,6 +296,25 @@
 				5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		8EB55B682B5F82E500008A6D /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8EB55B692B5F82EE00008A6D /* ChatCell */,
+				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
+				8E7DFD142B6875560078230C /* ChatView.swift */,
+				8EB55B6E2B5F834B00008A6D /* ChatReactor.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		8EB55B692B5F82EE00008A6D /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */,
+			);
+			path = ChatCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +352,8 @@
 				0F84B7BC2B54DDCD000EF575 /* Realtime */,
 				0F84B7BE2B54DDCD000EF575 /* Storage */,
 				0F84B7C02B54DDCD000EF575 /* Supabase */,
+				0F923CC62B67908000F7E0A0 /* GoogleSignIn */,
+				0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -335,6 +391,7 @@
 				5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -364,19 +421,27 @@
 			files = (
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
 				02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */,
+				8E7DFD152B6875560078230C /* ChatView.swift in Sources */,
+				0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */,
+				0F923CCB2B679A3100F7E0A0 /* SignInWithGoogle.swift in Sources */,
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
+				8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */,
 				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
+				8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */,
 				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
 				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,
+				8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */,
 				028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */,
 				028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */,
 				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,
 				0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */,
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,
+				5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */,
+				0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */,
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
@@ -512,10 +577,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GoodChatting/GoodChatting.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NDAHSTNV4Q;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = RYZ3RA62XL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -531,6 +599,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nudge.GoodChatting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "good chatting dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -542,10 +611,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GoodChatting/GoodChatting.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NDAHSTNV4Q;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = RYZ3RA62XL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -561,6 +633,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nudge.GoodChatting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "good chatting dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -629,6 +702,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.1.0;
+			};
+		};
+		0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
 			};
 		};
 		0FAC4EFB2B4FABAE00639E98 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
@@ -714,6 +795,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		0F923CC62B67908000F7E0A0 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		0FAC4EFC2B4FABAE00639E98 /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;

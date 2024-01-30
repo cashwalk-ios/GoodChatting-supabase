@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import CryptoKit
 
 class GlobalFunctions {
     public static func makeAlert(
@@ -38,33 +39,58 @@ class GlobalFunctions {
         
         return alertViewController
     }
+    
+    public static func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
+    }
 }
 
 extension UIViewController {
     func showToast(message: String, duration: TimeInterval = 2.0) {
-        let toastLabel = UILabel().then {
-            $0.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            $0.textColor = UIColor.white
-            $0.textAlignment = .center
-            $0.font = UIFont.systemFont(ofSize: 12.0)
-            $0.text = message
-            $0.alpha = 1.0
-            $0.layer.cornerRadius = 10
-            $0.clipsToBounds = true
-            self.view.addSubview($0)
+        DispatchQueue.main.async {
+            let toastLabel = UILabel().then {
+                $0.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+                $0.textColor = UIColor.white
+                $0.textAlignment = .center
+                $0.font = .appleSDGothicNeo(.regular, size: 16)
+                $0.text = message
+                $0.alpha = 1.0
+                $0.clipsToBounds = true
+                self.view.addSubview($0)
+            }
+            
+            toastLabel.snp.makeConstraints { make in
+                make.bottom.left.right.equalToSuperview()
+                make.height.equalTo(60)
+            }
+            
+            UIView.animate(withDuration: 0.3, delay: duration, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }, completion: { _ in
+                toastLabel.removeFromSuperview()
+            })
         }
-        
-        toastLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-100)
-            make.width.equalTo(300)
-            make.height.equalTo(35)
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: duration, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: { _ in
-            toastLabel.removeFromSuperview()
-        })
     }
+    
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
+        }
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
+
 }

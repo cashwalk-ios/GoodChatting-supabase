@@ -26,8 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func navigateToHome(from: BaseViewController, animated: Bool) {
-        let homeVC = HomeViewController()
-        homeVC.reactor = HomeReactor()
+        let homeVC = ChatViewController()
+        homeVC.reactor = ChatReactor(roomTitle: "sampleRoom")
+        
         ViewRouter.pushToNextViewContoller(from: from, to: homeVC, sceneDelegate: self, animated: animated)
     }
     

@@ -10,11 +10,12 @@ import ReactorKit
 final class LoginReactor: Reactor {
     
     enum Action {
-        case tappedKakaoLoginButton
+        case tappedGoogleLoginButton
     }
     
     enum Mutation {
-        case successLogin
+        case success
+        case fail
     }
     
     struct State {
@@ -25,8 +26,9 @@ final class LoginReactor: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .tappedKakaoLoginButton:
-            return .just(.successLogin)
+        case .tappedGoogleLoginButton:
+            // Google Login logic
+            return .just(.success)
         }
     }
     
@@ -34,8 +36,10 @@ final class LoginReactor: Reactor {
         var newState = state
         
         switch mutation {
-        case .successLogin:
+        case .success:
             newState.isLoggedIn = true
+        case .fail:
+            newState.isLoggedIn = false
         }
         
         return newState
