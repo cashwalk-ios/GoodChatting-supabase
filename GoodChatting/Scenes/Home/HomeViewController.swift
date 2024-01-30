@@ -282,21 +282,46 @@ extension HomeViewController: UITableViewDelegate {
             Log.cyo("Get Out tapped")
             success(true)
         }
-        let getOutAction = UIContextualAction(style: .normal, title: "나가기", handler: getOutHandler)
-        
-        getOutAction.image = UIImage(named: "getout")
+        let getOutAction = UIContextualAction(style: .normal, title: nil, handler: getOutHandler)
+
+        getOutAction.image = swipeLayout(icon: "getout", text: "나가기", size: 46)
         getOutAction.backgroundColor = UIColor.red
-        
         
         let notiOffHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             Log.cyo("Noti Off tapped")
             success(true)
         }
-        let notiOffAction = UIContextualAction(style: .normal, title: "알림 끄기", handler: notiOffHandler)
+        let notiOffAction = UIContextualAction(style: .normal, title: nil, handler: notiOffHandler)
         
-        notiOffAction.image = UIImage(named: "notioff")
+        notiOffAction.image = swipeLayout(icon: "notioff", text: "알림 끄기", size: 46)
         notiOffAction.backgroundColor = UIColor.init(hexCode: "5955D7")
         
         return UISwipeActionsConfiguration(actions: [getOutAction, notiOffAction])
+    }
+    
+    func swipeLayout(icon: String, text: String, size: CGFloat) -> UIImage {
+        let config = UIImage.SymbolConfiguration(pointSize: size, weight: .regular, scale: .large)
+        let uiImage = UIImage(named: icon, in: .main, with: config)?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        
+        let label = UILabel(frame: .zero)
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textColor = .white
+        label.text = text
+        
+        let tempView = UIStackView(frame: .init(x: 0, y: 0, width: 50, height: 50))
+        let imageView = UIImageView(frame: .init(x: 0, y: 0, width: uiImage?.size.width ?? 0, height: uiImage?.size.height ?? 0))
+        imageView.contentMode = .scaleAspectFit
+        tempView.axis = .vertical
+        tempView.alignment = .center
+        tempView.spacing = 2
+        imageView.image = uiImage
+        tempView.addArrangedSubview(imageView)
+        tempView.addArrangedSubview(label)
+        
+        let renderer = UIGraphicsImageRenderer(bounds: tempView.bounds)
+        let image = renderer.image { rendererContext in
+            tempView.layer.render(in: rendererContext.cgContext)
+        }
+        return image
     }
 }
