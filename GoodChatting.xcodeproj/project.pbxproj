@@ -54,6 +54,8 @@
 		5C14D1532B68E1A500B063DB /* TempShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C14D1522B68E1A500B063DB /* TempShareViewController.swift */; };
 		5C14D1552B68E59600B063DB /* TempShareReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C14D1542B68E59600B063DB /* TempShareReactor.swift */; };
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
+		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
+		5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */; };
@@ -92,6 +94,8 @@
 		5C14D1522B68E1A500B063DB /* TempShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempShareViewController.swift; sourceTree = "<group>"; };
 		5C14D1542B68E59600B063DB /* TempShareReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempShareReactor.swift; sourceTree = "<group>"; };
 		5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeViewController.swift; sourceTree = "<group>"; };
+		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
 		8E7DFD142B6875560078230C /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableCell.swift; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 			children = (
 				5C14D1522B68E1A500B063DB /* TempShareViewController.swift */,
 				5C14D1542B68E59600B063DB /* TempShareReactor.swift */,
+				5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */,
+				5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */,
 			);
 			path = TempShare;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */,
 				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
+				5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
 				5C14D1552B68E59600B063DB /* TempShareReactor.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
@@ -459,6 +466,7 @@
 				5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */,
 				0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */,
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
+				5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,

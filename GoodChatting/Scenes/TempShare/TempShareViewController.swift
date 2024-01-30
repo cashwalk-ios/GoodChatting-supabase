@@ -38,6 +38,11 @@ final class TempShareViewController: BaseViewController, View {
         self.bindState(reactor: reactor)
     }
     
+    // 완료 버튼 액션
+    @objc private func doneAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Bind
@@ -45,12 +50,33 @@ final class TempShareViewController: BaseViewController, View {
 extension TempShareViewController {
  
     private func bindAction(reactor: TempShareReactor) {
-        Log.rk("bindAction called")
-        
+
         self.inviteButton.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 Log.rk("Tap")
+                let vc = ParticipationCodeViewController()
+                vc.reactor = ParticipationCodeReactor()
+                
+                let nav = UINavigationController(rootViewController: vc)
+
+                if let sheet = nav.sheetPresentationController {
+                    sheet.detents = [
+                        .custom(resolver: { context in
+                            let height: CGFloat = 434
+                            return height
+                        })
+                    ]
+                    sheet.preferredCornerRadius = 15
+                }
+                
+                let doneButton = UIBarButtonItem(title: "완료", style: .done, 
+                                                 target: self, 
+                                                 action: #selector(owner.doneAction))
+                doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
+                vc.navigationItem.rightBarButtonItem = doneButton
+                
+                owner.present(nav, animated: true)
             }).disposed(by: disposeBag)
         
     }
@@ -60,6 +86,8 @@ extension TempShareViewController {
     }
     
 }
+
+// MARK: - Layout
 
 extension TempShareViewController {
     
