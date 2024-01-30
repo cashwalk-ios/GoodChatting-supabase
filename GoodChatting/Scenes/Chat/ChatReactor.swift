@@ -19,10 +19,15 @@ final class ChatReactor: Reactor {
     }
     
     struct State {
-        
+        var chattingRoomTitle: String = ""
+        var roomPeopleCount: Int = 10
     }
     
-    let initialState = State()
+    var initialState: State = State()
+    
+    init(roomTitle: String) {
+        initialState = State(chattingRoomTitle: roomTitle)
+    }
     
     func mutate(action: Action) -> Observable<Mutation> {
         
