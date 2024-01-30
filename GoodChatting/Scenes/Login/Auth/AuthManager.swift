@@ -26,9 +26,14 @@ class AuthManager {
     // MARK: - Functions
     
     /// 로그인되어 있는지 확인
-    func getCurrentSession() async throws -> UserInfo {
-        let session = try await client.auth.session
-        return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
+    func getCurrentSession() async throws -> UserInfo? {
+        do {
+            let session = try await client.auth.session
+            return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
+        } catch {
+            Log.kkr("현재 세션 불러오기 실패: \(error)")
+            return nil
+        }
     }
     
     func signInWithApple(idToken: String, nonce: String) async throws -> UserInfo {
@@ -48,7 +53,11 @@ class AuthManager {
     }
     
     func signOut() async throws {
-        try await client.auth.signOut()
+        do {
+            try await client.auth.signOut()
+        } catch {
+            Log.kkr("로그아웃 실패: \(error.localizedDescription)")
+        }
     }
     
 }
