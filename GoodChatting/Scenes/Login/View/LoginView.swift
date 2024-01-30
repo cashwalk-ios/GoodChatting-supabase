@@ -13,7 +13,9 @@ final class LoginView: UIView {
     
     // MARK: - Properties
     
+    var googleLoginBoxView: UIView!
     var kakaoLoginBoxView: UIView!
+    var appleLoginBoxView: UIView!
     
     // MARK: - Lifecycle
     
@@ -42,10 +44,10 @@ extension LoginView {
         let GCImageView = UIImageView().then {
             $0.image = UIImage(named: "launch-icon")
             self.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.size.equalTo(64)
-                $0.top.equalToSuperview().offset(259)
-                $0.centerX.equalToSuperview()
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(64)
+                make.top.equalToSuperview().offset(259)
+                make.centerX.equalToSuperview()
             }
         }
         
@@ -54,44 +56,127 @@ extension LoginView {
             $0.textColor = .designColor(color: .black())
             $0.font = .appleSDGothicNeo(.bold, size: 33)
             self.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.top.equalTo(GCImageView.snp.bottom).offset(49)
-                $0.centerX.equalToSuperview()
+            $0.snp.makeConstraints { make in
+                make.top.equalTo(GCImageView.snp.bottom).offset(25)
+                make.centerX.equalToSuperview()
             }
         }
         
-        self.kakaoLoginBoxView = UIView().then {
+        setupLoginViews()
+        
+    }
+    
+    fileprivate func setupLoginViews() {
+        
+//        self.kakaoLoginBoxView = UIView().then {
+//            $0.layer.cornerRadius = 10
+//            $0.backgroundColor = .init(hexCode: "FEE502")
+//            $0.isUserInteractionEnabled = true
+//            self.addSubview($0)
+//            $0.snp.makeConstraints {
+//                $0.height.equalTo(53)
+//                $0.left.right.equalToSuperview().inset(25)
+//                $0.bottom.equalToSuperview().offset(-64)
+//            }
+//        }
+//        
+//        let kakaoImageView = UIImageView().then {
+//            $0.image = UIImage(named: "iconKakaoSns")
+//            self.kakaoLoginBoxView.addSubview($0)
+//            $0.snp.makeConstraints {
+//                $0.size.equalTo(24)
+//            }
+//        }
+//        
+//        let kakaoLabel = UILabel().then {
+//            $0.text = "카카오로 로그인"
+//            $0.font = .appleSDGothicNeo(.regular, size: 16)
+//            $0.textColor = .init(hexCode: "3D1C1C")
+//        }
+//        
+//        _ = UIStackView(arrangedSubviews: [kakaoImageView, kakaoLabel]).then {
+//            $0.axis = .horizontal
+//            $0.alignment = .center
+//            $0.spacing = 12
+//            self.kakaoLoginBoxView.addSubview($0)
+//            $0.snp.makeConstraints {
+//                $0.center.equalToSuperview()
+//            }
+//        }
+            
+        self.googleLoginBoxView = UIView().then {
             $0.layer.cornerRadius = 10
-            $0.backgroundColor = .init(hexCode: "FEE502")
+            $0.backgroundColor = .white //.init(hexCode: "F0F0F0")
             $0.isUserInteractionEnabled = true
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.black.cgColor
             self.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.height.equalTo(53)
-                $0.left.right.equalToSuperview().inset(25)
-                $0.bottom.equalToSuperview().offset(-64)
+            
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(56)
+                make.left.right.equalToSuperview().inset(25)
+                make.bottom.equalToSuperview().inset(64)
             }
         }
         
-        let kakaoImageView = UIImageView().then {
-            $0.image = UIImage(named: "iconKakaoSns")
-            self.kakaoLoginBoxView.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.size.equalTo(24)
+        _ = UIImageView().then {
+            $0.image = UIImage(named: "iconGoogleSns")
+            googleLoginBoxView.addSubview($0)
+            
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(26)
+                make.left.equalToSuperview().inset(22)
+                make.centerY.equalToSuperview()
             }
         }
         
-        let kakaoLabel = UILabel().then {
-            $0.text = "카카오로 로그인"
-            $0.font = .appleSDGothicNeo(.regular, size: 16)
-            $0.textColor = .init(hexCode: "3D1C1C")
+        _ = UILabel().then {
+            $0.text = "Google로 로그인"
+            $0.font = .appleSDGothicNeo(.regular, size: 18)
+            $0.textColor = .black
+            googleLoginBoxView.addSubview($0)
+            
+            $0.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
         }
         
-        _ = UIStackView(arrangedSubviews: [kakaoImageView, kakaoLabel]).then {
-            $0.axis = .horizontal
-            $0.spacing = 12
-            self.kakaoLoginBoxView.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.center.equalToSuperview()
+        self.appleLoginBoxView = UIView().then {
+            $0.layer.cornerRadius = 10
+            $0.backgroundColor = .white
+            $0.isUserInteractionEnabled = true
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.black.cgColor
+            self.addSubview($0)
+            
+            $0.snp.makeConstraints { make in
+                make.height.equalTo(56)
+                make.left.right.equalToSuperview().inset(25)
+                make.bottom.equalTo(googleLoginBoxView.snp.top).offset(-12)
+            }
+        }
+        
+        _ = UIImageView().then {
+            $0.image = UIImage(systemName: "apple.logo")
+            $0.contentMode = .scaleAspectFit
+            $0.tintColor = .black
+            
+            appleLoginBoxView.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(32)
+                make.left.equalToSuperview().inset(20)
+                make.centerY.equalToSuperview()
+            }
+        }
+        
+        _ = UILabel().then {
+            $0.text = "Apple로 로그인"
+            $0.font = .appleSDGothicNeo(.regular, size: 18)
+            $0.textColor = .black
+            
+            appleLoginBoxView.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.center.equalToSuperview()
             }
         }
         
