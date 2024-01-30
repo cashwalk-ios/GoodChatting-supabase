@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let splashVC = SplashViewController()
+        let splashVC = TempShareViewController() //SplashViewController()
         splashVC.sceneDelegate = self
         
         let navController = UINavigationController(rootViewController: splashVC)
