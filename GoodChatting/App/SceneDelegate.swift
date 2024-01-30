@@ -28,8 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func navigateToHome(from: BaseViewController, animated: Bool) {
         let homeVC = ChatViewController()
         homeVC.reactor = ChatReactor(roomTitle: "sampleRoom")
-        
-        ViewRouter.pushToNextViewContoller(from: from, to: homeVC, sceneDelegate: self, animated: animated)
+        window?.rootViewController = UINavigationController(rootViewController: homeVC)
+        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

@@ -23,28 +23,19 @@ class AuthManager {
     
     let client = SupabaseClient(supabaseURL: Constants.SUPABASE_PROJECT_URL, supabaseKey: Constants.SUPABASE_API_KEY)
     
+    // MARK: - Functions
+    
     /// 로그인되어 있는지 확인
     func getCurrentSession() async throws -> UserInfo {
         let session = try await client.auth.session
         return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
     }
     
-    // MARK: - Functions
-    
     func signInWithApple(idToken: String, nonce: String) async throws -> UserInfo {
         Log.kkr("SignIn to Supabase")
-        do {
-            let session = try await client.auth.signInWithIdToken(credentials: OpenIDConnectCredentials(
-                provider: .apple,
-                idToken: idToken,
-                nonce: nonce
-            ))
-            Log.kkr("session: \(session)")
-            return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
-        } catch {
-            Log.kkr("Error SignIn to Supabase: \(error)")
-            return UserInfo(uid: "", email: "")
-        }
+        let session = try await client.auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken, nonce: nonce))
+        Log.kkr("session: \(session)")
+        return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
     }
     
     func signInWithGoogle(idToken: String, nonce: String) async throws -> UserInfo {
