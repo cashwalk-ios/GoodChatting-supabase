@@ -29,6 +29,7 @@ final class HomeViewController: BaseViewController, View {
     private var chattingAddButton: UIButton!
     
     private var chattingListTableView: UITableView!
+    private var blackView: BlackView!
     
     var settingAction = PublishSubject<SettingAction>()
     
@@ -158,6 +159,9 @@ extension HomeViewController {
         tempLogoutButton.rx.tap
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(with: self, onNext: { owner, _ in
+                let blackView = BlackView(alphaValue: 0.7)
+                blackView.show(onView: owner.view)
+                
                 let alert = GlobalFunctions.makeAlert(
                     title: "알림",
                     message: "정말 로그아웃하시겠습니까?",
@@ -166,8 +170,10 @@ extension HomeViewController {
                         UserSettings.isLoggedIn = false
                         // FIXME: SplashViewController로 연결할 것
                         owner.showToast(message: "앱을 재시작해주세요.")
+                        blackView.hide()
                     },
-                    cancelActionMsg: "취소"
+                    cancelActionMsg: "취소",
+                    cancelActionHandler: { blackView.hide() }
                 )
                 owner.present(alert, animated: true)
             }).disposed(by: disposeBag)
