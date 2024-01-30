@@ -47,8 +47,7 @@ final class SplashViewController: BaseViewController {
             Log.kkr("로그인 여부: \(isLoggedIn)")
             
             if isLoggedIn {
-                let reactor = HomeReactor()
-                self.sceneDelegate?.navigateToHome(reactor: reactor)
+                self.sceneDelegate?.navigateToHome(from: self, animated: false)
             } else {
                 self.navigateToLogin()
             }
