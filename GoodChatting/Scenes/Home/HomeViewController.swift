@@ -220,6 +220,26 @@ final class HomeViewController: BaseViewController, View {
         )
         self.present(alert, animated: true)
     }
+    
+    fileprivate func presentDeleteAlert(roomId: Int) {
+        let blackView = BlackView(alphaValue: 0.7)
+        blackView.show(onView: self.view)
+        
+        let alert = GlobalFunctions.makeAlert(
+            title: "채팅방 나가기",
+            message: "채팅방을 나가실 경우\n대화내용이 모두 삭제됩니다.",
+            firstActionMsg: "나가기",
+            firstActionStyle: .destructive,
+            firstActionHandler: { [weak self] in
+                blackView.hide()
+                guard let self else { return }
+                self.reactor?.action.on(.next(.chattingDelete(roomId: roomId)))
+            },
+            cancelActionMsg: "취소",
+            cancelActionHandler: { blackView.hide() }
+        )
+        self.present(alert, animated: true)
+    }
 }
 
 // MARK: - Bind
@@ -284,22 +304,32 @@ extension HomeViewController {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let getOutHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let room = reactor?.currentState.chattingList[indexPath.row]
+        let roomId = room?.id ?? 0
+        let alarm = room?.alarm ?? true
+        
+        let getOutHandler: UIContextualAction.Handler = { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             Log.cyo("Get Out tapped")
             success(true)
+            
+            guard let self else { return }
+            self.presentDeleteAlert(roomId: roomId)
         }
         let getOutAction = UIContextualAction(style: .normal, title: nil, handler: getOutHandler)
 
         getOutAction.image = swipeLayout(icon: "getout", text: "나가기", size: 46)
         getOutAction.backgroundColor = UIColor.red
         
-        let notiOffHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            Log.cyo("Noti Off tapped")
+        let notiOffHandler: UIContextualAction.Handler = { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            Log.cyo("Noti OnOff tapped")
             success(true)
+            
+            guard let self else { return }
+            self.reactor?.action.on(.next(.chattingAlarmStatusChange(alarm: !alarm, roomId: roomId)))
         }
         let notiOffAction = UIContextualAction(style: .normal, title: nil, handler: notiOffHandler)
         
-        notiOffAction.image = swipeLayout(icon: "notioff", text: "알림 끄기", size: 46)
+        notiOffAction.image = swipeLayout(icon: alarm ? "notioff" : "notion", text: alarm ? "알림 끄기" : "알림 켜기", size: 46)
         notiOffAction.backgroundColor = UIColor.init(hexCode: "5955D7")
         
         return UISwipeActionsConfiguration(actions: [getOutAction, notiOffAction])
