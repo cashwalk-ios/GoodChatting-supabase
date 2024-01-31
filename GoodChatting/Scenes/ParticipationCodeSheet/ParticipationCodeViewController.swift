@@ -71,7 +71,29 @@ extension ParticipationCodeViewController {
 
                 UIPasteboard.general.string = owner.participationCode.text
                 owner.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
+
             }).disposed(by: disposeBag)
+        
+        self.codeBoxView.rx.longPressGesture(configuration: { gestureRecognizer, _ in
+            gestureRecognizer.minimumPressDuration = 0.01 })
+        .withUnretained(self)
+        .subscribe(onNext: { owner, gesture in
+            switch gesture.state {
+            case .began:
+                // 손가락이 뷰에 닿았을 때
+                UIView.animate(withDuration: 0.1) {
+                    owner.codeBoxView.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
+                    owner.codeBoxView.layer.shadowRadius = 2
+                }
+            case .ended, .cancelled:
+                // 손가락이 뷰에서 떨어졌을 때
+                UIView.animate(withDuration: 0.1) {
+                    owner.codeBoxView.transform = CGAffineTransform.identity
+                    owner.codeBoxView.layer.shadowRadius = 4
+                }
+            default: break
+            }
+        }).disposed(by: disposeBag)
         
     }
     
@@ -125,6 +147,10 @@ extension ParticipationCodeViewController {
             $0.backgroundColor = UIColor.init(hexCode: "F2F2F7")
             $0.clipsToBounds = true
             $0.isUserInteractionEnabled = true
+            $0.layer.shadowColor = UIColor.designColor(color: .black()).cgColor
+            $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+            $0.layer.shadowRadius = 4
+            $0.layer.shadowOpacity = 0.25
             self.view.addSubview($0)
             $0.snp.makeConstraints {
                 $0.height.equalTo(47)
