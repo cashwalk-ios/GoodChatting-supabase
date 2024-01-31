@@ -145,8 +145,23 @@ extension ParticipationCodeViewController {
                 UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { _ in
                     
                 }),
-                UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { _ in
-                    
+                UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { [weak self] _ in
+                    guard let self else { return }
+                    // TODO: - Supabase에서 키 새로 발급하는 로직
+                    // Temp
+                    let tempRandomCode = [
+                        "g.sh/+3bNCRMGeF_3mOFU2",
+                        "g.sh/+6hBCXSGeF_4bOFU2",
+                        "g.sh/+8yKRWOEtIU_3dWRF9",
+                        "g.sh/+5rGXQCYtQZ_1dUGS2",
+                        "g.sh/+7nHUYVGeKJ_2fXRT3",
+                        "g.sh/+9mIVXDFtLQ_4gZSA4",
+                        "g.sh/+1oJWZEGuMP_5hTBV5",
+                        "g.sh/+2pKXYFHvNQ_6iUCW6",
+                        "g.sh/+4qLZYGIwOR_7jVDX7"
+                    ].randomElement()
+                    self.participationCode.text = tempRandomCode
+                    self.showToast(message: "참여 코드가 새로 발급되었습니다.", duration: 2.0)
                 })
             ]
             
