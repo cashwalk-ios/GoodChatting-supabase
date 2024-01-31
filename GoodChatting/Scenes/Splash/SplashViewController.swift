@@ -10,6 +10,10 @@ import SnapKit
 import Then
 
 final class SplashViewController: BaseViewController {
+    
+    // MARK: - Properties
+    
+    var userInfo: UserInfo?
 
     // MARK: - LifeCycles
     
@@ -43,13 +47,17 @@ final class SplashViewController: BaseViewController {
     private func checkLoginStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
             guard let self else { return }
-            let isLoggedIn = UserSettings.isLoggedIn
-            Log.kkr("로그인 여부: \(isLoggedIn)")
             
-            if isLoggedIn {
-                self.sceneDelegate?.navigateToHome(from: self, animated: false)
-            } else {
-                self.navigateToLogin()
+            // 로그인 여부 검사
+            Task {
+                self.userInfo = try await AuthManager.shared.getCurrentSession()
+                if let userInfo = self.userInfo {
+                    Log.kkr("자동 로그인 - uid: \(userInfo.uid), email: \(userInfo.email ?? "이메일 없음")")
+                    self.sceneDelegate?.navigateToHome()
+                } else {
+                    Log.kkr("세션 만료 - LoginViewController ㄱㄱ")
+                    self.navigateToLogin()
+                }
             }
         })
     }

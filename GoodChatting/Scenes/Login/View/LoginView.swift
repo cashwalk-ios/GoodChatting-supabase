@@ -67,43 +67,6 @@ extension LoginView {
     }
     
     fileprivate func setupLoginViews() {
-        
-//        self.kakaoLoginBoxView = UIView().then {
-//            $0.layer.cornerRadius = 10
-//            $0.backgroundColor = .init(hexCode: "FEE502")
-//            $0.isUserInteractionEnabled = true
-//            self.addSubview($0)
-//            $0.snp.makeConstraints {
-//                $0.height.equalTo(53)
-//                $0.left.right.equalToSuperview().inset(25)
-//                $0.bottom.equalToSuperview().offset(-64)
-//            }
-//        }
-//        
-//        let kakaoImageView = UIImageView().then {
-//            $0.image = UIImage(named: "iconKakaoSns")
-//            self.kakaoLoginBoxView.addSubview($0)
-//            $0.snp.makeConstraints {
-//                $0.size.equalTo(24)
-//            }
-//        }
-//        
-//        let kakaoLabel = UILabel().then {
-//            $0.text = "카카오로 로그인"
-//            $0.font = .appleSDGothicNeo(.regular, size: 16)
-//            $0.textColor = .init(hexCode: "3D1C1C")
-//        }
-//        
-//        _ = UIStackView(arrangedSubviews: [kakaoImageView, kakaoLabel]).then {
-//            $0.axis = .horizontal
-//            $0.alignment = .center
-//            $0.spacing = 12
-//            self.kakaoLoginBoxView.addSubview($0)
-//            $0.snp.makeConstraints {
-//                $0.center.equalToSuperview()
-//            }
-//        }
-            
         self.googleLoginBoxView = UIView().then {
             $0.layer.cornerRadius = 10
             $0.backgroundColor = .white //.init(hexCode: "F0F0F0")

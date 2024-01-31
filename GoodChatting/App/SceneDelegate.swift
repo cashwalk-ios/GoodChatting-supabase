@@ -25,11 +25,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func navigateToHome(from: BaseViewController, animated: Bool) {
-        let homeVC = ChatViewController()
-        homeVC.reactor = ChatReactor(roomTitle: "sampleRoom")
-        
-        ViewRouter.pushToNextViewContoller(from: from, to: homeVC, sceneDelegate: self, animated: animated)
+    func navigateToHome() {
+        let homeVC = HomeViewController()
+        homeVC.reactor = HomeReactor()
+        homeVC.sceneDelegate = self
+        window?.rootViewController = UINavigationController(rootViewController: homeVC)
+        window?.makeKeyAndVisible()
+    }
+    
+    func navigateToSplash() {
+        let splashVC = SplashViewController()
+        splashVC.sceneDelegate = self
+        window?.rootViewController = UINavigationController(rootViewController: splashVC)
+        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
