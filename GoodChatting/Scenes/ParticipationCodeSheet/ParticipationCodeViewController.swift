@@ -13,14 +13,17 @@ import RxCocoa
 import ReactorKit
 
 final class ParticipationCodeViewController: BaseViewController, View {
-    
+
     // MARK: - Properties
     
     var disposeBag = DisposeBag()
     
+    private var codeBoxView: UIView!
     private var moreButton: UIButton!
     private var participationCode: UILabel!
     private var shareButton: UIButton!
+    
+    private var feedbackGenerator: UIImpactFeedbackGenerator?
     
     // MARK: - Lifecycle
     
@@ -46,6 +49,11 @@ final class ParticipationCodeViewController: BaseViewController, View {
         self.bindState(reactor: reactor)
     }
     
+    private func setupGenerator() {
+        self.feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+        self.feedbackGenerator?.prepare()
+    }
+    
 }
 
 // MARK: - Bind
@@ -54,6 +62,35 @@ extension ParticipationCodeViewController {
  
     private func bindAction(reactor: ParticipationCodeReactor) {
         
+        self.codeBoxView.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                self.setupGenerator()
+                owner.feedbackGenerator?.impactOccurred()
+                
+            }).disposed(by: disposeBag)
+        
+        self.moreButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                
+                let menuItems: [UIMenuElement] = [
+                    UIAction(title: "복사", image: UIImage(systemName: "arrow.down.circle"), handler: { _ in
+                        
+                    }),
+                    UIAction(title: "코드 발급 기록", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in
+                        
+                    }),
+                    UIAction(title: "새로 발급", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in
+                        
+                    })
+                ]
+                
+                let menu = UIMenu(title: "", children: menuItems)
+                owner.moreButton.menu = menu
+                owner.moreButton.showsMenuAsPrimaryAction = true
+            }).disposed(by: disposeBag)
         
     }
     
@@ -102,7 +139,7 @@ extension ParticipationCodeViewController {
             }
         }
         
-        let codeBoxView = UIView().then {
+        self.codeBoxView = UIView().then {
             $0.layer.cornerRadius = 8
             $0.backgroundColor = UIColor.init(hexCode: "F2F2F7")
             $0.clipsToBounds = true
@@ -124,6 +161,14 @@ extension ParticipationCodeViewController {
                 $0.centerY.equalToSuperview()
             }
         }
+        
+        let moreButtonItems: [UIAction] = {
+            return [
+                UIAction(title: "복사", image: UIImage(systemName: "arrow.down.circle"), handler: { _ in }),
+                UIAction(title: "코드 발급 기록", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in }),
+                UIAction(title: "새로 발급", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in }),
+            ]
+        }()
 
         self.participationCode = UILabel().then {
             $0.text = "g.sh/+3bNCRMGeF_3mOFU2"

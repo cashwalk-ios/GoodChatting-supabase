@@ -161,7 +161,7 @@
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				5C14D1512B68E19200B063DB /* TempShare */,
+				5C14D1512B68E19200B063DB /* ParticipationCodeSheet */,
 				5C0C12A52B50F0350066FA69 /* Home */,
 				5C0C12962B50D96C0066FA69 /* Splash */,
 				5C0C12952B50D94E0066FA69 /* Login */,
@@ -256,7 +256,7 @@
 			path = GoodChatting;
 			sourceTree = "<group>";
 		};
-		5C14D1512B68E19200B063DB /* TempShare */ = {
+		5C14D1512B68E19200B063DB /* ParticipationCodeSheet */ = {
 			isa = PBXGroup;
 			children = (
 				5C14D1522B68E1A500B063DB /* TempShareViewController.swift */,
@@ -264,7 +264,7 @@
 				5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */,
 				5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */,
 			);
-			path = TempShare;
+			path = ParticipationCodeSheet;
 			sourceTree = "<group>";
 		};
 		5C65DF172B469CE7008BACCA /* App */ = {
