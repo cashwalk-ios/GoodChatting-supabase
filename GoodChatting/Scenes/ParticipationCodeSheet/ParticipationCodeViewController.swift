@@ -76,13 +76,13 @@ extension ParticipationCodeViewController {
             .subscribe(onNext: { owner, _ in
                 
                 let menuItems: [UIMenuElement] = [
-                    UIAction(title: "복사", image: UIImage(systemName: "arrow.down.circle"), handler: { _ in
+                    UIAction(title: "복사", image: UIImage(named: "copy_Icon"), handler: { _ in
                         
                     }),
-                    UIAction(title: "코드 발급 기록", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in
+                    UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { _ in
                         
                     }),
-                    UIAction(title: "새로 발급", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in
+                    UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { _ in
                         
                     })
                 ]
