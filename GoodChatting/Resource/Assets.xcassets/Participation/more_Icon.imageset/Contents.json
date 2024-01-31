@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "participation_Icon.png",
+      "filename" : "more_Icon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "participation_Icon@2x.png",
+      "filename" : "more_Icon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "participation_Icon@3x.png",
+      "filename" : "more_Icon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
