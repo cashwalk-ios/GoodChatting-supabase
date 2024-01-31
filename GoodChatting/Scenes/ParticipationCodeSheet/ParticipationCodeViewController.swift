@@ -66,30 +66,11 @@ extension ParticipationCodeViewController {
             .when(.recognized)
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                self.setupGenerator()
+                owner.setupGenerator()
                 owner.feedbackGenerator?.impactOccurred()
-                
-            }).disposed(by: disposeBag)
-        
-        self.moreButton.rx.tap
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                
-                let menuItems: [UIMenuElement] = [
-                    UIAction(title: "복사", image: UIImage(named: "copy_Icon"), handler: { _ in
-                        
-                    }),
-                    UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { _ in
-                        
-                    }),
-                    UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { _ in
-                        
-                    })
-                ]
-                
-                let menu = UIMenu(title: "", children: menuItems)
-                owner.moreButton.menu = menu
-                owner.moreButton.showsMenuAsPrimaryAction = true
+
+                UIPasteboard.general.string = owner.participationCode.text
+                owner.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
             }).disposed(by: disposeBag)
         
     }
@@ -154,6 +135,23 @@ extension ParticipationCodeViewController {
         
         self.moreButton = UIButton().then {
             $0.setImage(UIImage(named: "more_Icon"), for: .normal)
+            
+            let menuItems: [UIMenuElement] = [
+                UIAction(title: "복사", image: UIImage(named: "copy_Icon"), handler: { [weak self] _ in
+                    guard let self = self, let codeText = self.participationCode.text else { return }
+                    UIPasteboard.general.string = codeText
+                    self.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
+                }),
+                UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { _ in
+                    
+                }),
+                UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { _ in
+                    
+                })
+            ]
+            
+            $0.menu = UIMenu(title: "", children: menuItems)
+            $0.showsMenuAsPrimaryAction = true
             codeBoxView.addSubview($0)
             $0.snp.makeConstraints {
                 $0.size.equalTo(22)
@@ -161,14 +159,6 @@ extension ParticipationCodeViewController {
                 $0.centerY.equalToSuperview()
             }
         }
-        
-        let moreButtonItems: [UIAction] = {
-            return [
-                UIAction(title: "복사", image: UIImage(systemName: "arrow.down.circle"), handler: { _ in }),
-                UIAction(title: "코드 발급 기록", image: UIImage(systemName: "square.and.arrow.up"), handler: { _ in }),
-                UIAction(title: "새로 발급", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in }),
-            ]
-        }()
 
         self.participationCode = UILabel().then {
             $0.text = "g.sh/+3bNCRMGeF_3mOFU2"
