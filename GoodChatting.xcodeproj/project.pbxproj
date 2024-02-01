@@ -329,8 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */,
-				5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */,
 				5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */,
+				5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */,
 			);
 			path = CodeIssuanceHistory;
 			sourceTree = "<group>";

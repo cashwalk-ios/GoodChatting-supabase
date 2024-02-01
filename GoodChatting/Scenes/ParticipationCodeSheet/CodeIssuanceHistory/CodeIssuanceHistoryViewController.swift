@@ -18,7 +18,7 @@ final class CodeIssuanceHistoryViewController: BaseViewController, View {
     
     var disposeBag = DisposeBag()
     
-    
+    var tableView: UITableView!
     
     // MARK: - Lifecycle
     
@@ -89,7 +89,7 @@ extension CodeIssuanceHistoryViewController {
             }
         }
         
-        let decription = UILabel().then {
+        let description = UILabel().then {
             $0.text = "지난 참여 코드 발급 기록을 확인 및 삭제할 수 있습니다."
             $0.font = .appleSDGothicNeo(.regular, size: 12)
             $0.textColor = UIColor.init(hexCode: "6D6D71")
@@ -100,7 +100,18 @@ extension CodeIssuanceHistoryViewController {
             }
         }
         
-        
+        self.tableView = UITableView().then {
+            $0.register(CodeIssuanceHistoryTableViewCell.self,
+                        forCellReuseIdentifier: CodeIssuanceHistoryTableViewCell.cellIdentifier)
+            $0.showsHorizontalScrollIndicator = false
+            $0.clipsToBounds = true
+            self.view.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.top.equalTo(description.snp.bottom).offset(45)
+                $0.left.right.equalToSuperview().inset(15)
+                $0.height.equalTo(240)
+            }
+        }
        
     }
     
