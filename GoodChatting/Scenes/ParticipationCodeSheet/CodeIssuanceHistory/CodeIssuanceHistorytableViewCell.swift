@@ -15,7 +15,9 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    private var countLabel: UILabel!
+    private var iconImageView: UIImageView!
+    private var tempCountLabel: UILabel!
+    private var deleteLabel: UILabel!
     private var codeLabel: UILabel!
     
     // MARK: - Lifecycle
@@ -33,8 +35,21 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
     
-    func configureCell(count: Int, code: String) {
-        self.countLabel.text = "\(String(count))."
+    func setIconImageSize(size: Int, leftOffset: Int) {
+        self.iconImageView.snp.updateConstraints {
+            $0.size.equalTo(size)
+            $0.left.equalToSuperview().offset(leftOffset)
+        }
+    }
+    
+    func showDeleteLabel() {
+        self.deleteLabel.isHidden = false
+        self.tempCountLabel.isHidden = true
+    }
+    
+    func configureCell(iconImage: UIImage, count: Int, code: String) {
+        self.iconImageView.image = iconImage
+        self.tempCountLabel.text = "\(String(count))."
         self.codeLabel.text = code
     }
     
@@ -46,7 +61,7 @@ extension CodeIssuanceHistoryTableViewCell {
     
     private func setView() {
         
-        let codeIconImageView = UIImageView().then {
+        self.iconImageView = UIImageView().then {
             $0.image = UIImage(named: "codeIcon_expired")
             self.addSubview($0)
             $0.snp.makeConstraints {
@@ -56,11 +71,23 @@ extension CodeIssuanceHistoryTableViewCell {
             }
         }
         
-        self.countLabel = UILabel().then {
+        self.tempCountLabel = UILabel().then {
             self.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
-                $0.left.equalTo(codeIconImageView.snp.right).offset(10)
+                $0.left.equalTo(self.iconImageView.snp.right).offset(10)
+            }
+        }
+        
+        self.deleteLabel = UILabel().then {
+            $0.text = "만료된 코드 모두 삭제"
+            $0.font = .appleSDGothicNeo(.regular, size: 15)
+            $0.textColor = UIColor.init(hexCode: "FF3A30")
+            $0.isHidden = true
+            self.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalTo(self.iconImageView.snp.right).offset(10)
             }
         }
         
@@ -68,7 +95,7 @@ extension CodeIssuanceHistoryTableViewCell {
             self.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
-                $0.left.equalTo(self.countLabel.snp.right).offset(5)
+                $0.left.equalTo(self.tempCountLabel.snp.right).offset(5)
             }
         }
         
