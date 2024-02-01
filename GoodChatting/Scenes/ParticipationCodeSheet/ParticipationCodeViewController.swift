@@ -192,8 +192,13 @@ extension ParticipationCodeViewController {
                     UIPasteboard.general.string = codeText
                     self.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
                 }),
-                UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { _ in
+                UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { [weak self] _ in
+                    guard let self else { return }
+                    let vc = CodeIssuanceHistoryViewController()
+                    vc.reactor = CodeIssuanceHistoryReactor()
                     
+                    let nav = UINavigationController(rootViewController: vc)
+                    self.present(nav, animated: true)
                 }),
                 UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { [weak self] _ in
                     guard let self else { return }
