@@ -95,6 +95,30 @@ extension ParticipationCodeViewController {
             }
         }).disposed(by: disposeBag)
         
+        self.shareButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                guard let participationCode = owner.participationCode.text else { return }
+                
+                var stringToShare = [String]()
+                stringToShare.append("\(participationCode)")
+                
+                let activityVC = UIActivityViewController(activityItems : stringToShare, applicationActivities: nil)
+                
+                // 공유하기 기능 중 제외할 기능
+                activityVC.excludedActivityTypes = [
+                    UIActivity.ActivityType.print,
+                    UIActivity.ActivityType.postToWeibo,
+                    UIActivity.ActivityType.postToTencentWeibo,
+                    UIActivity.ActivityType.postToTwitter,
+                    UIActivity.ActivityType.postToFacebook,
+                    UIActivity.ActivityType.postToFlickr,
+                    UIActivity.ActivityType.addToReadingList
+                ]
+                activityVC.popoverPresentationController?.sourceView = owner.view
+                owner.present(activityVC, animated: true)
+            }).disposed(by: disposeBag)
+        
     }
     
     private func bindState(reactor: ParticipationCodeReactor) {
