@@ -15,6 +15,9 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private var countLabel: UILabel!
+    private var codeLabel: UILabel!
+    
     // MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -30,6 +33,11 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
     
+    func configureCell(count: Int, code: String) {
+        self.countLabel.text = "\(String(count))."
+        self.codeLabel.text = code
+    }
+    
 }
 
 // MARK: - Layout
@@ -37,6 +45,33 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
 extension CodeIssuanceHistoryTableViewCell {
     
     private func setView() {
+        
+        let codeIconImageView = UIImageView().then {
+            $0.image = UIImage(named: "codeIcon_expired")
+            self.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.size.equalTo(35)
+                $0.centerY.equalToSuperview()
+                $0.left.equalToSuperview().offset(10)
+            }
+        }
+        
+        self.countLabel = UILabel().then {
+            self.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalTo(codeIconImageView.snp.right).offset(10)
+            }
+        }
+        
+        self.codeLabel = UILabel().then {
+            self.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalTo(self.countLabel.snp.right).offset(5)
+            }
+        }
+        
         
     }
     

@@ -60,6 +60,7 @@
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
 		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
 		5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */; };
+		5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
@@ -103,6 +104,7 @@
 		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
 		5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryReactor.swift; sourceTree = "<group>"; };
 		5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistorytableViewCell.swift; sourceTree = "<group>"; };
+		5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiredCodeListModel.swift; sourceTree = "<group>"; };
 		8E7DFD142B6875560078230C /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableCell.swift; sourceTree = "<group>"; };
 		8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -328,11 +330,20 @@
 		5CE2156C2B6B1E7800F4EB2A /* CodeIssuanceHistory */ = {
 			isa = PBXGroup;
 			children = (
+				5CE215712B6B432000F4EB2A /* Model */,
 				5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */,
 				5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */,
 				5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */,
 			);
 			path = CodeIssuanceHistory;
+			sourceTree = "<group>";
+		};
+		5CE215712B6B432000F4EB2A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8EB55B682B5F82E500008A6D /* Chat */ = {
@@ -470,6 +481,7 @@
 				5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */,
 				5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
+				5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */,
 				5C14D1552B68E59600B063DB /* TempShareReactor.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
