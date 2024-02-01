@@ -76,6 +76,7 @@ extension ChatView {
         tableView = UITableView().then {
             self.addSubview($0)
             $0.backgroundColor = .white
+            $0.separatorStyle = .none
             $0.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
                 make.bottom.equalTo(messageTextField.snp.top)

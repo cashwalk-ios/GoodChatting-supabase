@@ -17,6 +17,9 @@
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
 		02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */; };
+		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
+		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
+		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
 		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
 		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
@@ -67,6 +70,7 @@
 		8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
 		8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6E2B5F834B00008A6D /* ChatReactor.swift */; };
+		8EB82D9A2B6B28FA0048BD43 /* ChatDateDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB82D992B6B28FA0048BD43 /* ChatDateDisplayCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +117,7 @@
 		8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableCell.swift; sourceTree = "<group>"; };
 		8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8EB55B6E2B5F834B00008A6D /* ChatReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatReactor.swift; sourceTree = "<group>"; };
+		8EB82D992B6B28FA0048BD43 /* ChatDateDisplayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDateDisplayCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */,
+				8EB82D992B6B28FA0048BD43 /* ChatDateDisplayCell.swift */,
 				02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */,
 			);
 			path = ChatCell;
@@ -508,6 +514,7 @@
 				8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */,
 				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
+				8EB82D9A2B6B28FA0048BD43 /* ChatDateDisplayCell.swift in Sources */,
 				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,
 				8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */,
 				0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */,

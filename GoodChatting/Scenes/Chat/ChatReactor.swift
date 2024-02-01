@@ -21,6 +21,7 @@ final class ChatReactor: Reactor {
     struct State {
         var chattingRoomTitle: String = ""
         var roomPeopleCount: Int = 10
+        var testChatList: [String] = ["1"]
     }
     
     var initialState: State = State()

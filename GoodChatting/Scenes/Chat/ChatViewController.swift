@@ -18,9 +18,12 @@ class ChatViewController: BaseViewController, View {
         super.viewDidLoad()
         
         setConfigure()
+        guard let reactor = self.reactor else { return }
+        bind(reactor: reactor)
     }
     
     func bind(reactor: ChatReactor) {
+        guard self.isViewLoaded else { return }
         
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
@@ -30,8 +33,6 @@ class ChatViewController: BaseViewController, View {
                 let roomPeople = reactor.currentState.roomPeopleCount
                 let tempTitle = "\(roomTitle) \(roomPeople)"
                 let titleAttributedString = NSMutableAttributedString(string: tempTitle)
-                
-                
                 
                 titleAttributedString.addAttribute(
                     .font,
@@ -49,17 +50,34 @@ class ChatViewController: BaseViewController, View {
                 titleLabel.attributedText = titleAttributedString
                 owner.navigationItem.titleView = titleLabel
             }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.testChatList)
+            .bind(to: chatView.tableView.rx.items) { [weak self]
+                cell, index, _ -> UITableViewCell in
+                guard let self else { fatalError("self Error") }
+                
+                guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "123") as? ChatDateDisplayCell else { return UITableViewCell() }
+                
+                cell.setConfigure(displayText: "test")
+                return cell
+            }.disposed(by: disposeBag)
     }
     
     @objc
     private func selectHamburgerButton(_ sender: UIBarButtonItem) {
-        
         
     }
     
     @objc
     private func backAction(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ChatViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
     }
 }
 
@@ -93,5 +111,7 @@ extension ChatViewController {
         rightBarButton.tintColor = .black
         
         navigationItem.rightBarButtonItem = rightBarButton
+        self.chatView.tableView.register(ChatDateDisplayCell.self, forCellReuseIdentifier: "123")
+        self.chatView.tableView.delegate = self
     }
 }
