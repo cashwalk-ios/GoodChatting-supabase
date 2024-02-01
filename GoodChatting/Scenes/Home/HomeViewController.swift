@@ -36,6 +36,8 @@ final class HomeViewController: BaseViewController, View {
     
     var settingAction = PublishSubject<SettingAction>()
     
+    var createRoomPopup: CreateRoomView?
+    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -279,6 +281,19 @@ extension HomeViewController {
         reactor.state.map({ $0.chattingList.count > 0 })
             .bind(to: self.nothingListView.rx.isHidden)
             .disposed(by: disposeBag)
+        
+        reactor.state.map(\.isPresentCreateRoomPopup)
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self, onNext: { owner, _ in
+                Log.kkr("채팅방 만들기 팝업 열기")
+                owner.createRoomPopup = CreateRoomView().then {
+                    owner.sceneDelegate?.window?.addSubview($0)
+                    $0.snp.makeConstraints { make in
+                        make.edges.equalToSuperview()
+                    }
+                }
+            }).disposed(by: disposeBag)
     }
 }
 

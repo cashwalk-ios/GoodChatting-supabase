@@ -11,11 +11,11 @@
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
-		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
-		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
+		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
-		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
+		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
+		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
 		0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5652B4E82F2009CC320 /* SnapKit */; };
 		0F4BA56B2B4E830C009CC320 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA56A2B4E830C009CC320 /* Then */; };
@@ -40,6 +40,7 @@
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
 		0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F022B4FABAE00639E98 /* RxSwift */; };
 		0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC4F062B4FC45400639E98 /* LoginViewController.swift */; };
+		0FD6233C2B6B66C30043C9BC /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */; };
 		5C0C12942B50D37D0066FA69 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12932B50D37D0066FA69 /* Log.swift */; };
 		5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12972B50D9CB0066FA69 /* LoginView.swift */; };
 		5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12992B50D9D60066FA69 /* LoginReactor.swift */; };
@@ -75,6 +76,7 @@
 		0F8E4FD12B687C4A001395D2 /* GoodChatting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoodChatting.entitlements; sourceTree = "<group>"; };
 		0F923CCA2B679A3100F7E0A0 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5C0C12972B50D9CB0066FA69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C0C12992B50D9D60066FA69 /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
@@ -171,6 +173,14 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		0FD6233A2B6B669D0043C9BC /* ManageRoom */ = {
+			isa = PBXGroup;
+			children = (
+				0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */,
+			);
+			path = ManageRoom;
+			sourceTree = "<group>";
+		};
 		5C0C12952B50D94E0066FA69 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +219,7 @@
 		5C0C12A52B50F0350066FA69 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				0FD6233A2B6B669D0043C9BC /* ManageRoom */,
 				02E4474A2B56034800002ABE /* Models */,
 				022C3C602B5518920048B539 /* Cells */,
 				028ABE7B2B54D0FE005DE05A /* Views */,
@@ -437,6 +448,7 @@
 				8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */,
 				028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */,
 				028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */,
+				0FD6233C2B6B66C30043C9BC /* CreateRoomView.swift in Sources */,
 				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,
 				0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */,
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,

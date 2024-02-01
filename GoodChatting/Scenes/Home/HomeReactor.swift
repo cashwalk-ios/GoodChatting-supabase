@@ -19,10 +19,12 @@ final class HomeReactor: Reactor {
     
     enum Mutation {
         case setChattingList([ChattingList])
+        case presentCreateRoomPopup
     }
     
     struct State {
         var chattingList: [ChattingList] = []
+        var isPresentCreateRoomPopup: Bool = false
     }
     
     var initialState: State = State()
@@ -37,10 +39,10 @@ final class HomeReactor: Reactor {
             switch action {
             case .makeRoom:
                 Log.cyo("makeRoom")
-                Task {
-                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
-                }
-                return .empty()
+//                Task {
+//                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
+//                }
+                return .just(Mutation.presentCreateRoomPopup)
             case .joinRoom:
                 Log.cyo("joinRoom")
                 return .empty()
@@ -74,6 +76,9 @@ final class HomeReactor: Reactor {
         case .setChattingList(let list):
             Log.cyo("setChattingList")
             newState.chattingList = list
+            
+        case .presentCreateRoomPopup:
+            newState.isPresentCreateRoomPopup = true
         }
         
         return newState
