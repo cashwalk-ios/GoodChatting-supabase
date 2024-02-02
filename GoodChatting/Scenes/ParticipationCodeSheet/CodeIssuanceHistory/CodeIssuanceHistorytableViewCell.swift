@@ -17,8 +17,9 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     private var iconImageView: UIImageView!
     private var tempCountLabel: UILabel!
-    private var deleteLabel: UILabel!
+    private var deleteAllLabel: UILabel!
     private var codeLabel: UILabel!
+    private var labelStack: UIStackView!
     
     // MARK: - Lifecycle
     
@@ -35,21 +36,20 @@ final class CodeIssuanceHistoryTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
     
-    func setIconImageSize(size: Int, leftOffset: Int) {
+    func configureDeleteCell() {
+        self.deleteAllLabel.isHidden = false
+        self.labelStack.isHidden = true
+        self.tempCountLabel.isHidden = true
+     
+        self.iconImageView.image = UIImage(named: "trash_Icon")
         self.iconImageView.snp.updateConstraints {
-            $0.size.equalTo(size)
-            $0.left.equalToSuperview().offset(leftOffset)
+            $0.size.equalTo(24)
+            $0.left.equalToSuperview().offset(19)
         }
     }
     
-    func showDeleteLabel() {
-        self.deleteLabel.isHidden = false
-        self.tempCountLabel.isHidden = true
-    }
-    
-    func configureCell(iconImage: UIImage, count: Int, code: String) {
-        self.iconImageView.image = iconImage
-        self.tempCountLabel.text = "\(String(count))."
+    func configureCell(count: Int, code: String) {
+        self.tempCountLabel.text = String(count)
         self.codeLabel.text = code
     }
     
@@ -71,17 +71,9 @@ extension CodeIssuanceHistoryTableViewCell {
             }
         }
         
-        self.tempCountLabel = UILabel().then {
-            self.addSubview($0)
-            $0.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.left.equalTo(self.iconImageView.snp.right).offset(10)
-            }
-        }
-        
-        self.deleteLabel = UILabel().then {
+        self.deleteAllLabel = UILabel().then {
             $0.text = "만료된 코드 모두 삭제"
-            $0.font = .appleSDGothicNeo(.regular, size: 15)
+            $0.font = .appleSDGothicNeo(.regular, size: 16)
             $0.textColor = UIColor.init(hexCode: "FF3A30")
             $0.isHidden = true
             self.addSubview($0)
@@ -92,13 +84,32 @@ extension CodeIssuanceHistoryTableViewCell {
         }
         
         self.codeLabel = UILabel().then {
+            $0.font = .appleSDGothicNeo(.regular, size: 16)
+        }
+        
+        let codeInfoLabel = UILabel().then {
+            $0.text = "참가자 4명 ∙ 만료됨"
+            $0.font = .appleSDGothicNeo(.regular, size: 12)
+            $0.textColor = UIColor.init(hexCode: "6D6D71")
+        }
+        
+        self.labelStack = UIStackView(arrangedSubviews: [self.codeLabel, codeInfoLabel]).then {
+            $0.axis = .vertical
+            $0.spacing = 2
             self.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
-                $0.left.equalTo(self.tempCountLabel.snp.right).offset(5)
+                $0.left.equalTo(self.iconImageView.snp.right).offset(10)
             }
         }
         
+        self.tempCountLabel = UILabel().then {
+            self.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.right.equalToSuperview().offset(-10)
+            }
+        }
         
     }
     

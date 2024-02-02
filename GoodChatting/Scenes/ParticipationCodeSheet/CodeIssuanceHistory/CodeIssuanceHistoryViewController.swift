@@ -19,6 +19,7 @@ final class CodeIssuanceHistoryViewController: BaseViewController, View {
     var disposeBag = DisposeBag()
     
     private var expiredCodeListTableView: UITableView!
+    private var firstCellHeight = 45
     
     // MARK: - Lifecycle
     
@@ -57,23 +58,16 @@ extension CodeIssuanceHistoryViewController {
     
     private func bindState(reactor: CodeIssuanceHistoryReactor) {
         
-        reactor.state.map { $0.tempExpiredCodeList }
-            .bind(to: expiredCodeListTableView.rx.items(cellIdentifier: CodeIssuanceHistoryTableViewCell.cellIdentifier, cellType: CodeIssuanceHistoryTableViewCell.self)) { row, item, cell in
-                if row == 0 {
-                    cell.setIconImageSize(size: 24, leftOffset: 19)
-                    cell.showDeleteLabel()
-                    cell.configureCell(iconImage: UIImage(named: "trash_Icon")!,
-                                       count: 0,
-                                       code: "")
-                } else {
-                    cell.setIconImageSize(size: 35, leftOffset: 10)
-                    cell.configureCell(iconImage: UIImage(named: "codeIcon_expired")!,
-                                       count: row + 1,
-                                       code: reactor.currentState.tempExpiredCodeList[row])
-                }
-                
-            }.disposed(by: disposeBag)
-        
+        // 고정된 "만료된 코드 모두 삭제" 셀을 추가하기 위해 첫 부분에 빈 값 추가
+        reactor.state.map { [""] + $0.tempExpiredCodeList }
+        .bind(to: expiredCodeListTableView.rx.items(cellIdentifier: CodeIssuanceHistoryTableViewCell.cellIdentifier, cellType: CodeIssuanceHistoryTableViewCell.self)) { row, item, cell in
+            if row == 0 { // 0번 셀: "만료된 코드 모두 삭제" 고정
+                cell.configureDeleteCell()
+            } else {
+                cell.configureCell(count: row, code: reactor.currentState.tempExpiredCodeList[row - 1])
+            }
+        }
+        .disposed(by: disposeBag)
     }
     
 }
@@ -141,6 +135,18 @@ extension CodeIssuanceHistoryViewController {
             }
         }
         
+        let expiredHeaderView = UIView()
+        let expiredHeaderLabel = UILabel().then {
+            $0.text = "만료된 코드"
+            $0.font = .appleSDGothicNeo(.regular, size: 12)
+            $0.textColor = UIColor.init(hexCode: "6D6D71")
+            expiredHeaderView.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalToSuperview().offset(16)
+            }
+        }
+        
         self.expiredCodeListTableView = UITableView(frame: .zero, style: .plain).then {
             $0.register(CodeIssuanceHistoryTableViewCell.self,
                         forCellReuseIdentifier: CodeIssuanceHistoryTableViewCell.cellIdentifier)
@@ -151,11 +157,30 @@ extension CodeIssuanceHistoryViewController {
             $0.rowHeight = CGFloat(rowHeight)
             $0.clipsToBounds = true
             $0.delegate = self
-            stackView.addArrangedSubview($0)
             $0.snp.makeConstraints {
                 guard let reactor else { return }
+                $0.height.equalTo(reactor.currentState.tempExpiredCodeList.count * rowHeight + firstCellHeight)
+            }
+        }
+
+        let expiredFooterView = UIView()
+        let expiredFooterLabel = UILabel().then {
+            $0.text = "만료된 코드는 참여가 불가능합니다."
+            $0.font = .appleSDGothicNeo(.regular, size: 12)
+            $0.textColor = UIColor.init(hexCode: "6D6D71")
+            expiredFooterView.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalToSuperview().offset(16)
+            }
+        }
+        
+        let tableStackView = UIStackView(arrangedSubviews: [expiredHeaderView, self.expiredCodeListTableView, expiredFooterView]).then {
+            $0.axis = .vertical
+            $0.spacing = 15
+            stackView.addArrangedSubview($0)
+            $0.snp.makeConstraints {
                 $0.left.right.equalToSuperview().inset(15)
-                $0.height.equalTo(reactor.currentState.tempExpiredCodeList.count * rowHeight + 40)
             }
         }
         
@@ -176,7 +201,7 @@ extension CodeIssuanceHistoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 40
+            return CGFloat(firstCellHeight)
         } else {
             return tableView.rowHeight
         }
