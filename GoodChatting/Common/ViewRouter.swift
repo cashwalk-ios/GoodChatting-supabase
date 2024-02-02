@@ -8,14 +8,14 @@
 import UIKit
 
 final class ViewRouter {
-    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, sceneDelegate: SceneDelegate, animated: Bool = true) {
+    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, sceneDelegate: SceneDelegate, modalPresentationStyle: UIModalPresentationStyle = .overFullScreen, animated: Bool = true) {
         next.sceneDelegate = sceneDelegate
-        next.modalPresentationStyle = .overFullScreen
+        next.modalPresentationStyle = modalPresentationStyle
         source.present(next, animated: animated, completion: nil)
     }
     
-    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, animated: Bool = true) {
-        next.modalPresentationStyle = .overFullScreen
+    static func presentToNextViewController(from source: BaseViewController, to next: BaseViewController, modalPresentationStyle: UIModalPresentationStyle = .overFullScreen, animated: Bool = true) {
+        next.modalPresentationStyle = modalPresentationStyle
         source.present(next, animated: animated, completion: nil)
     }
     

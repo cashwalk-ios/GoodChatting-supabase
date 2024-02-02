@@ -11,11 +11,11 @@
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
-		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
-		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
+		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
-		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
+		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
+		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
 		0F4BA5662B4E82F2009CC320 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5652B4E82F2009CC320 /* SnapKit */; };
 		0F4BA56B2B4E830C009CC320 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA56A2B4E830C009CC320 /* Then */; };
@@ -51,8 +51,16 @@
 		5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EE82B469C3500D75348 /* SceneDelegate.swift */; };
 		5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */; };
 		5C0D0EF02B469C3600D75348 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEF2B469C3600D75348 /* Assets.xcassets */; };
+		5C14D1532B68E1A500B063DB /* TempShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C14D1522B68E1A500B063DB /* TempShareViewController.swift */; };
+		5C14D1552B68E59600B063DB /* TempShareReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C14D1542B68E59600B063DB /* TempShareReactor.swift */; };
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
+		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
+		5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
+		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
+		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
+		5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */; };
+		5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
@@ -87,8 +95,16 @@
 		5C0D0EEA2B469C3500D75348 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5C0D0EEF2B469C3600D75348 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C0D0EF42B469C3600D75348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C14D1522B68E1A500B063DB /* TempShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempShareViewController.swift; sourceTree = "<group>"; };
+		5C14D1542B68E59600B063DB /* TempShareReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempShareReactor.swift; sourceTree = "<group>"; };
 		5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeViewController.swift; sourceTree = "<group>"; };
+		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
+		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
+		5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryReactor.swift; sourceTree = "<group>"; };
+		5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistorytableViewCell.swift; sourceTree = "<group>"; };
+		5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiredCodeListModel.swift; sourceTree = "<group>"; };
 		8E7DFD142B6875560078230C /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableCell.swift; sourceTree = "<group>"; };
 		8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +169,7 @@
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				5C14D1512B68E19200B063DB /* ParticipationCodeSheet */,
 				5C0C12A52B50F0350066FA69 /* Home */,
 				5C0C12962B50D96C0066FA69 /* Splash */,
 				5C0C12952B50D94E0066FA69 /* Login */,
@@ -247,6 +264,18 @@
 			path = GoodChatting;
 			sourceTree = "<group>";
 		};
+		5C14D1512B68E19200B063DB /* ParticipationCodeSheet */ = {
+			isa = PBXGroup;
+			children = (
+				5CE2156C2B6B1E7800F4EB2A /* CodeIssuanceHistory */,
+				5C14D1522B68E1A500B063DB /* TempShareViewController.swift */,
+				5C14D1542B68E59600B063DB /* TempShareReactor.swift */,
+				5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */,
+				5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */,
+			);
+			path = ParticipationCodeSheet;
+			sourceTree = "<group>";
+		};
 		5C65DF172B469CE7008BACCA /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +325,25 @@
 				5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		5CE2156C2B6B1E7800F4EB2A /* CodeIssuanceHistory */ = {
+			isa = PBXGroup;
+			children = (
+				5CE215712B6B432000F4EB2A /* Model */,
+				5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */,
+				5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */,
+				5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */,
+			);
+			path = CodeIssuanceHistory;
+			sourceTree = "<group>";
+		};
+		5CE215712B6B432000F4EB2A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8EB55B682B5F82E500008A6D /* Chat */ = {
@@ -419,15 +467,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */,
+				5C14D1532B68E1A500B063DB /* TempShareViewController.swift in Sources */,
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
 				02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */,
 				8E7DFD152B6875560078230C /* ChatView.swift in Sources */,
 				0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */,
 				0F923CCB2B679A3100F7E0A0 /* SignInWithGoogle.swift in Sources */,
+				5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */,
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				8EB55B6B2B5F830500008A6D /* ChatTableCell.swift in Sources */,
 				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
+				5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */,
+				5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */,
 				5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */,
+				5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */,
+				5C14D1552B68E59600B063DB /* TempShareReactor.swift in Sources */,
 				5C0D0EE72B469C3500D75348 /* AppDelegate.swift in Sources */,
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
 				8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */,
@@ -443,6 +498,7 @@
 				5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */,
 				0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */,
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
+				5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
