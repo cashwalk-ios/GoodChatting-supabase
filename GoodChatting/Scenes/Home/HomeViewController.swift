@@ -198,7 +198,7 @@ final class HomeViewController: BaseViewController, View {
             }
         }
     }
-
+    
     fileprivate func presentLogoutAlert() {
         let blackView = BlackView(alphaValue: 0.7)
         blackView.show(onView: self.view)
@@ -240,6 +240,41 @@ final class HomeViewController: BaseViewController, View {
         )
         self.present(alert, animated: true)
     }
+    
+    fileprivate func showChattingAddPopup() {
+        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        Log.cyo("chatting plus 누름? \(statusHeight)")
+        
+        let addPopup = ChattingAddPopup(statusHeight: statusHeight)
+        self.sceneDelegate?.window?.addSubview(addPopup)
+        
+        addPopup.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        if let reactor = self.reactor {
+            addPopup.actionSubject
+                .map { Reactor.Action.chattingAddAction($0) }
+                .bind(to: reactor.action)
+                .disposed(by: self.disposeBag)
+        }
+        
+        addPopup.showAnimation()
+    }
+    
+    fileprivate func showSideMenu() {
+        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
+        
+        let addPopup = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
+        self.sceneDelegate?.window?.addSubview(addPopup)
+        
+        addPopup.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        addPopup.showAnimation()
+    }
 }
 
 // MARK: - Bind
@@ -261,24 +296,8 @@ extension HomeViewController {
      
         chattingAddButton.rx.tap
             .subscribe(with: self) { owner, _ in
-                let statusHeight = owner.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-                Log.cyo("chatting plus 누름? \(statusHeight)")
-                
-                let addPopup = ChattingAddPopup(statusHeight: statusHeight)
-                owner.sceneDelegate?.window?.addSubview(addPopup)
-                
-                addPopup.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
-                
-                if let reactor = owner.reactor {
-                    addPopup.actionSubject
-                        .map { Reactor.Action.chattingAddAction($0) }
-                        .bind(to: reactor.action)
-                        .disposed(by: owner.disposeBag)
-                }
-                
-                addPopup.showAnimation()
+//                owner.showChattingAddPopup()
+                owner.showSideMenu()
             }.disposed(by: disposeBag)
         
         settingAction

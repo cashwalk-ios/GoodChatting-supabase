@@ -46,7 +46,7 @@ class ChattingAddPopup: UIView {
     }
     
     private func setupProperties() {
-        self.backgroundColor = .init(white: 0, alpha: 0.8)
+        self.backgroundColor = .init(white: 0, alpha: 0.5)
     }
     
     private func setupView() {
