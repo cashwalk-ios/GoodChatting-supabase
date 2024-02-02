@@ -34,6 +34,8 @@ final class HomeViewController: BaseViewController, View {
     
     private var nothingListView: UIView!
     
+    private var actionButtonForDebug: UIButton!
+    
     var settingAction = PublishSubject<SettingAction>()
     
     // MARK: - LifeCycles
@@ -63,6 +65,11 @@ final class HomeViewController: BaseViewController, View {
         guard self.isViewLoaded else { return }
         self.bindAction(reactor: reactor)
         self.bindState(reactor: reactor)
+    }
+    
+    // 참여코드 완료 버튼 액션(TEMP)
+    @objc private func doneAction() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setupProperties() {
@@ -195,6 +202,81 @@ final class HomeViewController: BaseViewController, View {
             nothingContainer.addArrangedSubview($0)
             $0.snp.makeConstraints { make in
                 make.height.equalTo(29)
+            }
+        }
+        
+        self.actionButtonForDebug = UIButton().then {
+            #if DEBUG
+            $0.isHidden = false
+            #else
+            $0.isHidden = true
+            #endif
+            $0.setImage(UIImage(named: "debug-Icon"), for: .normal)
+            
+            let menuItems: [UIMenuElement] = [
+                UIAction(title: "로그아웃", attributes: .destructive , handler: { [weak self] _ in
+                    guard let self else { return }
+                    let blackView = BlackView(alphaValue: 0.7)
+                    blackView.show(onView: self.view)
+                    
+                    let alert = GlobalFunctions.makeAlert(
+                        title: "알림",
+                        message: "정말 로그아웃하시겠습니까?",
+                        firstActionMsg: "예",
+                        firstActionStyle: .destructive,
+                        firstActionHandler: {
+                            Task {
+                                try await AuthManager.shared.signOut()
+                                self.sceneDelegate?.navigateToSplash()
+                            }
+                            blackView.hide()
+                        },
+                        cancelActionMsg: "취소",
+                        cancelActionHandler: { blackView.hide() }
+                    )
+                    self.present(alert, animated: true)
+                    
+                }),
+                UIAction(title: "참여 코드 바텀시트", handler: { [weak self] _ in
+                    guard let self else { return }
+                    let vc = ParticipationCodeViewController()
+                    vc.reactor = ParticipationCodeReactor()
+                    
+                    let nav = UINavigationController(rootViewController: vc)
+
+                    if let sheet = nav.sheetPresentationController {
+                        sheet.detents = [
+                            .custom(resolver: { context in
+                                let height: CGFloat = 434
+                                return height
+                            })
+                        ]
+                        sheet.preferredCornerRadius = 15
+                    }
+                    
+                    let doneButton = UIBarButtonItem(title: "완료", style: .done,
+                                                     target: self,
+                                                     action: #selector(self.doneAction))
+                    doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
+                    vc.navigationItem.rightBarButtonItem = doneButton
+                    
+                    self.present(nav, animated: true)
+                }),
+                UIAction(title: "블랙뷰 테스트(1.5초)", handler: { [weak self] _ in
+                    guard let self else { return }
+                    let blackView = BlackView(alphaValue: 0.7)
+                    blackView.show(onView: self.view)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { blackView.hide() }
+                })
+            ]
+            
+            $0.menu = UIMenu(title: "", children: menuItems)
+            $0.showsMenuAsPrimaryAction = true
+            view.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.size.equalTo(50)
+                $0.right.equalToSuperview().offset(-20)
+                $0.bottom.equalToSuperview().offset(-120)
             }
         }
     }
