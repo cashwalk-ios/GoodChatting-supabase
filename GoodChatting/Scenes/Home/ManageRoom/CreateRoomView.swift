@@ -18,8 +18,10 @@ final class CreateRoomView: UIView {
     var createButton: UIView!
     var profileImage: UIImageView!
     var camIcon: UIImageView!
-    var chatRoomTitle: UITextView!
+    var chatRoomTitle: UITextField!
+    var underline: UIView!
     var titleSizeLabel: UILabel!
+    var reactor: HomeReactor?
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -50,7 +52,8 @@ final class CreateRoomView: UIView {
             $0.snp.makeConstraints { make in
                 make.width.equalTo(321)
                 make.height.equalTo(364)
-                make.center.equalToSuperview()
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().inset(215)
             }
         }
         
@@ -97,11 +100,13 @@ final class CreateRoomView: UIView {
         // 하단 버튼
         
         createButton = UIView().then {
-            $0.backgroundColor = .init(hexCode: "5BD6FF")
+            $0.backgroundColor = .init(hexCode: "999999")
             $0.layer.cornerRadius = 8
+            $0.isUserInteractionEnabled = false
             container.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.right.bottom.equalToSuperview().inset(20)
+                make.right.equalToSuperview().inset(22)
+                make.bottom.equalToSuperview().inset(21)
                 make.width.equalTo(130)
                 make.height.equalTo(48)
             }
@@ -122,7 +127,8 @@ final class CreateRoomView: UIView {
             $0.layer.cornerRadius = 8
             container.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.left.bottom.equalToSuperview().inset(20)
+                make.left.equalToSuperview().inset(22)
+                make.bottom.equalToSuperview().inset(21)
                 make.width.equalTo(130)
                 make.height.equalTo(48)
             }
@@ -140,60 +146,37 @@ final class CreateRoomView: UIView {
         
         // 채팅방 타이틀 레이블
         
-        let underline = UIView().then {
+        underline = UIView().then {
             $0.backgroundColor = .init(hexCode: "E0E0E0")
             container.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(20)
+                make.left.right.equalToSuperview().inset(22)
                 make.height.equalTo(1)
-                make.bottom.equalTo(closeButton.snp.top).offset(-50)
+                make.bottom.equalTo(closeButton.snp.top).offset(-51)
             }
         }
-        
-        chatRoomTitle = UITextView().then {
-            $0.font = .appleSDGothicNeo(.semiBold, size: 16)
-            $0.isScrollEnabled = false
-            $0.delegate = self
-            container.addSubview($0)
-            $0.snp.makeConstraints { make in
-                make.left.right.equalTo(underline).inset(3)
-                make.bottom.equalTo(underline.snp.top).offset(-8)
-                make.height.equalTo(30)
-            }
-        }
-
         titleSizeLabel = UILabel().then {
             $0.text = "0/30"
             $0.textColor = .init(hexCode: "B2B2B2")
             $0.font = .appleSDGothicNeo(.regular, size: 12)
             container.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.right.equalToSuperview().inset(20)
-                make.bottom.equalTo(chatRoomTitle.snp.top).offset(-5)
+                make.right.equalToSuperview().inset(22)
+                make.bottom.equalTo(underline.snp.top).offset(-6)
             }
         }
-
         
-//        chatRoomTitle = UITextField().then {
-//            $0.placeholder = "채팅방 이름을 입력해주세요."
-//            $0.delegate = self
-//            $0.font = .appleSDGothicNeo(.semiBold, size: 16)
-//        }
-//        
-//        titleSizeLabel = UILabel().then {
-//            $0.text = "0/30"
-//            $0.textColor = .init(hexCode: "B2B2B2")
-//            $0.font = .appleSDGothicNeo(.regular, size: 12)
-//        }
-//        
-//        _ = UIStackView(arrangedSubviews: [chatRoomTitle, titleSizeLabel]).then {
-//            $0.distribution = .fill
-//            addSubview($0)
-//            $0.snp.makeConstraints { make in
-//                make.left.right.equalTo(underline).inset(3)
-//                make.bottom.equalTo(underline.snp.top).offset(-8)
-//            }
-//        }
+        chatRoomTitle = UITextField().then {
+            $0.placeholder = "채팅방 이름을 입력해주세요."
+            $0.font = .appleSDGothicNeo(.semiBold, size: 16)
+            $0.delegate = self
+            container.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.left.equalToSuperview().inset(26)
+                make.right.equalTo(titleSizeLabel.snp.left).offset(-5)
+                make.bottom.equalTo(underline.snp.top).offset(-7)
+            }
+        }
         
     }
     
@@ -207,14 +190,25 @@ final class CreateRoomView: UIView {
         closeButton.rx.tapGesture()
             .when(.ended)
             .subscribe(with: self, onNext: { owner, _ in
-                Log.kkr("Close popup")
-                self.removeFromSuperview()
+                owner.reactor?.action.onNext(.closePopupView(.create))
             }).disposed(by: disposeBag)
         
         createButton.rx.tapGesture()
             .when(.ended)
-            .subscribe(onNext: { _ in
-                Log.kkr("방 생성하기 버튼 클릭했음")
+            .filter { [weak self] _ in self?.chatRoomTitle.text?.count ?? 0 > 0 }
+            .subscribe(with: self, onNext: { owner, _ in
+                // TODO: 방 생성 로직 추가해야 함
+//                Task {
+//                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
+//                }
+                // 유저테이블에 만든 방 id를 넣어야 함
+                owner.reactor?.action.onNext(.closePopupView(.create))
+            }).disposed(by: disposeBag)
+        
+        chatRoomTitle.rx.text
+            .changed
+            .bind(with: self, onNext: { owner, title in
+                owner.titleSizeLabel.text = "\(title?.count ?? 0)/30"
             }).disposed(by: disposeBag)
     }
     
@@ -229,27 +223,35 @@ final class CreateRoomView: UIView {
     
 }
 
-extension CreateRoomView: UITextViewDelegate {
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        textView.resignFirstResponder()
+extension CreateRoomView: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        underline.backgroundColor = .init(hexCode: "5BD6FF")
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        let currentTextLength = textView.text.count
-        titleSizeLabel.text = "\(currentTextLength)/30"
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        underline.backgroundColor = .init(hexCode: "E0E0E0")
+        textField.resignFirstResponder()
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         
-        if currentTextLength > 30 {
-            textView.text = String(textView.text.prefix(30))
-            titleSizeLabel.text = "30/30"
-        }
+        return updatedText.count <= 30
     }
     
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        textView.snp.updateConstraints { make in
-            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.infinity))
-            make.height.equalTo(size.height)
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let textCnt = textField.text?.count ?? 0
+        setButtonState(isEnabled: textCnt > 0)
+    }
+    
+    private func setButtonState(isEnabled: Bool) {
+        createButton.isUserInteractionEnabled = isEnabled
+        if isEnabled {
+            createButton.backgroundColor = .init(hexCode: "5BD6FF")
+        } else {
+            createButton.backgroundColor = .init(hexCode: "999999")
         }
     }
-
 }
