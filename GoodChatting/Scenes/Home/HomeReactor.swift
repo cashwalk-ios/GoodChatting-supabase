@@ -15,11 +15,16 @@ final class HomeReactor: Reactor {
         case chattingAddAction(ChattingAddPopup.ChattingAddPopupAction)
         case settingAction(HomeViewController.SettingAction)
         case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
+        
+        case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
+        case chattingDelete(roomId: Int)
         case closePopupView(ChatPopupType)
     }
     
     enum Mutation {
         case setChattingList([ChattingList])
+        case setChattingAlarmStatus(alarm: Bool, roomId: Int)
+        case deleteChattingRoom(roomId: Int)
         case presentCreateRoomPopup(Bool)
         case presentJoinRoomPopup(Bool)
     }
@@ -42,9 +47,15 @@ final class HomeReactor: Reactor {
             switch action {
             case .makeRoom:
                 Log.cyo("makeRoom")
-//                Task {
-//                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
-//                }
+                Task {
+                    let addItem = ChattingRoomItem(title: "",               //채팅방 이름
+                                                   image: "",               //채팅방 썸네일 이미지 - 없어도됨 없을떈 nil
+                                                   maker: 1,                //생성자 id
+                                                   people: [1],             //채팅방 만들떄는 참여인원은 생성자 하나뿐이니 생성자 아이디를 어레이에 담아서 전달
+                                                   updated_at: Date())      //고정값
+                    
+                    try await ChattingListManager.shared.addChattingTable(item: addItem)
+                }
                 return .just(Mutation.presentCreateRoomPopup(true))
             case .joinRoom:
                 Log.cyo("joinRoom")
@@ -70,6 +81,14 @@ final class HomeReactor: Reactor {
                 return .just(.setChattingList(list))
             }
             
+        case .chattingAlarmStatusChange(let alarm, let roomId):
+            //TODO: 채팅 알림 상태 바꾸기
+            return .just(.setChattingAlarmStatus(alarm: alarm, roomId: roomId))
+            
+        case .chattingDelete(let roomId):
+            //TODO: 채팅 방 삭제
+            return .just(.deleteChattingRoom(roomId: roomId))
+            
         case .closePopupView(let popupType):
             switch popupType {
             case .create:
@@ -87,6 +106,14 @@ final class HomeReactor: Reactor {
         case .setChattingList(let list):
             Log.cyo("setChattingList")
             newState.chattingList = list
+            
+        case .setChattingAlarmStatus(let alarm, let roomId):
+            if let row = newState.chattingList.firstIndex(where: { $0.id == roomId }) {
+                newState.chattingList[row].alarm = alarm
+            }
+            
+        case .deleteChattingRoom(let roomId):
+            newState.chattingList.removeAll(where: { $0.id == roomId })
             
         case .presentCreateRoomPopup(let isPresent):
             newState.isPresentCreateRoomPopup = isPresent

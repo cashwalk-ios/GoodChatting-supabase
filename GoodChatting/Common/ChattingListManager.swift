@@ -93,22 +93,20 @@ class ChattingListManager {
         subject.onNext(.getList(list))
     }
     
-    func addChattingTable(testNum: Int) async throws {
-        Log.cyo("addChattingTable")
+    func addChattingTable(item: ChattingRoomItem) async throws {
+        // id, createdAt, 
+        Log.cyo("addChattingTable(item: \(item))")
         
-//        let addItem = ChattingList(title: "테스트\(testNum)",
-//                         update_at: Date(),
-//                         lastest: "무시하셔도되요\(testNum)",
-//                         image: "template01",
-//                         unRead: 10,
-//                         number: 3)
-//        
-//        let response = try await supabase
-//            .database
-//            .from("roomCYO")
-//            .insert(addItem)
-//            .execute()
-//                    
-//        Log.cyo("response \(response.status)")
+        let response = try await supabase
+            .database
+            .from("roomCYO")
+            .insert(item)
+            .execute()
+        
+        Log.cyo("addChattingTable response \(response.status)")
+    }
+    
+    func deleteChattingRoomInDatabase(roomId: Int) async throws {
+        Log.cyo("deleteChattingRoomInDatabase(roomId: \(roomId))")
     }
 }

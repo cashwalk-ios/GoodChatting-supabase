@@ -7,17 +7,13 @@
 
 import Foundation
 
-//struct ChattingList: Codable {
-//    var id: Int?
-//    var created_at: Date?
-//    
-//    var title: String?
-//    var update_at: Date?
-//    var lastest: String?
-//    var image: String?
-//    var unRead: Int?
-//    var number: Int?
-//}
+struct ChattingRoomItem: Codable {
+    var title: String
+    var image: String?
+    var maker: Int
+    var people: [Int]
+    var updated_at: Date
+}
 
 struct ChattingList: Codable {
     var id: Int
@@ -29,6 +25,7 @@ struct ChattingList: Codable {
     var people: [Int]?
     var messages: [Int]?
     var updated_at: Date?
+    var alarm: Bool?
     
     var messageCYO: [MessageCYO]?
     var roomUserCYO: [RoomUserCYO]?
