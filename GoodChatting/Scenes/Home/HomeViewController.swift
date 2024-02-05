@@ -26,13 +26,14 @@ final class HomeViewController: BaseViewController, View {
     var disposeBag = DisposeBag()
     
     private var helloLabel: UILabel!
-    private var tempLogoutButton: UIButton!
     private var chattingAddButton: UIButton!
     
     private var chattingListTableView: UITableView!
     private var blackView: BlackView!
     
     private var nothingListView: UIView!
+    
+    private var actionButtonForDebug: UIButton!
     
     var settingAction = PublishSubject<SettingAction>()
     
@@ -63,6 +64,11 @@ final class HomeViewController: BaseViewController, View {
         guard self.isViewLoaded else { return }
         self.bindAction(reactor: reactor)
         self.bindState(reactor: reactor)
+    }
+    
+    // 참여코드 완료 버튼 액션(TEMP)
+    @objc private func doneAction() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setupProperties() {
@@ -137,20 +143,6 @@ final class HomeViewController: BaseViewController, View {
             }
         }
         
-        tempLogoutButton = UIButton().then {
-            $0.setTitle("로그아웃", for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 16)
-            $0.titleLabel?.textColor = .white
-            $0.backgroundColor = UIColor.red
-            $0.layer.cornerRadius = 15
-            view.addSubview($0)
-            $0.snp.makeConstraints { make in
-                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-                make.left.right.equalToSuperview().inset(20)
-                make.height.equalTo(50)
-            }
-        }
-        
         nothingListView = UIView().then {
             $0.backgroundColor = .white
             $0.isHidden = false
@@ -195,6 +187,62 @@ final class HomeViewController: BaseViewController, View {
             nothingContainer.addArrangedSubview($0)
             $0.snp.makeConstraints { make in
                 make.height.equalTo(29)
+            }
+        }
+        
+        self.actionButtonForDebug = UIButton().then {
+            #if DEBUG
+            $0.isHidden = false
+            #else
+            $0.isHidden = true
+            #endif
+            $0.setImage(UIImage(named: "debug-Icon"), for: .normal)
+            
+            let menuItems: [UIMenuElement] = [
+                UIAction(title: "로그아웃", attributes: .destructive , handler: { [weak self] _ in
+                    guard let self else { return }
+                    self.presentLogoutAlert()
+                }),
+                UIAction(title: "참여 코드 바텀시트", handler: { [weak self] _ in
+                    guard let self else { return }
+                    let vc = ParticipationCodeViewController()
+                    vc.reactor = ParticipationCodeReactor()
+                    
+                    let nav = UINavigationController(rootViewController: vc)
+
+                    if let sheet = nav.sheetPresentationController {
+                        sheet.detents = [
+                            .custom(resolver: { context in
+                                let height: CGFloat = 434
+                                return height
+                            })
+                        ]
+                        sheet.preferredCornerRadius = 15
+                    }
+                    
+                    let doneButton = UIBarButtonItem(title: "완료", style: .done,
+                                                     target: self,
+                                                     action: #selector(self.doneAction))
+                    doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
+                    vc.navigationItem.rightBarButtonItem = doneButton
+                    
+                    self.present(nav, animated: true)
+                }),
+                UIAction(title: "블랙뷰 테스트(1.5초)", handler: { [weak self] _ in
+                    guard let self else { return }
+                    let blackView = BlackView(alphaValue: 0.7)
+                    blackView.show(onView: self.view)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { blackView.hide() }
+                })
+            ]
+            
+            $0.menu = UIMenu(title: "", children: menuItems)
+            $0.showsMenuAsPrimaryAction = true
+            view.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.size.equalTo(50)
+                $0.right.equalToSuperview().offset(-20)
+                $0.bottom.equalToSuperview().offset(-90)
             }
         }
     }
@@ -287,12 +335,6 @@ extension HomeViewController {
             .map({ Reactor.Action.chattingListManagerAction($0) })
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        tempLogoutButton.rx.tap
-            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
-            .subscribe(with: self, onNext: { owner, _ in
-                owner.presentLogoutAlert()
-            }).disposed(by: disposeBag)
      
         chattingAddButton.rx.tap
             .subscribe(with: self) { owner, _ in
