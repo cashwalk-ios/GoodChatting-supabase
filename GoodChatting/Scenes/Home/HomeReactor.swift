@@ -15,16 +15,19 @@ final class HomeReactor: Reactor {
         case chattingAddAction(ChattingAddPopup.ChattingAddPopupAction)
         case settingAction(HomeViewController.SettingAction)
         case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
+        case closePopupView(ChatPopupType)
     }
     
     enum Mutation {
         case setChattingList([ChattingList])
-        case presentCreateRoomPopup
+        case presentCreateRoomPopup(Bool)
+        case presentJoinRoomPopup(Bool)
     }
     
     struct State {
         var chattingList: [ChattingList] = []
         var isPresentCreateRoomPopup: Bool = false
+        var isPresentJoinRoomPopup: Bool = false
     }
     
     var initialState: State = State()
@@ -42,11 +45,12 @@ final class HomeReactor: Reactor {
 //                Task {
 //                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
 //                }
-                return .just(Mutation.presentCreateRoomPopup)
+                return .just(Mutation.presentCreateRoomPopup(true))
             case .joinRoom:
                 Log.cyo("joinRoom")
-                return .empty()
+                return .just(Mutation.presentJoinRoomPopup(true))
             }
+            
         case .settingAction(let action):
             switch action {
             case .edit:
@@ -66,6 +70,13 @@ final class HomeReactor: Reactor {
                 return .just(.setChattingList(list))
             }
             
+        case .closePopupView(let popupType):
+            switch popupType {
+            case .create:
+                return .just(Mutation.presentCreateRoomPopup(false))
+            case .join:
+                return .just(Mutation.presentJoinRoomPopup(false))
+            }
         }
     }
     
@@ -77,8 +88,11 @@ final class HomeReactor: Reactor {
             Log.cyo("setChattingList")
             newState.chattingList = list
             
-        case .presentCreateRoomPopup:
-            newState.isPresentCreateRoomPopup = true
+        case .presentCreateRoomPopup(let isPresent):
+            newState.isPresentCreateRoomPopup = isPresent
+            
+        case .presentJoinRoomPopup(let isPresent):
+            newState.isPresentJoinRoomPopup = isPresent
         }
         
         return newState
@@ -102,4 +116,9 @@ final class HomeReactor: Reactor {
             return []
         }
     }
+}
+
+enum ChatPopupType {
+    case create
+    case join
 }
