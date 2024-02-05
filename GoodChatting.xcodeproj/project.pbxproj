@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C3C612B5518AC0048B539 /* ChattingListTVCell.swift */; };
+		0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
+		0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */; };
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
 		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
-		02F8CDC82B6B1DA80010A66C /* ChattingSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */; };
 		02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */; };
 		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
 		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
@@ -55,7 +56,6 @@
 		5C0D0EF02B469C3600D75348 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C0D0EEF2B469C3600D75348 /* Assets.xcassets */; };
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
 		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
-		5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
 		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
@@ -496,6 +496,7 @@
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
 				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,
 				8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */,
+				0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */,
 				028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */,
 				028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */,
 				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,
@@ -507,6 +508,7 @@
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
+				0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
 				5C0C12A12B50E04B0066FA69 /* UIFont+Extension.swift in Sources */,
 			);
