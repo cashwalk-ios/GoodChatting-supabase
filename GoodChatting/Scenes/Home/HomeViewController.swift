@@ -37,6 +37,9 @@ final class HomeViewController: BaseViewController, View {
     
     var settingAction = PublishSubject<SettingAction>()
     
+    var createRoomPopup: CreateRoomView?
+    var joinRoomPopup: JoinRoomView?
+    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -360,6 +363,48 @@ extension HomeViewController {
         reactor.state.map({ $0.chattingList.count > 0 })
             .bind(to: self.nothingListView.rx.isHidden)
             .disposed(by: disposeBag)
+        
+        reactor.state.map(\.isPresentCreateRoomPopup)
+            .observe(on: MainScheduler.instance)
+            .bind(with: self, onNext: { owner, isPresent in
+                owner.presentPopup(isPresent, owner, .create)
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.isPresentJoinRoomPopup)
+            .observe(on: MainScheduler.instance)
+            .bind(with: self, onNext: { owner, isPresent in
+                owner.presentPopup(isPresent, owner, .join)
+            }).disposed(by: disposeBag)
+    }
+    
+    fileprivate func presentPopup(_ isPresent: Bool, _ owner: HomeViewController, _ popupType: ChatPopupType) {
+        if isPresent {
+            switch popupType {
+            case .create:
+                owner.createRoomPopup = CreateRoomView().then {
+                    $0.reactor = owner.reactor
+                    owner.sceneDelegate?.window?.addSubview($0)
+                    $0.snp.makeConstraints { make in
+                        make.edges.equalToSuperview()
+                    }
+                }
+            case .join:
+                owner.joinRoomPopup = JoinRoomView().then {
+                    $0.reactor = owner.reactor
+                    owner.sceneDelegate?.window?.addSubview($0)
+                    $0.snp.makeConstraints { make in
+                        make.edges.equalToSuperview()
+                    }
+                }
+            }
+        } else {
+            switch popupType {
+            case .create:
+                owner.createRoomPopup?.removeFromSuperview()
+            case .join:
+                owner.joinRoomPopup?.removeFromSuperview()
+            }
+        }
     }
 }
 

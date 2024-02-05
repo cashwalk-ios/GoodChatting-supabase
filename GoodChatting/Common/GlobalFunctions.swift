@@ -51,6 +51,20 @@ class GlobalFunctions {
         
         return hashString
     }
+    
+    class func shake(_ view: UIView) {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.05
+        animation.repeatCount = 5
+        animation.autoreverses = true
+        let center: CGPoint = view.center
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: center.x - 5.0, y: center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: center.x + 5.0, y: center.y))
+        
+        DispatchQueue.main.async {
+            view.layer.add(animation, forKey: "position")
+        }
+    }
 }
 
 extension UIViewController {

@@ -18,16 +18,21 @@ final class HomeReactor: Reactor {
         
         case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
         case chattingDelete(roomId: Int)
+        case closePopupView(ChatPopupType)
     }
     
     enum Mutation {
         case setChattingList([ChattingList])
         case setChattingAlarmStatus(alarm: Bool, roomId: Int)
         case deleteChattingRoom(roomId: Int)
+        case presentCreateRoomPopup(Bool)
+        case presentJoinRoomPopup(Bool)
     }
     
     struct State {
         var chattingList: [ChattingList] = []
+        var isPresentCreateRoomPopup: Bool = false
+        var isPresentJoinRoomPopup: Bool = false
     }
     
     var initialState: State = State()
@@ -49,13 +54,14 @@ final class HomeReactor: Reactor {
                                                    people: [1],             //채팅방 만들떄는 참여인원은 생성자 하나뿐이니 생성자 아이디를 어레이에 담아서 전달
                                                    updated_at: Date())      //고정값
                     
-                    try await ChattingListManager.shared.addChattingTable(item: addItem)
+//                    try await ChattingListManager.shared.addChattingTable(item: addItem)
                 }
-                return .empty()
+                return .just(Mutation.presentCreateRoomPopup(true))
             case .joinRoom:
                 Log.cyo("joinRoom")
-                return .empty()
+                return .just(Mutation.presentJoinRoomPopup(true))
             }
+            
         case .settingAction(let action):
             switch action {
             case .edit:
@@ -82,6 +88,14 @@ final class HomeReactor: Reactor {
         case .chattingDelete(let roomId):
             //TODO: 채팅 방 삭제
             return .just(.deleteChattingRoom(roomId: roomId))
+            
+        case .closePopupView(let popupType):
+            switch popupType {
+            case .create:
+                return .just(Mutation.presentCreateRoomPopup(false))
+            case .join:
+                return .just(Mutation.presentJoinRoomPopup(false))
+            }
         }
     }
     
@@ -100,6 +114,12 @@ final class HomeReactor: Reactor {
             
         case .deleteChattingRoom(let roomId):
             newState.chattingList.removeAll(where: { $0.id == roomId })
+            
+        case .presentCreateRoomPopup(let isPresent):
+            newState.isPresentCreateRoomPopup = isPresent
+            
+        case .presentJoinRoomPopup(let isPresent):
+            newState.isPresentJoinRoomPopup = isPresent
         }
         
         return newState
@@ -123,4 +143,9 @@ final class HomeReactor: Reactor {
             return []
         }
     }
+}
+
+enum ChatPopupType {
+    case create
+    case join
 }
