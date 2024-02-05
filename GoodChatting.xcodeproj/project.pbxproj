@@ -14,6 +14,8 @@
 		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
+		02F8CDC82B6B1DA80010A66C /* ChattingSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */; };
+		02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */; };
 		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
 		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
@@ -73,6 +75,8 @@
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
 		02E447482B56021200002ABE /* ChattingListTempData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ChattingListTempData.json; sourceTree = "<group>"; };
 		02E4474B2B56035300002ABE /* ChattingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListModel.swift; sourceTree = "<group>"; };
+		02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenu.swift; sourceTree = "<group>"; };
+		02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenuCell.swift; sourceTree = "<group>"; };
 		0F0AD3522B652D8300045E07 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
 		0F68B2FA2B50ADFD00FE0390 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +164,14 @@
 				02E4474B2B56035300002ABE /* ChattingListModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		02F8CDC62B6B1D930010A66C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
@@ -343,6 +355,7 @@
 		8EB55B682B5F82E500008A6D /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				02F8CDC62B6B1D930010A66C /* Views */,
 				8EB55B692B5F82EE00008A6D /* ChatCell */,
 				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
 				8E7DFD142B6875560078230C /* ChatView.swift */,
@@ -355,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				8EB55B6A2B5F830500008A6D /* ChatTableCell.swift */,
+				02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -489,8 +503,8 @@
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,
 				5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */,
 				0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */,
+				02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */,
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
-				5CB2DC232B690D7800187FD8 /* ParticipationCodeReactor.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,

@@ -246,7 +246,7 @@ final class HomeViewController: BaseViewController, View {
             }
         }
     }
-
+    
     fileprivate func presentLogoutAlert() {
         let blackView = BlackView(alphaValue: 0.7)
         blackView.show(onView: self.view)
@@ -268,6 +268,61 @@ final class HomeViewController: BaseViewController, View {
         )
         self.present(alert, animated: true)
     }
+    
+    fileprivate func presentDeleteAlert(roomId: Int) {
+        let blackView = BlackView(alphaValue: 0.7)
+        blackView.show(onView: self.view)
+        
+        let alert = GlobalFunctions.makeAlert(
+            title: "채팅방 나가기",
+            message: "채팅방을 나가실 경우\n대화내용이 모두 삭제됩니다.",
+            firstActionMsg: "나가기",
+            firstActionStyle: .destructive,
+            firstActionHandler: { [weak self] in
+                blackView.hide()
+                guard let self else { return }
+                self.reactor?.action.on(.next(.chattingDelete(roomId: roomId)))
+            },
+            cancelActionMsg: "취소",
+            cancelActionHandler: { blackView.hide() }
+        )
+        self.present(alert, animated: true)
+    }
+    
+    fileprivate func showChattingAddPopup() {
+        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        Log.cyo("chatting plus 누름? \(statusHeight)")
+        
+        let addPopup = ChattingAddPopup(statusHeight: statusHeight)
+        self.sceneDelegate?.window?.addSubview(addPopup)
+        
+        addPopup.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        if let reactor = self.reactor {
+            addPopup.actionSubject
+                .map { Reactor.Action.chattingAddAction($0) }
+                .bind(to: reactor.action)
+                .disposed(by: self.disposeBag)
+        }
+        
+        addPopup.showAnimation()
+    }
+    
+    fileprivate func showSideMenu() {
+        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
+        
+        let addPopup = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
+        self.sceneDelegate?.window?.addSubview(addPopup)
+        
+        addPopup.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        addPopup.showAnimation()
+    }
 }
 
 // MARK: - Bind
@@ -283,24 +338,8 @@ extension HomeViewController {
      
         chattingAddButton.rx.tap
             .subscribe(with: self) { owner, _ in
-                let statusHeight = owner.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-                Log.cyo("chatting plus 누름? \(statusHeight)")
-                
-                let addPopup = ChattingAddPopup(statusHeight: statusHeight)
-                owner.sceneDelegate?.window?.addSubview(addPopup)
-                
-                addPopup.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
-                
-                if let reactor = owner.reactor {
-                    addPopup.actionSubject
-                        .map { Reactor.Action.chattingAddAction($0) }
-                        .bind(to: reactor.action)
-                        .disposed(by: owner.disposeBag)
-                }
-                
-                addPopup.showAnimation()
+//                owner.showChattingAddPopup()
+                owner.showSideMenu()
             }.disposed(by: disposeBag)
         
         settingAction
@@ -326,25 +365,60 @@ extension HomeViewController {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let getOutHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let room = reactor?.currentState.chattingList[indexPath.row]
+        let roomId = room?.id ?? 0
+        let alarm = room?.alarm ?? true
+        
+        let getOutHandler: UIContextualAction.Handler = { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             Log.cyo("Get Out tapped")
             success(true)
+            
+            guard let self else { return }
+            self.presentDeleteAlert(roomId: roomId)
         }
-        let getOutAction = UIContextualAction(style: .normal, title: "나가기", handler: getOutHandler)
-        
-        getOutAction.image = UIImage(named: "getout")
+        let getOutAction = UIContextualAction(style: .normal, title: nil, handler: getOutHandler)
+
+        getOutAction.image = swipeLayout(icon: "getout", text: "나가기", size: 46)
         getOutAction.backgroundColor = UIColor.red
         
-        
-        let notiOffHandler: UIContextualAction.Handler = { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            Log.cyo("Noti Off tapped")
+        let notiOffHandler: UIContextualAction.Handler = { [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            Log.cyo("Noti OnOff tapped")
             success(true)
+            
+            guard let self else { return }
+            self.reactor?.action.on(.next(.chattingAlarmStatusChange(alarm: !alarm, roomId: roomId)))
         }
-        let notiOffAction = UIContextualAction(style: .normal, title: "알림 끄기", handler: notiOffHandler)
+        let notiOffAction = UIContextualAction(style: .normal, title: nil, handler: notiOffHandler)
         
-        notiOffAction.image = UIImage(named: "notioff")
+        notiOffAction.image = swipeLayout(icon: alarm ? "notioff" : "notion", text: alarm ? "알림 끄기" : "알림 켜기", size: 46)
         notiOffAction.backgroundColor = UIColor.init(hexCode: "5955D7")
         
         return UISwipeActionsConfiguration(actions: [getOutAction, notiOffAction])
+    }
+    
+    func swipeLayout(icon: String, text: String, size: CGFloat) -> UIImage {
+        let config = UIImage.SymbolConfiguration(pointSize: size, weight: .regular, scale: .large)
+        let uiImage = UIImage(named: icon, in: .main, with: config)?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        
+        let label = UILabel(frame: .zero)
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textColor = .white
+        label.text = text
+        
+        let tempView = UIStackView(frame: .init(x: 0, y: 0, width: 50, height: 50))
+        let imageView = UIImageView(frame: .init(x: 0, y: 0, width: uiImage?.size.width ?? 0, height: uiImage?.size.height ?? 0))
+        imageView.contentMode = .scaleAspectFit
+        tempView.axis = .vertical
+        tempView.alignment = .center
+        tempView.spacing = 2
+        imageView.image = uiImage
+        tempView.addArrangedSubview(imageView)
+        tempView.addArrangedSubview(label)
+        
+        let renderer = UIGraphicsImageRenderer(bounds: tempView.bounds)
+        let image = renderer.image { rendererContext in
+            tempView.layer.render(in: rendererContext.cgContext)
+        }
+        return image
     }
 }
