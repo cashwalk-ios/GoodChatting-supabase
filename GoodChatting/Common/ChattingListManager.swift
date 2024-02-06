@@ -106,6 +106,25 @@ class ChattingListManager {
         Log.cyo("addChattingTable response \(response.status)")
     }
     
+    func testA() async throws {
+        Log.cyo("testA()")
+        struct MessageModel: Codable {
+            var room_id: Int
+            var user_id: Int
+            var message: String
+            
+        }
+        let item = MessageModel(room_id: 1, user_id: 1, message: "하하하?")
+        
+        let response = try await supabase
+            .database
+            .from("messageCYO")
+            .insert(item)
+            .execute()
+        
+        Log.cyo("testA() response \(response)")
+    }
+    
     func deleteChattingRoomInDatabase(roomId: Int) async throws {
         Log.cyo("deleteChattingRoomInDatabase(roomId: \(roomId))")
     }

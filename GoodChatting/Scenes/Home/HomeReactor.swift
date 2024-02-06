@@ -48,14 +48,13 @@ final class HomeReactor: Reactor {
             case .makeRoom:
                 Log.cyo("makeRoom")
                 Task {
-                    let addItem = ChattingRoomItem(title: "",               //채팅방 이름
-                                                   image: "",               //채팅방 썸네일 이미지 - 없어도됨 없을떈 nil
-                                                   maker: 1,                //생성자 id
-                                                   people: [1],             //채팅방 만들떄는 참여인원은 생성자 하나뿐이니 생성자 아이디를 어레이에 담아서 전달
-                                                   updated_at: Date())      //고정값
-                    
-//                    try await ChattingListManager.shared.addChattingTable(item: addItem)
+                    do {
+                        try await ChattingListManager.shared.testA()
+                    } catch {
+                        Log.cyo("testA error \(error)")
+                    }
                 }
+                
                 return .just(Mutation.presentCreateRoomPopup(true))
             case .joinRoom:
                 Log.cyo("joinRoom")
