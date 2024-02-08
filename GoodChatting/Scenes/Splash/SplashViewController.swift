@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Supabase
 
 final class SplashViewController: BaseViewController {
     
@@ -43,21 +44,38 @@ final class SplashViewController: BaseViewController {
     }
     
     private func checkLoginStatus() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
-            guard let self else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard let self = self else { return }
             
-            // 로그인 여부 검사
             Task {
-                if let userInfo = try await AuthManager.shared.getCurrentSession() {
-                    Log.kkr("자동 로그인 - uid: \(userInfo.id), email: \(userInfo.email ?? "이메일 없음")")
-                    self.sceneDelegate?.navigateToHome()
-                    // TODO: 세션의 userId와 Supabase에 userCYO 테이블에 id와 비교해서 room_ids 를 HomeViewController에 보내준다
-                } else {
-                    Log.kkr("세션 만료 - LoginViewController ㄱㄱ")
+                do {
+                    if let currentSession = try await AuthManager.shared.getCurrentSession() {
+                        // 자동 로그인 로직
+                        let userCYO = try await self.fetchUserCYO(for: currentSession.id)
+                        self.sceneDelegate?.navigateToHome(with: userCYO.first)
+                    } else {
+                        // 세션 만료 처리
+                        self.navigateToLogin()
+                    }
+                } catch {
+                    Log.kkr("Error: \(error)")
                     self.navigateToLogin()
                 }
             }
-        })
+        }
+    }
+    
+    private func fetchUserCYO(for userId: String) async throws -> [UserCYO] {
+        let response = try await AuthManager.shared.client.database
+            .from("userCYO")
+            .select("*")
+            .eq("id", value: userId)
+            .execute()
+        guard let jsonString = String(data: response.data, encoding: .utf8) else { throw NSError() }
+        let jsonData = Data(jsonString.utf8)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode([UserCYO].self, from: jsonData)
     }
     
     private func navigateToLogin() {
@@ -66,8 +84,10 @@ final class SplashViewController: BaseViewController {
         
         if let sceneDelegate = self.sceneDelegate {
             ViewRouter.presentToNextViewController(from: self, to: vc, sceneDelegate: sceneDelegate)
+        } else {
+            Log.kkr("sceneDelegate is nil")
         }
     }
-
+    
 }
 
