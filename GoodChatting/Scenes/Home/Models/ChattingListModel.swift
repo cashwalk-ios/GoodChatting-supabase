@@ -45,3 +45,10 @@ struct RoomUserCYO: Codable {
     var user_id: Int?
     var nickname: String?
 }
+
+struct UserCYO: Codable {
+    let id: String
+    var created_at: Date?
+    var room_ids: [Int]?
+    let email: String?
+}
