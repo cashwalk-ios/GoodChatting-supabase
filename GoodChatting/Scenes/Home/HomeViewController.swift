@@ -341,8 +341,8 @@ extension HomeViewController {
      
         chattingAddButton.rx.tap
             .subscribe(with: self) { owner, _ in
-//                owner.showChattingAddPopup()
-                owner.showSideMenu()
+                owner.showChattingAddPopup()
+//                owner.showSideMenu()
             }.disposed(by: disposeBag)
         
         settingAction
