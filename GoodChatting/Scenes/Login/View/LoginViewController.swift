@@ -86,7 +86,7 @@ final class LoginViewController: BaseViewController, View {
                 .from("userCYO")
                 .insert(user)
                 .execute()
-            return nil
+            return user
         } else {
             // 기존 유저
             return try await fetchUserCYO(withId: user.id)

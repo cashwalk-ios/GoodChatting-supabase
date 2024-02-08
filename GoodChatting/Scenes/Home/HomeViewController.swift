@@ -62,7 +62,7 @@ final class HomeViewController: BaseViewController, View {
             }
         }
         
-        Log.kkr("userCYO: \(userCYO?.room_ids ?? [])")
+        Log.kkr("userCYO's id: \((userCYO?.id) ?? "is nil"), userCYO's room_ids: \(userCYO?.room_ids ?? [])")
     }
     
     // MARK: - Functions
