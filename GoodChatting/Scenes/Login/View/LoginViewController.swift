@@ -49,6 +49,18 @@ final class LoginViewController: BaseViewController, View {
         self.bindState(reactor: reactor)
     }
     
+    fileprivate func tappedAppleLogin(_ owner: LoginViewController) {
+        Task {
+            do {
+                let user = try await owner.signInWithApple()
+                let userCYO = try await owner.checkAlreadySignedInUser(user)
+                owner.sceneDelegate?.navigateToHome(with: userCYO)
+            } catch {
+                owner.showToast(message: "애플 로그인 실패")
+            }
+        }
+    }
+    
     private func signInWithApple() async throws -> UserCYO {
         let appleResult = try await signInApple.startSignInWithAppleFlow()
         return try await AuthManager.shared.signInWithApple(idToken: appleResult.idToken, nonce: appleResult.nonce)
@@ -59,8 +71,8 @@ final class LoginViewController: BaseViewController, View {
         return try await AuthManager.shared.signInWithGoogle(idToken: googleResult.idToken, nonce: googleResult.nonce)
     }
 
-    private func checkAlreadySignedInUser(_ user: UserCYO) async throws {
-        // 이미 추가된 유저인지 조회
+    private func checkAlreadySignedInUser(_ user: UserCYO) async throws -> UserCYO? {
+        // 기존 유저인지 조회
         let selectUserCount = try await AuthManager.shared.client.database
             .from("userCYO")
             .select("id", head: true, count: .exact)
@@ -69,19 +81,32 @@ final class LoginViewController: BaseViewController, View {
             .count
         
         if selectUserCount == 0 {
-            // 기존 유저가 아니면 Supabase UserCYO에 유저 추가
-            let insertResponse = try await AuthManager.shared.client.database
+            // 신규 유저
+            _ = try await AuthManager.shared.client.database
                 .from("userCYO")
                 .insert(user)
                 .execute()
+            return nil
         } else {
-            // 기존 유저이면 Update data
-            let updateResponse = try await AuthManager.shared.client.database
-                .from("userCYO")
-                .update(user)
-                .eq("id", value: user.id)
-                .execute()
+            // 기존 유저
+            return try await fetchUserCYO(withId: user.id)
         }
+    }
+    
+    private func fetchUserCYO(withId id: String) async throws -> UserCYO? {
+        let response = try await AuthManager.shared.client.database
+            .from("userCYO")
+            .select("*")
+            .eq("id", value: id)
+            .execute()
+        
+        guard let jsonString = String(data: response.data, encoding: .utf8),
+              let jsonData = jsonString.data(using: .utf8) else { return nil }
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let userCYOs = try decoder.decode([UserCYO].self, from: jsonData)
+        return userCYOs.first
     }
 }
 
@@ -93,17 +118,7 @@ extension LoginViewController {
         loginView.appleLoginBoxView.rx.tapGesture()
             .when(.recognized)
             .subscribe(with: self, onNext: { owner, _ in
-                Task {
-                    do {
-                        // 애플 로그인
-                        let user = try await owner.signInWithApple()
-                        Log.kkr("uid: \(user.id), email: \(String(describing: user.email))")
-                        try await owner.checkAlreadySignedInUser(user)
-                        owner.sceneDelegate?.navigateToHome()
-                    } catch {
-                        owner.showToast(message: "애플 로그인 실패")
-                    }
-                }
+                owner.tappedAppleLogin(owner)
             }).disposed(by: disposeBag)
         
         self.loginView.googleLoginBoxView.rx.tapGesture()
