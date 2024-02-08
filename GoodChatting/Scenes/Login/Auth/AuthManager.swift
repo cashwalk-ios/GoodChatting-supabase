@@ -24,7 +24,6 @@ class AuthManager {
     func getCurrentSession() async throws -> UserCYO? {
         do {
             let session = try await client.auth.session
-            Log.kkr("로그인되어 있는 세션: \(session.user.id.uuidString)")
             return UserCYO(id: session.user.id.uuidString, email: session.user.email)
         } catch {
             Log.kkr("현재 세션 불러오기 실패: \(error)")
@@ -34,7 +33,7 @@ class AuthManager {
     
     func signInWithApple(idToken: String, nonce: String) async throws -> UserCYO {
         let session = try await client.auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken, nonce: nonce))
-        Log.kkr("session: \(session)")
+        Log.kkr("애플 로그인 성공 - userId: \(session.user.id.uuidString)")
         return UserCYO(id: session.user.id.uuidString, created_at: Date(), room_ids: nil, email: session.user.email)
     }
     

@@ -25,10 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func navigateToHome() {
+    func navigateToHome(with userCYO: UserCYO?) {
         let homeVC = HomeViewController()
         homeVC.reactor = HomeReactor()
         homeVC.sceneDelegate = self
+        homeVC.userCYO = userCYO
         window?.rootViewController = UINavigationController(rootViewController: homeVC)
         window?.makeKeyAndVisible()
     }

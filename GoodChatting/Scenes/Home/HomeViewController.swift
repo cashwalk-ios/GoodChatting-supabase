@@ -40,6 +40,8 @@ final class HomeViewController: BaseViewController, View {
     var createRoomPopup: CreateRoomView?
     var joinRoomPopup: JoinRoomView?
     
+    var userCYO: UserCYO?
+    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -59,6 +61,8 @@ final class HomeViewController: BaseViewController, View {
                 Log.cyo("get Room Error \(error.localizedDescription)")
             }
         }
+        
+        Log.kkr("userCYO: \(userCYO?.room_ids ?? [])")
     }
     
     // MARK: - Functions
