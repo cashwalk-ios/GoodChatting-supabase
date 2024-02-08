@@ -8,11 +8,6 @@
 import Foundation
 import Supabase
 
-struct UserInfo {
-    let uid: String
-    let email: String?
-}
-
 class AuthManager {
     
     private init() {}
@@ -26,30 +21,30 @@ class AuthManager {
     // MARK: - Functions
     
     /// 로그인되어 있는지 확인
-    func getCurrentSession() async throws -> UserInfo? {
+    func getCurrentSession() async throws -> UserCYO? {
         do {
             let session = try await client.auth.session
-            return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
+            Log.kkr("로그인되어 있는 세션: \(session.user.id.uuidString)")
+            return UserCYO(id: session.user.id.uuidString, email: session.user.email)
         } catch {
             Log.kkr("현재 세션 불러오기 실패: \(error)")
             return nil
         }
     }
     
-    func signInWithApple(idToken: String, nonce: String) async throws -> UserInfo {
-        Log.kkr("SignIn to Supabase")
+    func signInWithApple(idToken: String, nonce: String) async throws -> UserCYO {
         let session = try await client.auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken, nonce: nonce))
         Log.kkr("session: \(session)")
-        return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
+        return UserCYO(id: session.user.id.uuidString, created_at: Date(), room_ids: nil, email: session.user.email)
     }
     
-    func signInWithGoogle(idToken: String, nonce: String) async throws -> UserInfo {
+    func signInWithGoogle(idToken: String, nonce: String) async throws -> UserCYO {
         let session = try await client.auth.signInWithIdToken(credentials: OpenIDConnectCredentials(
             provider: .google,
             idToken: idToken,
             nonce: nonce)
         )
-        return UserInfo(uid: session.user.id.uuidString, email: session.user.email)
+        return UserCYO(id: session.user.id.uuidString, created_at: Date(), room_ids: nil, email: session.user.email)
     }
     
     func signOut() async throws {

@@ -13,8 +13,6 @@ final class SplashViewController: BaseViewController {
     
     // MARK: - Properties
     
-    var userInfo: UserInfo?
-
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -50,10 +48,10 @@ final class SplashViewController: BaseViewController {
             
             // 로그인 여부 검사
             Task {
-                self.userInfo = try await AuthManager.shared.getCurrentSession()
-                if let userInfo = self.userInfo {
-                    Log.kkr("자동 로그인 - uid: \(userInfo.uid), email: \(userInfo.email ?? "이메일 없음")")
+                if let userInfo = try await AuthManager.shared.getCurrentSession() {
+                    Log.kkr("자동 로그인 - uid: \(userInfo.id), email: \(userInfo.email ?? "이메일 없음")")
                     self.sceneDelegate?.navigateToHome()
+                    // TODO: 세션의 userId와 Supabase에 userCYO 테이블에 id와 비교해서 room_ids 를 HomeViewController에 보내준다
                 } else {
                     Log.kkr("세션 만료 - LoginViewController ㄱㄱ")
                     self.navigateToLogin()

@@ -49,12 +49,12 @@ final class LoginViewController: BaseViewController, View {
         self.bindState(reactor: reactor)
     }
     
-    private func signInWithApple() async throws -> UserInfo {
+    private func signInWithApple() async throws -> UserCYO {
         let appleResult = try await signInApple.startSignInWithAppleFlow()
         return try await AuthManager.shared.signInWithApple(idToken: appleResult.idToken, nonce: appleResult.nonce)
     }
     
-    private func signInWithGoogle() async throws -> UserInfo {
+    private func signInWithGoogle() async throws -> UserCYO {
         let googleResult = try await signInGoole.startSignInWithGoogleFlow()
         return try await AuthManager.shared.signInWithGoogle(idToken: googleResult.idToken, nonce: googleResult.nonce)
     }
@@ -71,8 +71,33 @@ extension LoginViewController {
             .subscribe(with: self, onNext: { owner, _ in
                 Task {
                     do {
-                        let userInfo = try await owner.signInWithApple()
-                        Log.kkr("uid: \(userInfo.uid), email: \(userInfo.email)")
+                        // 애플 로그인
+                        let user = try await owner.signInWithApple()
+                        Log.kkr("uid: \(user.id), email: \(String(describing: user.email))")
+                        
+                        // 이미 추가된 유저인지 조회
+                        let selectUserCount = try await AuthManager.shared.client.database
+                            .from("userCYO")
+                            .select("id", head: true, count: .exact)
+                            .eq("id", value: user.id)
+                            .execute()
+                            .count
+                        
+                        if selectUserCount == 0 {
+                            // 기존 유저가 아니면 Supabase UserCYO에 유저 추가
+                            let insertResponse = try await AuthManager.shared.client.database
+                                .from("userCYO")
+                                .insert(user)
+                                .execute()
+                        } else {
+                            // 기존 유저이면 Update data
+                            let updateResponse = try await AuthManager.shared.client.database
+                                .from("userCYO")
+                                .update(user)
+                                .eq("id", value: user.id)
+                                .execute()
+                        }
+                        
                         owner.sceneDelegate?.navigateToHome()
                     } catch {
                         owner.showToast(message: "애플 로그인 실패")
