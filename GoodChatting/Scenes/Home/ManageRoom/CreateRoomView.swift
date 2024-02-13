@@ -190,7 +190,7 @@ final class CreateRoomView: UIView {
         closeButton.rx.tapGesture()
             .when(.ended)
             .subscribe(with: self, onNext: { owner, _ in
-                owner.reactor?.action.onNext(.closePopupView(.create))
+                owner.reactor?.action.onNext(.closePopupView(.create(nil)))
             }).disposed(by: disposeBag)
         
         createButton.rx.tapGesture()
@@ -202,7 +202,15 @@ final class CreateRoomView: UIView {
 //                    try await ChattingListManager.shared.addChattingTable(testNum: currentState.chattingList.count)
 //                }
                 // 유저테이블에 만든 방 id를 넣어야 함
-                owner.reactor?.action.onNext(.closePopupView(.create))
+                
+                let title = owner.chatRoomTitle.text ?? ""
+                let addItem = ChattingRoomItem(title: title,            //채팅방 이름
+                                               image: "template01",               //채팅방 썸네일 이미지 - 없어도됨 없을떈 nil
+                                               maker: 1,                //생성자 id
+                                               people: [1],             //채팅방 만들떄는 참여인원은 생성자 하나뿐이니 생성자 아이디를 어레이에 담아서 전달
+                                               updated_at: Date())      //고정값
+                
+                owner.reactor?.action.onNext(.closePopupView(.create(addItem)))
             }).disposed(by: disposeBag)
         
         chatRoomTitle.rx.text
