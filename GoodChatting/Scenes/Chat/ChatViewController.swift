@@ -25,6 +25,8 @@ class ChatViewController: BaseViewController, View {
     func bind(reactor: ChatReactor) {
         guard self.isViewLoaded else { return }
         
+        reactor.action.onNext(.fetchChatData)
+        
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
             .withUnretained(self)
@@ -51,21 +53,26 @@ class ChatViewController: BaseViewController, View {
                 owner.navigationItem.titleView = titleLabel
             }).disposed(by: disposeBag)
         
-        reactor.state.map(\.testChatList)
+        reactor.state.map(\.chatList)
             .bind(to: chatView.tableView.rx.items) { [weak self]
-                cell, index, _ -> UITableViewCell in
+                cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
-                /// 상대방 채팅
-                guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
+                switch model.user_id {
+                case 1:
+                    /// 나의 채팅
+                    guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
+
+                    cell.configure(message: "안녕하세요")
+                    return cell
+                default:
+                    /// 상대방 채팅
+                    guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
+                    
+                    cell.configure(message: "영회관 왔어")
+                    return cell
+                }
                 
-                cell.configure(message: "영회관 왔어")
-                
-                /// 나의 채팅
-//                guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
-//
-//                cell.configure(message: "안녕하세요")
-                return cell
             }.disposed(by: disposeBag)
     }
     

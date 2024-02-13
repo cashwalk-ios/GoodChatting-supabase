@@ -21,7 +21,7 @@ class AuthManager {
     
     // MARK: - Properties
     
-    let client = SupabaseClient(supabaseURL: Constants.SUPABASE_PROJECT_URL, supabaseKey: Constants.SUPABASE_API_KEY)
+    let client = SupabaseClient(supabaseURL: URL(string: Constants.SUPABASE_PROJECT_URL)!, supabaseKey: Constants.SUPABASE_API_KEY)
     
     // MARK: - Functions
     
