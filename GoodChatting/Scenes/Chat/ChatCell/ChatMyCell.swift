@@ -33,6 +33,8 @@ extension ChatMyCell {
     
     private func setConfigure() {
         
+        self.selectionStyle = .none
+        
         sendDate = UILabel().then {
             self.addSubview($0)
             $0.font = UIFont.systemFont(ofSize: 9)
@@ -63,7 +65,8 @@ extension ChatMyCell {
             $0.snp.makeConstraints { make in
                 make.left.equalTo(sendDate.snp.right).offset(6)
                 make.right.equalTo(self).offset(-10)
-                make.top.bottom.equalTo(self)
+                make.top.equalTo(self).offset(4)
+                make.bottom.equalTo(self).offset(-4)
             }
         }
         

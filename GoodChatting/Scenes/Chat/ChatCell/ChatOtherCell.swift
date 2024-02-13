@@ -33,6 +33,8 @@ class ChatOtherCell: UITableViewCell {
 extension ChatOtherCell {
     
     private func setConfigure() {
+    
+        self.selectionStyle = .none
         
         personImageView = UIImageView().then {
             self.addSubview($0)

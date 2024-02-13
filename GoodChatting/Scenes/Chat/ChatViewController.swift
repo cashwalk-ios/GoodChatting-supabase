@@ -7,6 +7,8 @@
 
 import UIKit
 import ReactorKit
+import RxSwift
+import RxCocoa
 
 class ChatViewController: BaseViewController, View {
     
@@ -62,18 +64,41 @@ class ChatViewController: BaseViewController, View {
                 case 1:
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
-
-                    cell.configure(message: "안녕하세요")
+                    
+                    cell.configure(message: model.message)
                     return cell
                 default:
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     
-                    cell.configure(message: "영회관 왔어")
+                    cell.configure(message: model.message)
                     return cell
                 }
                 
             }.disposed(by: disposeBag)
+        
+        chatView.messageTextField.rx.text
+            .orEmpty
+            .withUnretained(self)
+            .subscribe(onNext: { owner, text in
+                switch text {
+                case "":
+                    owner.chatView.sendButton.backgroundColor = .lightGray
+                default:
+                    owner.chatView.sendButton.backgroundColor = .blue
+                }
+            }).disposed(by: disposeBag)
+        
+        chatView.sendButton.rx.tapGesture()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                
+                Log.cyo(owner.chatView.messageTextField.text)
+                
+                if owner.chatView.messageTextField.text?.isEmpty == false {
+                    
+                }
+            }).disposed(by: disposeBag)
     }
     
     @objc

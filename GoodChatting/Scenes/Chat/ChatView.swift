@@ -67,6 +67,7 @@ extension ChatView {
         let sendButtonImage = UIImageView().then {
             sendButton.addSubview($0)
             $0.image = UIImage(named: "chatSendImage")
+            $0.isUserInteractionEnabled = true
             $0.snp.makeConstraints { make in
                 make.centerX.centerY.equalTo(sendButton)
                 make.width.height.equalTo(15)
