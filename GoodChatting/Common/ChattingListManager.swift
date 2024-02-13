@@ -18,7 +18,7 @@ class ChattingListManager {
     
     static let shared: ChattingListManager = ChattingListManager()
     
-    let supabase = SupabaseClient(supabaseURL: Constants.SUPABASE_PROJECT_URL, supabaseKey: Constants.SUPABASE_API_KEY)
+    let supabase = SupabaseClient(supabaseURL: URL(string: Constants.SUPABASE_PROJECT_URL)!, supabaseKey: Constants.SUPABASE_API_KEY)
     
     let subject = PublishSubject<ChattingListManagerAction>()
     
@@ -31,7 +31,7 @@ class ChattingListManager {
         
         //TODO: 내가 속해있는 방에서 일어나는 이벤트만 구독하도록 설정이 필요.
         let publicSchema = supabase.realtime.channel("public")
-          .on("postgres_changes", filter: ChannelFilter(event: "INSERT", schema: "public")) { insertData in
+          .on("postgres_changes", filter: ChannelFilter(event: "sync", schema: "public")) { insertData in
               let insertValue = insertData.payload
               let data = insertValue["data"] as? [String: Any] ?? [:]
               let record = data["record"] as? [String: Any] ?? [:]
@@ -108,5 +108,19 @@ class ChattingListManager {
     
     func deleteChattingRoomInDatabase(roomId: Int) async throws {
         Log.cyo("deleteChattingRoomInDatabase(roomId: \(roomId))")
+    }
+    
+    func insertChatList() async throws {
+        let item = ChatMessageModel(id: 6,
+                                    room_id: 1,
+                                    user_id: 1,
+                                    message: "HI",
+                                    read_users: nil)
+        
+        let response = try await supabase
+            .database
+            .from("messageCYO")
+            .insert(item)
+            .execute()
     }
 }
