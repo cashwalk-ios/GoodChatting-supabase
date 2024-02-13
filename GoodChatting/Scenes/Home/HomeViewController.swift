@@ -371,7 +371,7 @@ extension HomeViewController {
         reactor.state.map(\.isPresentCreateRoomPopup)
             .observe(on: MainScheduler.instance)
             .bind(with: self, onNext: { owner, isPresent in
-                owner.presentPopup(isPresent, owner, .create)
+                owner.presentPopup(isPresent, owner, .create(nil))
             }).disposed(by: disposeBag)
         
         reactor.state.map(\.isPresentJoinRoomPopup)

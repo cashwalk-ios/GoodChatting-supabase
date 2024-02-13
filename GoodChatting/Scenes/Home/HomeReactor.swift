@@ -47,15 +47,6 @@ final class HomeReactor: Reactor {
             switch action {
             case .makeRoom:
                 Log.cyo("makeRoom")
-                Task {
-                    let addItem = ChattingRoomItem(title: "",               //채팅방 이름
-                                                   image: "",               //채팅방 썸네일 이미지 - 없어도됨 없을떈 nil
-                                                   maker: 1,                //생성자 id
-                                                   people: [1],             //채팅방 만들떄는 참여인원은 생성자 하나뿐이니 생성자 아이디를 어레이에 담아서 전달
-                                                   updated_at: Date())      //고정값
-                    
-//                    try await ChattingListManager.shared.addChattingTable(item: addItem)
-                }
                 return .just(Mutation.presentCreateRoomPopup(true))
             case .joinRoom:
                 Log.cyo("joinRoom")
@@ -91,8 +82,30 @@ final class HomeReactor: Reactor {
             
         case .closePopupView(let popupType):
             switch popupType {
-            case .create:
-                return .just(Mutation.presentCreateRoomPopup(false))
+            case .create(let item):
+                if let item {
+                    Task {
+                        do {
+                            let status = try await ChattingListManager.shared.addChattingTable(item: item)
+                            
+                            if status == 201 {
+                                Log.cyo("채팅방 생성 성공")
+                            } else {
+                                Log.cyo("채팅방 생성 실패 \(status)")
+                                //TODO: 실패 에러 메시지 보여줄것인가?
+                            }
+                        } catch {
+                            Log.cyo("채팅방 생성 error \(error.localizedDescription)")
+                            //TODO: 실패 에러 메시지 보여줄것인가?
+                        }
+                    }
+                    
+                    return .just(Mutation.presentCreateRoomPopup(false))
+                } else {
+                    Log.cyo("없음")
+                    return .just(Mutation.presentCreateRoomPopup(false))
+                }
+                
             case .join:
                 return .just(Mutation.presentJoinRoomPopup(false))
             }
@@ -146,6 +159,6 @@ final class HomeReactor: Reactor {
 }
 
 enum ChatPopupType {
-    case create
+    case create(ChattingRoomItem?)
     case join
 }

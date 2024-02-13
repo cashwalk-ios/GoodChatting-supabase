@@ -24,9 +24,9 @@ struct Log {
     }
     
     /// Yunoh's Log
-    static func cyo(_ any: Any, filename: String = #file, funcName: String = #function) {
+    static func cyo(_ any: Any, filename: String = #file, funcName: String = #function, line: Int = #line) {
         #if DEBUG
-        print("[😡cyo][\(sourceFileName(filePath: filename))] \(funcName) -> \(any)\n")
+        print("[😡cyo][line: \(line)][\(sourceFileName(filePath: filename))] \(funcName) -> \(any)")
         #endif
     }
  
