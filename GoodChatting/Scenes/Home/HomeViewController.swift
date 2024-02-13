@@ -362,6 +362,11 @@ extension HomeViewController {
         reactor.state.map(\.chattingList)
             .bind(to: chattingListTableView.rx.items(cellIdentifier: "listCell", cellType: ChattingListTVCell.self)) { row , item , cell in
                 cell.configuration(item: item)
+                cell.tapCellButton.subscribe(with: self) { owner, _ in
+                    let vc = ChatViewController()
+                    vc.reactor = ChatReactor(roomTitle: item.title ?? "", roomData: item)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }.disposed(by: cell.disposeBag)
             }.disposed(by: disposeBag)
         
         reactor.state.map({ $0.chattingList.count > 0 })

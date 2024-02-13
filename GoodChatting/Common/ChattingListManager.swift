@@ -35,10 +35,8 @@ class ChattingListManager {
         
 //        let userId = try await supabase.auth.session.user.id
         
-        Task {
-            for await change in changes {
-                handleChangedUser(change, userId: 1)
-            }
+        for await change in changes {
+            handleChangedUser(change, userId: 1)
         }
     }
     

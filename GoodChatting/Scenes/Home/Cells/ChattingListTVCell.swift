@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import ReactorKit
+import RxCocoa
 
 class ChattingListTVCell: UITableViewCell {
     
@@ -16,6 +18,13 @@ class ChattingListTVCell: UITableViewCell {
     var numberOfPeopleLabel: UILabel!
     var dateLabel: UILabel!
     var unReadLabel: UILabel!
+    
+    var cellButton: UIButton!
+    
+    var tapCellButton: ControlEvent<Void> {
+        return cellButton.rx.tap
+    }
+    var disposeBag: DisposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,6 +43,8 @@ class ChattingListTVCell: UITableViewCell {
         dateLabel.text = ""
         unReadLabel.text = ""
         unReadLabel.isHidden = true
+        
+        disposeBag = DisposeBag()
     }
     
     func setupView() {
@@ -131,6 +142,13 @@ class ChattingListTVCell: UITableViewCell {
                 make.left.equalTo(titleLabel.snp.right).offset(4)
                 make.right.equalToSuperview()
                 make.centerY.equalTo(titleLabel.snp.centerY)
+            }
+        }
+        
+        cellButton = UIButton().then {
+            self.contentView.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
             }
         }
     }
