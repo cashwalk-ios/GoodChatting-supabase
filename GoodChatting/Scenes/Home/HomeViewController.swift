@@ -53,10 +53,10 @@ final class HomeViewController: BaseViewController, View {
         guard let reactor = self.reactor else { return }
         bind(reactor: reactor)
         
-        ChattingListManager.shared.subcribeChannel()
         Task {
             do {
                 try await ChattingListManager.shared.getChattingList()
+                try await ChattingListManager.shared.subcribeChannelV2()
             } catch {
                 Log.cyo("get Room Error \(error.localizedDescription)")
             }

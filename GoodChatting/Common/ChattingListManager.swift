@@ -24,47 +24,45 @@ class ChattingListManager {
     
     init() { }
     
-    func subcribeChannel() {
-        Log.cyo("subcribeChannel")
+    func subcribeChannelV2() async throws {
+        Log.cyo("subcribeChannelV2()")
+        let channel = await supabase.realtimeV2.channel("public:roomCYO")
+        let changes = await channel.postgresChange(AnyAction.self, table: "roomCYO")
         
-        supabase.realtime.connect()
-
-        //TODO: 내가 속해있는 방에서 일어나는 이벤트만 구독하도록 설정이 필요.
-        let publicSchema = supabase.realtime.channel("public")
-            .on("postgres_changes", filter: ChannelFilter(event: "*", schema: "public", table: "roomCYO", filter: "people=cs.{1}")) { insertData in
-                let insertValue = insertData.payload
-                let data = insertValue["data"] as? [String: Any] ?? [:]
-                let record = data["record"] as? [String: Any] ?? [:]
-//                let title record["title"] as? String ?? "흠 오류가 났다."
-                 
-                Log.cyo("inserts \(record)")
+//        let prenseces = await channel.presenceChange()
+        
+        await channel.subscribe()
+        
+//        let userId = try await supabase.auth.session.user.id
+        
+        Task {
+            for await change in changes {
+                handleChangedUser(change, userId: 1)
+            }
+        }
+    }
+    
+    private func handleChangedUser(_ action: AnyAction, userId: Int) {
+        switch action {
+        case let .insert(action):
+            let recode = action.record
+            Log.cyo("V2 insert recode \(recode)")
+            if let people = recode["people"]?.arrayValue, people.contains(where: { $0.intValue ?? 0 == 1 }) {
+                Log.cyo("채팅방 가져와랏!")
                 
                 Task { [weak self] in
                     try await self?.getChattingList()
                 }
             }
-//            .on("postgres_changes", filter: ChannelFilter(event: "UPDATE", schema: "public")) {
-//                Log.cyo("updates \($0)")
-//            }
-//            .on("postgres_changes", filter: ChannelFilter(event: "DELETE", schema: "public")) {
-//                Log.cyo("delete \($0)")
-//            }
-        
-        publicSchema.onError { _ in Log.cyo("ERROR") }
-        publicSchema.onClose { _ in Log.cyo("Closed gracefully") }
-        publicSchema
-            .subscribe { state, _ in
-                switch state {
-                case .subscribed:
-                    Log.cyo("OK")
-                case .closed:
-                    Log.cyo("CLOSED")
-                case .timedOut:
-                    Log.cyo("Timed out")
-                case .channelError:
-                    Log.cyo("ERROR")
-                }
-            }
+        case let .update(action):
+            let recode = action.record
+            Log.cyo("V2 update recode \(recode)")
+        case let .delete(action):
+            let recode = action.oldRecord
+            Log.cyo("V2 delete recode \(recode)")
+        default:
+            break
+        }
     }
     
     func getChattingList() async throws {
