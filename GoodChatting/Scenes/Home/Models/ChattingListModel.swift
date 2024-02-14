@@ -27,8 +27,8 @@ struct ChattingList: Codable {
     var updated_at: Date?
     var alarm: Bool?
     
-//    var messageCYO: [MessageCYO]?
-//    var roomUserCYO: [RoomUserCYO]?
+    var messageCYO: [MessageCYO]?
+    var roomUserCYO: [RoomUserCYO]?
 }
 
 struct MessageCYO: Codable {
@@ -40,9 +40,9 @@ struct MessageCYO: Codable {
 }
 
 struct RoomUserCYO: Codable {
-    var id: String
+    var id: Int
     
-    var user_id: Int?
+    var user_id: String?
     var nickname: String?
 }
 
