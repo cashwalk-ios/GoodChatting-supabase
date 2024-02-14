@@ -33,12 +33,25 @@ final class HomeReactor: Reactor {
         var chattingList: [ChattingList] = []
         var isPresentCreateRoomPopup: Bool = false
         var isPresentJoinRoomPopup: Bool = false
+        var userCYO: UserCYO?
     }
     
-    var initialState: State = State()
+    var initialState: State// = State()
     
-    init() {
+    init(userCYO: UserCYO?) {
+        initialState = State(userCYO: userCYO)
+        Log.kkr("userCYO's id: \((userCYO?.id) ?? "is nil"), userCYO's room_ids: \(userCYO?.room_ids ?? [])")
         
+//        if let userId = userCYO?.id {
+            Task {
+                do {
+                    try await ChattingListManager.shared.getChattingList(userId: "1")
+                    try await ChattingListManager.shared.subcribeChannelV2()
+                } catch {
+                    Log.cyo("get Room Error \(error.localizedDescription)")
+                }
+            }
+//        }
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

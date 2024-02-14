@@ -36,20 +36,20 @@ class ChattingListManager {
 //        let userId = try await supabase.auth.session.user.id
         
         for await change in changes {
-            handleChangedUser(change, userId: 1)
+            handleChangedUser(change, userId: "1")
         }
     }
     
-    private func handleChangedUser(_ action: AnyAction, userId: Int) {
+    private func handleChangedUser(_ action: AnyAction, userId: String) {
         switch action {
         case let .insert(action):
             let recode = action.record
             Log.cyo("V2 insert recode \(recode)")
-            if let people = recode["people"]?.arrayValue, people.contains(where: { $0.intValue ?? 0 == 1 }) {
+            if let people = recode["people"]?.arrayValue, people.contains(where: { $0.stringValue ?? "" == userId }) {
                 Log.cyo("채팅방 가져와랏!")
                 
                 Task { [weak self] in
-                    try await self?.getChattingList()
+                    try await self?.getChattingList(userId: userId)
                 }
             }
         case let .update(action):
@@ -63,7 +63,7 @@ class ChattingListManager {
         }
     }
     
-    func getChattingList() async throws {
+    func getChattingList(userId: String) async throws {
         Log.cyo("getChattingList")
         
         let list: [ChattingList] = try await supabase.database
@@ -79,7 +79,7 @@ class ChattingListManager {
                 )
             """
             )
-            .contains("people", value: [1])               // 내가 참여한 방의 정보만 가져오기 ver.유저ID
+            .contains("people", value: ["1"])               // 내가 참여한 방의 정보만 가져오기 ver.유저ID
 //            .in("people", value: [1])                     // 내가 참여한 방의 정보만 가져오기 ver.룸IDs
             .order("updated_at", ascending: false)      // 최신순으로 정렬
             .execute()

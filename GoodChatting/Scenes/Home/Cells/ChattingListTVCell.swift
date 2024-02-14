@@ -157,7 +157,7 @@ class ChattingListTVCell: UITableViewCell {
         mainImageView.image = UIImage(named: item.image ?? "")
         dateLabel.text = "\(item.updated_at ?? Date())"
         titleLabel.text = item.title ?? ""
-        lastestMessageLabel.text = item.messageCYO?.last?.message ?? ""
+//        lastestMessageLabel.text = item.messageCYO?.last?.message ?? ""
         numberOfPeopleLabel.text = "\(item.people?.count ?? 1)"
         
 //        if let unRead = item.unRead, unRead > 0 {

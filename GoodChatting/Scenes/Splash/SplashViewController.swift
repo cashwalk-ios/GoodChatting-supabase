@@ -79,11 +79,11 @@ final class SplashViewController: BaseViewController {
     }
     
     private func navigateToLogin() {
-//        let vc = LoginViewController()
-//        vc.reactor = LoginReactor()
+        let vc = LoginViewController()
+        vc.reactor = LoginReactor()
         
-        let vc = ChatViewController()
-        vc.reactor = ChatReactor(roomTitle: "123")
+//        let vc = ChatViewController()
+//        vc.reactor = ChatReactor(roomTitle: "123")
         
         if let sceneDelegate = self.sceneDelegate {
             ViewRouter.presentToNextViewController(from: self, to: vc, sceneDelegate: sceneDelegate)

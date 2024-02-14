@@ -40,8 +40,6 @@ final class HomeViewController: BaseViewController, View {
     var createRoomPopup: CreateRoomView?
     var joinRoomPopup: JoinRoomView?
     
-    var userCYO: UserCYO?
-    
     // MARK: - LifeCycles
     
     override func viewDidLoad() {
@@ -52,17 +50,6 @@ final class HomeViewController: BaseViewController, View {
         
         guard let reactor = self.reactor else { return }
         bind(reactor: reactor)
-        
-        Task {
-            do {
-                try await ChattingListManager.shared.getChattingList()
-                try await ChattingListManager.shared.subcribeChannelV2()
-            } catch {
-                Log.cyo("get Room Error \(error.localizedDescription)")
-            }
-        }
-        
-        Log.kkr("userCYO's id: \((userCYO?.id) ?? "is nil"), userCYO's room_ids: \(userCYO?.room_ids ?? [])")
     }
     
     // MARK: - Functions

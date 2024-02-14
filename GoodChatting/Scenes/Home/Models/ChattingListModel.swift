@@ -10,8 +10,8 @@ import Foundation
 struct ChattingRoomItem: Codable {
     var title: String
     var image: String?
-    var maker: Int
-    var people: [Int]
+    var maker: String
+    var people: [String]
     var updated_at: Date
 }
 
@@ -21,26 +21,26 @@ struct ChattingList: Codable {
     
     var title: String?
     var image: String?
-    var maker: Int?
-    var people: [Int]?
+    var maker: String?
+    var people: [String]?
     var messages: [Int]?
     var updated_at: Date?
     var alarm: Bool?
     
-    var messageCYO: [MessageCYO]?
-    var roomUserCYO: [RoomUserCYO]?
+//    var messageCYO: [MessageCYO]?
+//    var roomUserCYO: [RoomUserCYO]?
 }
 
 struct MessageCYO: Codable {
     var id: Int
     var created_at: Date
     
-    var user_id: Int?
+    var user_id: String?
     var message: String?
 }
 
 struct RoomUserCYO: Codable {
-    var id: Int
+    var id: String
     
     var user_id: Int?
     var nickname: String?
