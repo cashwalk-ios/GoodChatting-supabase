@@ -2,7 +2,18 @@
   "images" : [
     {
       "filename" : "navigation-arrow-on--compass-arrow-map-bearing-navigation-maps-heading-gps-off-disable.png",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "navigation-arrow-on--compass-arrow-map-bearing-navigation-maps-heading-gps-off-disable@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "navigation-arrow-on--compass-arrow-map-bearing-navigation-maps-heading-gps-off-disable@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
