@@ -75,7 +75,7 @@ extension ChatOtherCell {
                 make.top.equalTo(personName.snp.bottom).offset(6)
                 make.left.equalTo(personName)
                 make.bottom.equalTo(self)
-                make.right.lessThanOrEqualTo(self).offset(10)
+                make.right.lessThanOrEqualTo(self).offset(-10)
             }
         }
         

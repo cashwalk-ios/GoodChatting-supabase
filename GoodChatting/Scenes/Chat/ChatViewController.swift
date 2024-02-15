@@ -34,7 +34,7 @@ class ChatViewController: BaseViewController, View {
             .withUnretained(self)
             .subscribe(onNext: { owner, roomTitle in
                 
-                let roomPeople = reactor.currentState.roomPeopleCount
+                let roomPeople = reactor.currentState.roomData.people?.count ?? 1
                 let tempTitle = "\(roomTitle) \(roomPeople)"
                 let titleAttributedString = NSMutableAttributedString(string: tempTitle)
                 
@@ -61,10 +61,10 @@ class ChatViewController: BaseViewController, View {
                 guard let self else { fatalError("self Error") }
                 
                 switch model.user_id {
-                case 1:
+                case "1":
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
-                    
+                    Log.cyo(model)
                     cell.configure(message: model.message)
                     return cell
                 default:
@@ -89,7 +89,9 @@ class ChatViewController: BaseViewController, View {
                 }
             }).disposed(by: disposeBag)
         
-        chatView.sendButton.rx.tapGesture()
+        chatView.sendButton.rx
+            .tapGesture()
+            .when(.recognized)
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 
