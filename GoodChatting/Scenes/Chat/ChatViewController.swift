@@ -65,13 +65,13 @@ class ChatViewController: BaseViewController, View {
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
                     Log.cyo(model)
-                    cell.configure(message: model.message)
+                    cell.configure(messageModel: model)
                     return cell
                 default:
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     
-                    cell.configure(message: model.message)
+                    cell.configure(messageModel: model)
                     return cell
                 }
                 

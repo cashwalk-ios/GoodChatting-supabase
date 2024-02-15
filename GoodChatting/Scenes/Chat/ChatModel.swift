@@ -17,8 +17,15 @@ struct ChatMessageModel: Codable {
     
     var convertTimestamp: String {
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-mm-dd"
+        dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
+        dateformatter.timeZone = TimeZone(secondsFromGMT: 9)
+        guard let dateTransString = dateformatter.date(from: created_at) else {
+            return ""
+        }
         
-        return ""
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a H:mm"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: dateTransString)
     }
 }
