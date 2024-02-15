@@ -16,10 +16,12 @@ final class ChatReactor: Reactor {
     
     enum Action {
         case fetchChatData
+        case sendMessage(text: String)
     }
     
     enum Mutation {
         case mutateChat([ChatMessageModel])
+        case mutateRequestMessage
     }
     
     struct State {
@@ -61,6 +63,24 @@ final class ChatReactor: Reactor {
                 
                 return Disposables.create()
             }
+        case .sendMessage(let message):
+            
+            let item = ChatMessageModel(id: 6,
+                                        room_id: 1,
+                                        user_id: "1",
+                                        message: message,
+                                        read_users: nil,
+                                        created_at: "")
+            
+            Task {
+                let response = try await ChattingListManager.shared.supabase
+                    .database
+                    .from("messageCYO")
+                    .insert(item)
+                    .execute()
+            }
+            
+            return .empty()
         }
     }
     
@@ -71,6 +91,7 @@ final class ChatReactor: Reactor {
         switch mutation {
         case .mutateChat(let array):
             state.chatList = array
+        case .mutateRequestMessage: break
         }
         
         return state
@@ -110,7 +131,7 @@ extension ChatReactor {
             let messages: [ChatMessageModel] = try await client.database
                 .from("messageCYO")
                 .select()
-//                .eq("eventId", value: "eventId")
+                .equals("room_id", value: "1")
                 .execute()
                 .value
             
