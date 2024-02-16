@@ -24,6 +24,10 @@ class ChatViewController: BaseViewController, View {
         bind(reactor: reactor)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func bind(reactor: ChatReactor) {
         guard self.isViewLoaded else { return }
         
@@ -60,6 +64,10 @@ class ChatViewController: BaseViewController, View {
                 cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
+//                let ss = reactor.currentState.chatList[index - 1]
+                // 날짜 비교
+//                ss.created_at
+                
                 switch model.user_id {
                 case "1":
                     /// 나의 채팅
@@ -90,15 +98,14 @@ class ChatViewController: BaseViewController, View {
             }).disposed(by: disposeBag)
         
         chatView.sendButton.rx
-            .tapGesture()
-            .when(.recognized)
+            .tap
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                
-                Log.cyo(owner.chatView.messageTextField.text)
-                
-                if owner.chatView.messageTextField.text?.isEmpty == false {
+                if owner.chatView.messageTextField.text?.isEmpty == false,
+                    let textMessage = owner.chatView.messageTextField.text {
                     
+                    Log.cyo("touch Button")
+                    reactor.action.onNext(.sendMessage(text: textMessage))
                 }
             }).disposed(by: disposeBag)
     }
@@ -111,6 +118,22 @@ class ChatViewController: BaseViewController, View {
     @objc
     private func backAction(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ChatViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        chatView.messageTextField.becomeFirstResponder()
+    }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        chatView.messageTextField.becomeFirstResponder()
+//        return true
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        chatView.messageTextField.resignFirstResponder()
+        return true
     }
 }
 
@@ -155,5 +178,6 @@ extension ChatViewController {
         self.chatView.tableView.register(ChatMyCell.self, forCellReuseIdentifier: "myChat")
         self.chatView.tableView.register(ChatOtherCell.self, forCellReuseIdentifier: "otherChat")
         self.chatView.tableView.delegate = self
+        self.chatView.messageTextField.delegate = self
     }
 }

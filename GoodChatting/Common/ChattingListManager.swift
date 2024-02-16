@@ -122,5 +122,7 @@ class ChattingListManager {
             .from("messageCYO")
             .insert(item)
             .execute()
+        
+        Log.cyo(response.status)
     }
 }

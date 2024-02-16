@@ -65,22 +65,35 @@ final class ChatReactor: Reactor {
             }
         case .sendMessage(let message):
             
-            let item = ChatMessageModel(id: 6,
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
+            let inputTimestamp = dateformatter.string(from: Date())
+            
+            let item = ChatMessageModel(id: 9,
                                         room_id: 1,
                                         user_id: "1",
                                         message: message,
                                         read_users: nil,
-                                        created_at: "")
+                                        created_at: inputTimestamp)
             
-            Task {
-                let response = try await ChattingListManager.shared.supabase
-                    .database
-                    .from("messageCYO")
-                    .insert(item)
-                    .execute()
+            return Observable.create { observer in
+                
+                Task {
+                    do {
+                        try await ChattingListManager.shared.supabase
+                            .database
+                            .from("messageCYO")
+                            .insert(item)
+                            .execute()
+                        observer.onNext(.mutateRequestMessage)
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(error)
+                    }
+                }
+                
+                return Disposables.create()
             }
-            
-            return .empty()
         }
     }
     
