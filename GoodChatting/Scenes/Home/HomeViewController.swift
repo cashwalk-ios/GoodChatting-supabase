@@ -227,6 +227,10 @@ final class HomeViewController: BaseViewController, View {
                     let blackView = BlackView(alphaValue: 0.7)
                     blackView.show(onView: self.view)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { blackView.hide() }
+                }),
+                UIAction(title: "참여코드 생성", handler: { [weak self] _ in
+                    let code = GlobalFunctions.GenerateUniqueRandomCode()
+                    self?.showToast(message: code)
                 })
             ]
             

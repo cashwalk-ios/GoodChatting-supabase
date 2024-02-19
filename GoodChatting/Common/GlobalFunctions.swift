@@ -66,6 +66,42 @@ class GlobalFunctions {
         }
     }
     
+    class func showToast(message: String, duration: TimeInterval = 1.0) {
+        DispatchQueue.main.async {
+            let toastTag = 9999
+            guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return }
+            guard let window = windowScene.windows.first(where: { $0.isKeyWindow }) else { return }
+            if window.viewWithTag(toastTag) != nil { return }
+            
+            let toastLabel = UILabel().then {
+                $0.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+                $0.textColor = UIColor.white
+                $0.textAlignment = .center
+                $0.font = .appleSDGothicNeo(.regular, size: 16)
+                $0.text = message
+                $0.alpha = 1.0
+                $0.clipsToBounds = true
+                window.addSubview($0)
+            }
+            
+            toastLabel.snp.makeConstraints { make in
+                make.bottom.left.right.equalToSuperview()
+                make.height.equalTo(60)
+            }
+            
+            UIView.animate(
+                withDuration: 0.3,
+                delay: duration,
+                options: .curveEaseOut,
+                animations: {
+                    toastLabel.alpha = 0.0
+                },
+                completion: { _ in
+                    toastLabel.removeFromSuperview()
+                })
+        }
+    }
+    
     /// 고유한 랜덤 코드 생성
     ///
     /// '-' 하이픈을 제거하고 어미에 'g.sh/'를 붙여 생성

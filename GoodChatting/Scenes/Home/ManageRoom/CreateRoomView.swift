@@ -185,6 +185,7 @@ final class CreateRoomView: UIView {
             .when(.ended)
             .subscribe(with: self, onNext: { owner, _ in
                 Log.kkr("프로필 이미지 변경")
+                GlobalFunctions.showToast(message: "준비 중입니다")
             }).disposed(by: disposeBag)
         
         closeButton.rx.tapGesture()
