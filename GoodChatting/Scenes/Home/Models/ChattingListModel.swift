@@ -52,3 +52,9 @@ struct UserCYO: Codable {
     var room_ids: [Int]?
     let email: String?
 }
+
+struct AddRoomUserCYOModel: Codable {
+    let room_id: Int
+    let user_id: String
+    let nickname: String
+}
