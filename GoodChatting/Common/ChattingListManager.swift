@@ -24,19 +24,15 @@ class ChattingListManager {
     
     init() { }
     
-    func subcribeChannelV2() async throws {
+    func subcribeChannelV2(userId: String) async throws {
         Log.cyo("subcribeChannelV2()")
         let channel = await supabase.realtimeV2.channel("public:roomCYO")
         let changes = await channel.postgresChange(AnyAction.self, table: "roomCYO")
         
-//        let prenseces = await channel.presenceChange()
-        
         await channel.subscribe()
         
-//        let userId = try await supabase.auth.session.user.id
-        
         for await change in changes {
-            handleChangedUser(change, userId: "1")
+            handleChangedUser(change, userId: userId)
         }
     }
     
@@ -79,8 +75,7 @@ class ChattingListManager {
                 )
             """
             )
-            .contains("people", value: ["1"])               // 내가 참여한 방의 정보만 가져오기 ver.유저ID
-//            .in("people", value: [1])                     // 내가 참여한 방의 정보만 가져오기 ver.룸IDs
+            .contains("people", value: [userId])               // 내가 참여한 방의 정보만 가져오기 ver.유저ID
             .order("updated_at", ascending: false)      // 최신순으로 정렬
             .execute()
             .value
@@ -112,10 +107,9 @@ class ChattingListManager {
     func insertChatList() async throws {
         let item = ChatMessageModel(id: 6,
                                     room_id: 1,
-                                    user_id: "1",
+                                    user_id: 1,
                                     message: "HI",
-                                    read_users: nil,
-                                    created_at: "")
+                                    read_users: nil)
         
         let response = try await supabase
             .database

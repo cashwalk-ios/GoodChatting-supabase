@@ -30,12 +30,13 @@ final class ChatReactor: Reactor {
         var chatList: [ChatMessageModel] = []
         
         var roomData: ChattingList
+        var userData: UserCYO
     }
     
     var initialState: State// = State()
     
-    init(roomTitle: String, roomData: ChattingList) {
-        initialState = State(chattingRoomTitle: roomTitle, roomData: roomData)
+    init(roomTitle: String, roomData: ChattingList, userData: UserCYO) {
+        initialState = State(chattingRoomTitle: roomTitle, roomData: roomData, userData: userData)
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
