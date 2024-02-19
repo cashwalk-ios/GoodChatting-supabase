@@ -21,6 +21,7 @@ class ChattingListManager {
     let supabase = SupabaseClient(supabaseURL: URL(string: Constants.SUPABASE_PROJECT_URL)!, supabaseKey: Constants.SUPABASE_API_KEY)
     
     let subject = PublishSubject<ChattingListManagerAction>()
+    var userRoomList: [ChattingList] = []
     
     init() { }
     
@@ -41,11 +42,18 @@ class ChattingListManager {
         case let .insert(action):
             let recode = action.record
             Log.cyo("V2 insert recode \(recode)")
-            if let people = recode["people"]?.arrayValue, people.contains(where: { $0.stringValue ?? "" == userId }) {
+            if let people = recode["people"]?.arrayValue,
+               people.contains(where: { $0.stringValue ?? "" == userId }),
+               let roomId = recode["id"]?.intValue {
                 Log.cyo("채팅방 가져와랏!")
                 
                 Task { [weak self] in
-                    try await self?.getChattingList(userId: userId)
+                    do {
+                        try await self?.updateUserRoom(userId: userId, roomId: roomId)
+                        try await self?.getChattingList(userId: userId)
+                    } catch {
+                        Log.cyo("뭔지모르지만 \(error.localizedDescription)")
+                    }
                 }
             }
         case let .update(action):
@@ -82,6 +90,7 @@ class ChattingListManager {
         
 //        Log.cyo("list \(list)")
         
+        userRoomList = list
         subject.onNext(.getList(list))
     }
     
@@ -102,6 +111,22 @@ class ChattingListManager {
     
     func deleteChattingRoomInDatabase(roomId: Int) async throws {
         Log.cyo("deleteChattingRoomInDatabase(roomId: \(roomId))")
+    }
+    
+    func updateUserRoom(userId: String, roomId: Int) async throws {
+        Log.cyo("updateUserRoom(roomId: \(roomId))")
+        
+        var roomIds = userRoomList.compactMap({ $0.id })
+        roomIds.append(roomId)
+        
+        let response = try await supabase
+            .database
+            .from("userCYO")
+            .update(["room_ids" : roomIds])
+            .eq("id", value: userId)
+            .execute()
+        
+        Log.cyo("response \(response)")
     }
     
     func insertChatList() async throws {
