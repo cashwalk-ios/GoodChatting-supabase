@@ -20,6 +20,12 @@
 				<string>com.googleusercontent.apps.421950816923-elgchhddftorf2kb3fep0lelemfb8g1u</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>goodchattingapp</string>
+			</array>
+		</dict>
 	</array>
 	<key>GIDClientID</key>
 	<string>421950816923-elgchhddftorf2kb3fep0lelemfb8g1u.apps.googleusercontent.com</string>
