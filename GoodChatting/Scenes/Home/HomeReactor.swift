@@ -42,16 +42,16 @@ final class HomeReactor: Reactor {
         initialState = State(userCYO: userCYO)
         Log.kkr("userCYO's id: \((userCYO?.id) ?? "is nil"), userCYO's room_ids: \(userCYO?.room_ids ?? [])")
         
-//        if let userId = userCYO?.id {
+        if let userId = userCYO?.id {
             Task {
                 do {
-                    try await ChattingListManager.shared.getChattingList(userId: "1")
-                    try await ChattingListManager.shared.subcribeChannelV2()
+                    try await ChattingListManager.shared.getChattingList(userId: userId)
+                    try await ChattingListManager.shared.subcribeChannelRoom(userId: userId)
                 } catch {
                     Log.cyo("get Room Error \(error.localizedDescription)")
                 }
             }
-//        }
+        }
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -95,10 +95,16 @@ final class HomeReactor: Reactor {
             
         case .closePopupView(let popupType):
             switch popupType {
-            case .create(let item):
-                if let item {
+            case .create(let title, let image):
+                if let title {
                     Task {
                         do {
+                            let item = ChattingRoomItem(title: title, 
+                                                        image: image,
+                                                        maker: currentState.userCYO?.id ?? "",
+                                                        people: [currentState.userCYO?.id ?? ""],
+                                                        updated_at: Date())
+                            
                             let status = try await ChattingListManager.shared.addChattingTable(item: item)
                             
                             if status == 201 {
@@ -172,6 +178,6 @@ final class HomeReactor: Reactor {
 }
 
 enum ChatPopupType {
-    case create(ChattingRoomItem?)
+    case create(title: String?, image: String?)
     case join
 }

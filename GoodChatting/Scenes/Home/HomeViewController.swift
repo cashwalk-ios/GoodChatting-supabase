@@ -349,9 +349,12 @@ extension HomeViewController {
         reactor.state.map(\.chattingList)
             .bind(to: chattingListTableView.rx.items(cellIdentifier: "listCell", cellType: ChattingListTVCell.self)) { row , item , cell in
                 cell.configuration(item: item)
-                cell.tapCellButton.subscribe(with: self) { owner, _ in
+                cell.tapCellButton.subscribe(with: self) { [weak self] owner, _ in
+                    guard let self, let userData = self.reactor?.currentState.userCYO else { return }
                     let vc = ChatViewController()
-                    vc.reactor = ChatReactor(roomTitle: item.title ?? "", roomData: item)
+                    vc.reactor = ChatReactor(roomTitle: item.title ?? "",
+                                             roomData: item,
+                                             userData: userData)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }.disposed(by: cell.disposeBag)
             }.disposed(by: disposeBag)
@@ -363,7 +366,7 @@ extension HomeViewController {
         reactor.state.map(\.isPresentCreateRoomPopup)
             .observe(on: MainScheduler.instance)
             .bind(with: self, onNext: { owner, isPresent in
-                owner.presentPopup(isPresent, owner, .create(nil))
+                owner.presentPopup(isPresent, owner, .create(title: nil, image: nil))
             }).disposed(by: disposeBag)
         
         reactor.state.map(\.isPresentJoinRoomPopup)
