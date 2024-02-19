@@ -25,19 +25,19 @@ class ChattingListManager {
     
     init() { }
     
-    func subcribeChannelV2(userId: String) async throws {
-        Log.cyo("subcribeChannelV2()")
+    func subcribeChannelRoom(userId: String) async throws {
+        Log.cyo("subcribeChannelRoom(userId: \(userId))")
         let channel = await supabase.realtimeV2.channel("public:roomCYO")
         let changes = await channel.postgresChange(AnyAction.self, table: "roomCYO")
         
         await channel.subscribe()
         
         for await change in changes {
-            handleChangedUser(change, userId: userId)
+            handleChangedRoom(change, userId: userId)
         }
     }
     
-    private func handleChangedUser(_ action: AnyAction, userId: String) {
+    private func handleChangedRoom(_ action: AnyAction, userId: String) {
         switch action {
         case let .insert(action):
             let recode = action.record
@@ -47,12 +47,15 @@ class ChattingListManager {
                let roomId = recode["id"]?.intValue {
                 Log.cyo("채팅방 가져와랏!")
                 
+                let randomCode = arc4random_uniform(1000)   //TODO: 랜덤 닉네임 처리
+                
                 Task { [weak self] in
                     do {
                         try await self?.updateUserRoom(userId: userId, roomId: roomId)
+                        try await self?.addUserNickname(userId: userId, roomId: roomId, nickName: "유저#\(randomCode)")
                         try await self?.getChattingList(userId: userId)
                     } catch {
-                        Log.cyo("뭔지모르지만 \(error.localizedDescription)")
+                        Log.cyo("handleChangedRoom error \(error.localizedDescription)")
                     }
                 }
             }
@@ -122,8 +125,22 @@ class ChattingListManager {
         let response = try await supabase
             .database
             .from("userCYO")
-            .update(["room_ids" : roomIds])
+            .update(["room_ids": roomIds])
             .eq("id", value: userId)
+            .execute()
+        
+        Log.cyo("response \(response)")
+    }
+    
+    func addUserNickname(userId: String, roomId: Int, nickName: String) async throws {
+        Log.cyo("addUserNickname(userId: \(userId), roomId: \(roomId), nickName: \(nickName))")
+        
+        let item = AddRoomUserCYOModel(room_id: roomId, user_id: userId, nickname: nickName)
+        
+        let response = try await supabase
+            .database
+            .from("roomUserCYO")
+            .insert(item)
             .execute()
         
         Log.cyo("response \(response)")

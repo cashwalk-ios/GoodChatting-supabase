@@ -46,7 +46,7 @@ final class HomeReactor: Reactor {
             Task {
                 do {
                     try await ChattingListManager.shared.getChattingList(userId: userId)
-                    try await ChattingListManager.shared.subcribeChannelV2(userId: userId)
+                    try await ChattingListManager.shared.subcribeChannelRoom(userId: userId)
                 } catch {
                     Log.cyo("get Room Error \(error.localizedDescription)")
                 }
