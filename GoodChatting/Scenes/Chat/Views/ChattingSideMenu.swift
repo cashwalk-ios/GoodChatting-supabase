@@ -17,6 +17,7 @@ class ChattingSideMenu: UIView {
         case close
     }
     
+    var backgroundButton: UIButton!
     var containerView: UIView!
     
     var createDateLabel: UILabel!
@@ -223,12 +224,26 @@ class ChattingSideMenu: UIView {
                 make.bottom.equalTo(lineBottom.snp.top)
             }
         }
+        
+        backgroundButton = UIButton().then {
+            self.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.top.left.bottom.equalToSuperview()
+                make.right.equalTo(containerView.snp.left)
+            }
+        }
     }
     
     func bindView() {
         tempList.asObserver()
             .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
                 cell.configuration(name: item)
+            }.disposed(by: disposeBag)
+        
+        backgroundButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.removeFromSuperview()
             }.disposed(by: disposeBag)
     }
     

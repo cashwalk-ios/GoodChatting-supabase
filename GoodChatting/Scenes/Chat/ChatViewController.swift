@@ -124,14 +124,14 @@ class ChatViewController: BaseViewController, View {
         let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
         
-        let addPopup = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
-        self.sceneDelegate?.window?.addSubview(addPopup)
+        let sideMenu = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
+        self.sceneDelegate?.window?.addSubview(sideMenu)
         
-        addPopup.snp.makeConstraints { make in
+        sideMenu.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        addPopup.showAnimation()
+        sideMenu.showAnimation()
     }
 }
 
