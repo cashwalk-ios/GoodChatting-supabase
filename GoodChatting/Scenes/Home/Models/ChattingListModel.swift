@@ -13,6 +13,7 @@ struct ChattingRoomItem: Codable {
     var maker: String
     var people: [String]
     var updated_at: Date
+    var active_participation_code: String
 }
 
 struct ChattingList: Codable {
