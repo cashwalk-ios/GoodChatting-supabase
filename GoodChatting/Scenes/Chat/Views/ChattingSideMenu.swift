@@ -15,8 +15,12 @@ import RxSwift
 class ChattingSideMenu: UIView {
     enum SideMenuAction {
         case close
+        case invite
+        case getout
+        case noti
     }
     
+    var backgroundButton: UIButton!
     var containerView: UIView!
     
     var createDateLabel: UILabel!
@@ -43,7 +47,9 @@ class ChattingSideMenu: UIView {
         
         setupProperties()
         setupView()
-        bindView()
+        
+        bindState()
+        bindAction()
     }
     
     required init?(coder: NSCoder) {
@@ -223,13 +229,14 @@ class ChattingSideMenu: UIView {
                 make.bottom.equalTo(lineBottom.snp.top)
             }
         }
-    }
-    
-    func bindView() {
-        tempList.asObserver()
-            .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
-                cell.configuration(name: item)
-            }.disposed(by: disposeBag)
+        
+        backgroundButton = UIButton().then {
+            self.addSubview($0)
+            $0.snp.makeConstraints { make in
+                make.top.left.bottom.equalToSuperview()
+                make.right.equalTo(containerView.snp.left)
+            }
+        }
     }
     
     func showAnimation() {
@@ -246,4 +253,47 @@ class ChattingSideMenu: UIView {
             }
         }
     }
+}
+
+// MARK: - bind
+
+extension ChattingSideMenu {
+    
+    private func bindAction() {
+        
+        backgroundButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.removeFromSuperview()
+                owner.actionSubject.onNext(.close)
+            }.disposed(by: disposeBag)
+        
+        inviteButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.invite)
+            }.disposed(by: disposeBag)
+        
+        getoutButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.getout)
+            }.disposed(by: disposeBag)
+        
+        notiButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.noti)
+            }.disposed(by: disposeBag)
+    }
+    
+    private func bindState() {
+        
+        tempList.asObserver()
+            .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
+                cell.configuration(name: item)
+            }.disposed(by: disposeBag)
+        
+    }
+    
 }
