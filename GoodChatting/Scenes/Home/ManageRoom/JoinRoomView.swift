@@ -153,13 +153,55 @@ final class JoinRoomView: UIView {
             .when(.ended)
             .filter { [weak self] _ in self?.codeInputTextField.text?.count ?? 0 > 0 }
             .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { owner, _ in
-                // TODO: 방 참여 로직 추가해야 함
-                //owner.reactor?.action.onNext(.closePopupView(.join))
-                owner.validView.isHidden = false
-                GlobalFunctions.shake(owner.validView)
+            .flatMapLatest { [weak self] _ -> Observable<Bool> in
+                guard let self = self, let joinCode = self.codeInputTextField.text else {
+                    return .just(false)
+                }
+                return self.checkJoinCode(joinCode: joinCode)
+                    .catchAndReturn(false)
+            }
+            .subscribe(with: self, onNext: { owner, isValid in
+                if isValid {
+                    // TODO: 방 참여 성공 로직
+                    owner.reactor?.action.onNext(.closePopupView(.join))
+                    GlobalFunctions.showToast(message: "참여한 방에 진입하는 로직 추가")
+                    // 채팅방 DB에 people이라는 컬럼에 userId 추가
+                    // 닉네임 생성해서 roomUserCYO에 추가 (addUserNickname() 메서드 사용)
+                } else {
+                    // 참여코드가 roomCYO DB에 없는 경우
+                    owner.validView.isHidden = false
+                    GlobalFunctions.shake(owner.validView)
+                }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func checkJoinCode(joinCode: String) -> Observable<Bool> {
+        return Observable.create { [weak self] observer in
+            Task {
+                do {
+                    let isValid = try await self?.selectJoinCode(code: joinCode) ?? false
+                    observer.onNext(isValid)
+                    observer.onCompleted()
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    /// 입력한 참여코드가 roomCYO에 존재하는지 체크
+    private func selectJoinCode(code: String) async throws -> Bool {
+        let response: [ChattingList] = try await AuthManager.shared.client.database
+            .from("roomCYO")
+            .select("*")
+            .eq("active_participation_code", value: code)
+            .execute()
+            .value
+        
+        Log.kkr("참여코드 유효성 검사 결과: \(!response.isEmpty)")
+        return !response.isEmpty
     }
     
     private func addTapGesture() {

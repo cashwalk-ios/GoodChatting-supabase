@@ -30,6 +30,8 @@ struct ChattingList: Codable {
     
     var messageCYO: [MessageCYO]?
     var roomUserCYO: [RoomUserCYO]?
+    
+    var active_participation_code: String?
 }
 
 struct MessageCYO: Codable {
