@@ -146,17 +146,17 @@ class ChattingListManager {
         Log.cyo("response \(response)")
     }
     
-    func insertChatList() async throws {
-        let item = ChatMessageModel(id: 6,
-                                    room_id: 1,
-                                    user_id: 1,
-                                    message: "HI",
-                                    read_users: nil)
-        
-        let response = try await supabase
-            .database
-            .from("messageCYO")
-            .insert(item)
-            .execute()
-    }
+//    func insertChatList() async throws {
+//        let item = ChatMessageModel(id: 6,
+//                                    room_id: 1,
+//                                    user_id: 1,
+//                                    message: "HI",
+//                                    read_users: nil)
+//        
+//        let response = try await supabase
+//            .database
+//            .from("messageCYO")
+//            .insert(item)
+//            .execute()
+//    }
 }
