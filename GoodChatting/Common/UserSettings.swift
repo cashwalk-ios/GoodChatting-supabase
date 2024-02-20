@@ -12,6 +12,9 @@ struct UserSettings {
     @UserDefault("isLoggedIn", defaultValue: false)
     static var isLoggedIn: Bool
     
+    @UserDefault("userId", defaultValue: nil)
+    static var userId: String?
+    
 }
 
 @propertyWrapper
