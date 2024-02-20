@@ -112,6 +112,10 @@ class GlobalFunctions {
         return addPrefix
     }
     
+    class func makeShareLink(joinCode: String) -> String {
+        return "goodchatting://?joinCode=\(joinCode)"
+    }
+    
 }
 
 extension UIViewController {
