@@ -86,9 +86,13 @@ final class LoginViewController: BaseViewController, View {
                 .from("userCYO")
                 .insert(user)
                 .execute()
+            
+            UserSettings.userId = user.id
+            
             return user
         } else {
             // 기존 유저
+            UserSettings.userId = user.id
             return try await fetchUserCYO(withId: user.id)
         }
     }

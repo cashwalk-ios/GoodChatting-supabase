@@ -22,10 +22,10 @@ final class ChatMyCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(message text: String) {
+    func configure(messageModel model: ChatMessageModel) {
         
-        sendMessage.text = text
-        sendDate.text = "오후 1:12"
+        sendMessage.text = model.message
+        sendDate.text = model.convertTimestamp
     }
 }
 
@@ -38,6 +38,9 @@ extension ChatMyCell {
         sendDate = UILabel().then {
             self.addSubview($0)
             $0.font = UIFont.systemFont(ofSize: 9)
+            $0.textColor = UIColor(
+                red: 136/255, green: 136/255, blue: 136/255, alpha: 1.0
+            )
             $0.snp.makeConstraints { make in
                 make.left.greaterThanOrEqualToSuperview().offset(10)
                 make.bottom.equalTo(self)

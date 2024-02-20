@@ -24,6 +24,10 @@ class ChatViewController: BaseViewController, View {
         bind(reactor: reactor)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func bind(reactor: ChatReactor) {
         guard self.isViewLoaded else { return }
         
@@ -60,18 +64,22 @@ class ChatViewController: BaseViewController, View {
                 cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
+//                let ss = reactor.currentState.chatList[index - 1]
+                // 날짜 비교
+//                ss.created_at
+                
                 switch model.user_id {
                 case "1":
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
                     Log.cyo(model)
-                    cell.configure(message: model.message)
+                    cell.configure(messageModel: model)
                     return cell
                 default:
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     
-                    cell.configure(message: model.message)
+                    cell.configure(messageModel: model)
                     return cell
                 }
                 
@@ -90,27 +98,63 @@ class ChatViewController: BaseViewController, View {
             }).disposed(by: disposeBag)
         
         chatView.sendButton.rx
-            .tapGesture()
-            .when(.recognized)
+            .tap
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                
-                Log.cyo(owner.chatView.messageTextField.text)
-                
-                if owner.chatView.messageTextField.text?.isEmpty == false {
+                if owner.chatView.messageTextField.text?.isEmpty == false,
+                    let textMessage = owner.chatView.messageTextField.text {
                     
+                    Log.cyo("touch Button")
+                    reactor.action.onNext(.sendMessage(text: textMessage))
                 }
             }).disposed(by: disposeBag)
     }
     
     @objc
     private func selectHamburgerButton(_ sender: UIBarButtonItem) {
-        
+        showSideMenu()
     }
     
     @objc
     private func backAction(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    fileprivate func showSideMenu() {
+        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
+        
+        let sideMenu = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
+        self.sceneDelegate?.window?.addSubview(sideMenu)
+        
+        sideMenu.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        if let reactor = self.reactor {
+            sideMenu.actionSubject
+                .map({ Reactor.Action.sideMenuAction(action: $0) })
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
+        
+        sideMenu.showAnimation()
+    }
+}
+
+extension ChatViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        chatView.messageTextField.becomeFirstResponder()
+    }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        chatView.messageTextField.becomeFirstResponder()
+//        return true
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        chatView.messageTextField.resignFirstResponder()
+        return true
     }
 }
 
@@ -155,5 +199,6 @@ extension ChatViewController {
         self.chatView.tableView.register(ChatMyCell.self, forCellReuseIdentifier: "myChat")
         self.chatView.tableView.register(ChatOtherCell.self, forCellReuseIdentifier: "otherChat")
         self.chatView.tableView.delegate = self
+        self.chatView.messageTextField.delegate = self
     }
 }

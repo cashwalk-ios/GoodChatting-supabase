@@ -24,7 +24,7 @@ struct ChattingList: Codable {
     var image: String?
     var maker: String?
     var people: [String]?
-    var messages: [Int]?
+    var messages: [String]?
     var updated_at: Date?
     var alarm: Bool?
     
@@ -33,7 +33,7 @@ struct ChattingList: Codable {
 }
 
 struct MessageCYO: Codable {
-    var id: Int
+    var id: String
     var created_at: Date
     
     var user_id: String?

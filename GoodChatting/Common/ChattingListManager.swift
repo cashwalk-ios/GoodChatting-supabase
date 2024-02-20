@@ -78,7 +78,7 @@ class ChattingListManager {
             .select(
             """
                 *,
-                messageCYO (
+                newmessageCYO (
                     *
                 ),
                 roomUserCYO (

@@ -17,6 +17,7 @@ final class ChatReactor: Reactor {
     enum Action {
         case fetchChatData
         case sendMessage(text: String)
+        case sideMenuAction(action: ChattingSideMenu.SideMenuAction)
     }
     
     enum Mutation {
@@ -66,19 +67,45 @@ final class ChatReactor: Reactor {
             }
         case .sendMessage(let message):
             
-            let item = ChatMessageModel(id: 6,
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
+            let inputTimestamp = dateformatter.string(from: Date())
+            
+            let item = ChatMessageModel(id: UUID().uuidString,
                                         room_id: 1,
                                         user_id: "1",
                                         message: message,
                                         read_users: nil,
-                                        created_at: "")
+                                        created_at: inputTimestamp)
             
-            Task {
-                let response = try await ChattingListManager.shared.supabase
-                    .database
-                    .from("messageCYO")
-                    .insert(item)
-                    .execute()
+            return Observable.create { observer in
+                
+                Task {
+                    do {
+                        try await ChattingListManager.shared.supabase
+                            .database
+                            .from("newmessageCYO")
+                            .insert(item)
+                            .execute()
+                        observer.onNext(.mutateRequestMessage)
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(error)
+                    }
+                }
+                
+                return Disposables.create()
+            }
+        case .sideMenuAction(let action):
+            switch action {
+            case .close:
+                Log.cyo("끄기")
+            case .invite:
+                Log.cyo("초대")
+            case .getout:
+                Log.cyo("나가기")
+            case .noti:
+                Log.cyo("알림 onoff")
             }
             
             return .empty()
@@ -130,7 +157,7 @@ extension ChatReactor {
     private func fetchDatabase() async -> [ChatMessageModel] {
         do {
             let messages: [ChatMessageModel] = try await client.database
-                .from("messageCYO")
+                .from("newmessageCYO")
                 .select()
                 .equals("room_id", value: "1")
                 .execute()

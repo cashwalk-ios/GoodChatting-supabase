@@ -11,7 +11,7 @@ final class ChatView: UIView {
 
     var tableView: UITableView!
     var messageTextField: UITextField!
-    var sendButton: UIView!
+    var sendButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,7 +53,7 @@ extension ChatView {
             }
         }
         
-        sendButton = UIView().then {
+        sendButton = UIButton(type: .custom).then {
             messageTextField.addSubview($0)
             $0.layer.cornerRadius = 15
             $0.backgroundColor = .gray

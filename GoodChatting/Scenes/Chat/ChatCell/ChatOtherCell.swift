@@ -12,6 +12,7 @@ class ChatOtherCell: UITableViewCell {
     private var personImageView: UIImageView!
     private var personName: UILabel!
     private var personMessage: UILabel!
+    private var recievdDate: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,9 +24,11 @@ class ChatOtherCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(message text: String) {
+    func configure(messageModel model: ChatMessageModel) {
+        
         personName.text = "김아영"
-        personMessage.text = text
+        personMessage.text = model.message
+        recievdDate.text = model.convertTimestamp
     }
 
 }
@@ -75,13 +78,26 @@ extension ChatOtherCell {
                 make.top.equalTo(personName.snp.bottom).offset(6)
                 make.left.equalTo(personName)
                 make.bottom.equalTo(self)
-                make.right.lessThanOrEqualTo(self).offset(-10)
             }
         }
         
         personMessage = UILabel().then {
             chatBaseView.addArrangedSubview($0)
             $0.font = UIFont.systemFont(ofSize: 15)
+        }
+        
+        recievdDate = UILabel().then {
+            self.addSubview($0)
+            $0.font = UIFont.systemFont(ofSize: 9)
+            $0.textColor = UIColor(
+                red: 136/255, green: 136/255, blue: 136/255, alpha: 1.0
+            )
+            $0.snp.makeConstraints { make in
+                make.left.equalTo(chatBaseView.snp.right).offset(6)
+                make.bottom.equalTo(chatBaseView.snp.bottom)
+                make.height.equalTo(10)
+                make.right.lessThanOrEqualTo(self).offset(-10)
+            }
         }
     }
 }
