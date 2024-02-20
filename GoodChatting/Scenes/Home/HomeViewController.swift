@@ -309,20 +309,6 @@ final class HomeViewController: BaseViewController, View {
         
         addPopup.showAnimation()
     }
-    
-    fileprivate func showSideMenu() {
-        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
-        
-        let addPopup = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
-        self.sceneDelegate?.window?.addSubview(addPopup)
-        
-        addPopup.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        addPopup.showAnimation()
-    }
 }
 
 // MARK: - Bind
@@ -339,7 +325,6 @@ extension HomeViewController {
         chattingAddButton.rx.tap
             .subscribe(with: self) { owner, _ in
                 owner.showChattingAddPopup()
-//                owner.showSideMenu()
             }.disposed(by: disposeBag)
         
         settingAction
@@ -358,6 +343,7 @@ extension HomeViewController {
                 cell.tapCellButton.subscribe(with: self) { [weak self] owner, _ in
                     guard let self, let userData = self.reactor?.currentState.userCYO else { return }
                     let vc = ChatViewController()
+                    vc.sceneDelegate = self.sceneDelegate
                     vc.reactor = ChatReactor(roomTitle: item.title ?? "",
                                              roomData: item,
                                              userData: userData)
