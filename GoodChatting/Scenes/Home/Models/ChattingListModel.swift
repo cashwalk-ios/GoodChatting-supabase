@@ -23,7 +23,7 @@ struct ChattingList: Codable {
     var image: String?
     var maker: String?
     var people: [String]?
-    var messages: [Int]?
+    var messages: [String]?
     var updated_at: Date?
     var alarm: Bool?
     

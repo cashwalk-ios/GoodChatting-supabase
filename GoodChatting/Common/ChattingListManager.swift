@@ -110,7 +110,7 @@ class ChattingListManager {
     }
     
     func insertChatList() async throws {
-        let item = ChatMessageModel(id: 6,
+        let item = ChatMessageModel(id: UUID().uuidString,
                                     room_id: 1,
                                     user_id: "1",
                                     message: "HI",

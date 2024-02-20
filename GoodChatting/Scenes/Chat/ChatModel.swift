@@ -8,7 +8,7 @@
 import Foundation
 
 struct ChatMessageModel: Codable {
-    let id: Int
+    let id: String
     let room_id: Int
     let user_id: String
     let message: String

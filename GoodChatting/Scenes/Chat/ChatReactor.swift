@@ -69,7 +69,7 @@ final class ChatReactor: Reactor {
             dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
             let inputTimestamp = dateformatter.string(from: Date())
             
-            let item = ChatMessageModel(id: 9,
+            let item = ChatMessageModel(id: UUID().uuidString,
                                         room_id: 1,
                                         user_id: "1",
                                         message: message,
@@ -82,7 +82,7 @@ final class ChatReactor: Reactor {
                     do {
                         try await ChattingListManager.shared.supabase
                             .database
-                            .from("messageCYO")
+                            .from("newmessageCYO")
                             .insert(item)
                             .execute()
                         observer.onNext(.mutateRequestMessage)
@@ -142,7 +142,7 @@ extension ChatReactor {
     private func fetchDatabase() async -> [ChatMessageModel] {
         do {
             let messages: [ChatMessageModel] = try await client.database
-                .from("messageCYO")
+                .from("newmessageCYO")
                 .select()
                 .equals("room_id", value: "1")
                 .execute()
