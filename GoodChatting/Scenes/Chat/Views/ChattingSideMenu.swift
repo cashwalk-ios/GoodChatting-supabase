@@ -15,6 +15,9 @@ import RxSwift
 class ChattingSideMenu: UIView {
     enum SideMenuAction {
         case close
+        case invite
+        case getout
+        case noti
     }
     
     var backgroundButton: UIButton!
@@ -244,6 +247,25 @@ class ChattingSideMenu: UIView {
             .withUnretained(self)
             .subscribe { owner, _ in
                 owner.removeFromSuperview()
+                owner.actionSubject.onNext(.close)
+            }.disposed(by: disposeBag)
+        
+        inviteButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.invite)
+            }.disposed(by: disposeBag)
+        
+        getoutButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.getout)
+            }.disposed(by: disposeBag)
+        
+        notiButton.rx.tap
+            .withUnretained(self)
+            .subscribe { owner, _ in
+                owner.actionSubject.onNext(.noti)
             }.disposed(by: disposeBag)
     }
     

@@ -17,6 +17,7 @@ final class ChatReactor: Reactor {
     enum Action {
         case fetchChatData
         case sendMessage(text: String)
+        case sideMenuAction(action: ChattingSideMenu.SideMenuAction)
     }
     
     enum Mutation {
@@ -95,6 +96,19 @@ final class ChatReactor: Reactor {
                 
                 return Disposables.create()
             }
+        case .sideMenuAction(let action):
+            switch action {
+            case .close:
+                Log.cyo("끄기")
+            case .invite:
+                Log.cyo("초대")
+            case .getout:
+                Log.cyo("나가기")
+            case .noti:
+                Log.cyo("알림 onoff")
+            }
+            
+            return .empty()
         }
     }
     

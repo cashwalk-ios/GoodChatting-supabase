@@ -131,6 +131,13 @@ class ChatViewController: BaseViewController, View {
             make.edges.equalToSuperview()
         }
         
+        if let reactor = self.reactor {
+            sideMenu.actionSubject
+                .map({ Reactor.Action.sideMenuAction(action: $0) })
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
+        }
+        
         sideMenu.showAnimation()
     }
 }
