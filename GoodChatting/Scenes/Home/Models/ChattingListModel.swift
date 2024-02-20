@@ -33,7 +33,7 @@ struct ChattingList: Codable {
 }
 
 struct MessageCYO: Codable {
-    var id: Int
+    var id: String
     var created_at: Date
     
     var user_id: String?
