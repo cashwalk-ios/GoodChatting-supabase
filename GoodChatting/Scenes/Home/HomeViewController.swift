@@ -228,10 +228,11 @@ final class HomeViewController: BaseViewController, View {
                     blackView.show(onView: self.view)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { blackView.hide() }
                 }),
-                UIAction(title: "참여코드 생성", handler: { [weak self] _ in
+                UIAction(title: "참여코드 공유하기", handler: { [weak self] _ in
                     let code = GlobalFunctions.GenerateUniqueRandomCode()
-                    self?.showToast(message: "참여코드가 복사되었습니다..\(code)")
-                    UIPasteboard.general.string = code
+                    let appLink = GlobalFunctions.makeShareLink(joinCode: code)
+                    self?.showToast(message: "링크가 복사되었습니다. 카카오톡으로 공유해보세요.")
+                    UIPasteboard.general.string = appLink
                 })
             ]
             

@@ -112,8 +112,9 @@ class GlobalFunctions {
         return addPrefix
     }
     
+    /// 공유하기 링크 생성
     class func makeShareLink(joinCode: String) -> String {
-        return "goodchatting://?joinCode=\(joinCode)"
+        return "goodchattingapp://?joinCode=\(joinCode)"
     }
     
 }
