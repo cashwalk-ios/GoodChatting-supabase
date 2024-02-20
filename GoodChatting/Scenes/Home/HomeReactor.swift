@@ -103,7 +103,8 @@ final class HomeReactor: Reactor {
                                                         image: image,
                                                         maker: currentState.userCYO?.id ?? "",
                                                         people: [currentState.userCYO?.id ?? ""],
-                                                        updated_at: Date())
+                                                        updated_at: Date(),
+                                                        active_participation_code: GlobalFunctions.GenerateUniqueRandomCode())
                             
                             let status = try await ChattingListManager.shared.addChattingTable(item: item)
                             
