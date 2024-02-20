@@ -41,12 +41,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url {
-            if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                _ = AuthController.handleOpenUrl(url: url)
+//        handleKakaoLoginURL(URLContexts)
+        handleAppSchemes(URLContexts)
+    }
+    
+    // FIXME: 추후 Supabase에서 카카오 로그인을 Swift SDK로 지원하면 그때 추가
+//    fileprivate func handleKakaoLoginURL(_ URLContexts: Set<UIOpenURLContext>) {
+//        if let url = URLContexts.first?.url {
+//            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+//                _ = AuthController.handleOpenUrl(url: url)
+//            }
+//        }
+//    }
+    
+    fileprivate func handleAppSchemes(_ URLContexts: Set<UIOpenURLContext>) {
+        if let urlContext = URLContexts.first {
+            let url = urlContext.url
+            Log.kkr("url: \(url)")
+            
+            if url.scheme == "goodchattingapp" {
+                guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                      let queryItems = components.queryItems else { return }
+                
+                if let code = queryItems.first(where: { $0.name == "joinCode" })?.value {
+                    // TODO: 홈이 아니면 홈으로 보내고 채팅방 참여하기 팝업을 열어서 입력칸에 코드를 붙여 넣어준다.
+                    Log.kkr("Received code: \(code)")
+//                    let homeVC = HomeViewController()
+//                    homeVC.reactor?.action.onNext(.chattingAddAction(.joinRoom))
+                }
             }
         }
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

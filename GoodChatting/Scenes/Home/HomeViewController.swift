@@ -230,7 +230,8 @@ final class HomeViewController: BaseViewController, View {
                 }),
                 UIAction(title: "참여코드 생성", handler: { [weak self] _ in
                     let code = GlobalFunctions.GenerateUniqueRandomCode()
-                    self?.showToast(message: code)
+                    self?.showToast(message: "참여코드가 복사되었습니다..\(code)")
+                    UIPasteboard.general.string = code
                 })
             ]
             
