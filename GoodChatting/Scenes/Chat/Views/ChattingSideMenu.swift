@@ -47,7 +47,9 @@ class ChattingSideMenu: UIView {
         
         setupProperties()
         setupView()
-        bindView()
+        
+        bindState()
+        bindAction()
     }
     
     required init?(coder: NSCoder) {
@@ -237,11 +239,27 @@ class ChattingSideMenu: UIView {
         }
     }
     
-    func bindView() {
-        tempList.asObserver()
-            .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
-                cell.configuration(name: item)
-            }.disposed(by: disposeBag)
+    func showAnimation() {
+        Task {
+            try await Task.sleep(nanoseconds: 100_000_000)
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.containerView.snp.updateConstraints { make in
+                    make.right.equalToSuperview().inset(0)
+                }
+                
+                self.layoutIfNeeded()
+            }
+        }
+    }
+}
+
+// MARK: - bind
+
+extension ChattingSideMenu {
+    
+    private func bindAction() {
         
         backgroundButton.rx.tap
             .withUnretained(self)
@@ -269,18 +287,13 @@ class ChattingSideMenu: UIView {
             }.disposed(by: disposeBag)
     }
     
-    func showAnimation() {
-        Task {
-            try await Task.sleep(nanoseconds: 100_000_000)
-            
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                guard let self else { return }
-                self.containerView.snp.updateConstraints { make in
-                    make.right.equalToSuperview().inset(0)
-                }
-                
-                self.layoutIfNeeded()
-            }
-        }
+    private func bindState() {
+        
+        tempList.asObserver()
+            .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
+                cell.configuration(name: item)
+            }.disposed(by: disposeBag)
+        
     }
+    
 }
