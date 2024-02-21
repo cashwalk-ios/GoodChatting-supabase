@@ -59,6 +59,7 @@
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
 		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
+		5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */; };
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
 		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
 		5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */; };
@@ -108,6 +109,7 @@
 		5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeViewController.swift; sourceTree = "<group>"; };
 		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
+		5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
 		5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryReactor.swift; sourceTree = "<group>"; };
 		5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistorytableViewCell.swift; sourceTree = "<group>"; };
@@ -353,6 +355,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		5CDAA2942B85C3E900CD4ABD /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
 		5CE2156C2B6B1E7800F4EB2A /* CodeIssuanceHistory */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +385,7 @@
 		8EB55B682B5F82E500008A6D /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5CDAA2942B85C3E900CD4ABD /* SideMenu */,
 				02F8CDC62B6B1D930010A66C /* Views */,
 				8EB55B692B5F82EE00008A6D /* ChatCell */,
 				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
@@ -502,6 +513,7 @@
 				5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */,
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
 				02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */,
+				5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */,
 				8E1A16AF2B74747200D56EDE /* ChatModel.swift in Sources */,
 				8E7DFD152B6875560078230C /* ChatView.swift in Sources */,
 				0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */,
