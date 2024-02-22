@@ -53,7 +53,7 @@ extension SideMenuViewController {
     private func bindState() {
         
         tempList.asObserver()
-            .bind(to: participantsTableView.rx.items(cellIdentifier: "participantCell", cellType: ChattingSideMenuCell.self)) { row , item , cell in
+            .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { row , item , cell in
                 cell.configuration(name: item)
             }.disposed(by: disposeBag)
         
@@ -216,7 +216,7 @@ extension SideMenuViewController {
             $0.rowHeight = 50
             $0.separatorColor = .clear
             $0.allowsSelection = false
-            $0.register(ChattingSideMenuCell.self, forCellReuseIdentifier: "participantCell")
+            $0.register(SideMenuCell.self, forCellReuseIdentifier: SideMenuCell.cellIdentifier)
             self.view.addSubview($0)
             $0.snp.makeConstraints {
                 $0.top.equalTo(middleContainer.snp.bottom)

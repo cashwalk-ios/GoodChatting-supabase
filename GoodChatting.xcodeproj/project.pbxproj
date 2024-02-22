@@ -60,6 +60,7 @@
 		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
 		5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */; };
+		5CDF1BC42B86D4DA0054DD5F /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */; };
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
 		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
 		5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */; };
@@ -110,6 +111,7 @@
 		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
 		5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
 		5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryReactor.swift; sourceTree = "<group>"; };
 		5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistorytableViewCell.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */,
+				5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */,
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				8EB55B6B2B5F830500008A6D /* ChatMyCell.swift in Sources */,
+				5CDF1BC42B86D4DA0054DD5F /* SideMenuCell.swift in Sources */,
 				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
 				5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */,
 				5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */,
