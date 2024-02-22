@@ -32,6 +32,18 @@ class ChatViewController: BaseViewController, View {
         guard self.isViewLoaded else { return }
         
         reactor.action.onNext(.fetchChatData)
+        reactor.action.onNext(.insertSubscribe)
+        
+        reactor.state.map(\.reload)
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, state in
+                if let state, state == true {
+                    DispatchQueue.main.async {
+                        owner.chatView.tableView.reloadData()
+                    }
+                }
+            }).disposed(by: disposeBag)
         
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
