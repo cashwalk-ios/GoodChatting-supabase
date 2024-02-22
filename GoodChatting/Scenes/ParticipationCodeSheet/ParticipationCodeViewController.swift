@@ -37,6 +37,12 @@ final class ParticipationCodeViewController: BaseViewController, View {
         bind(reactor: reactor)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.post(name: .didDismissParticipationCodeVC, object: nil)
+    }
+    
     deinit {
         Log.rk("ParticipationCodeViewController is Deinit!!")
     }

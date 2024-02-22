@@ -9,13 +9,22 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import RxGesture
 
 final class SideMenuViewController: BaseViewController {
     
     var disposeBag = DisposeBag()
     
     // MARK: - Properties
+    
+    private var dimmingView: UIView!
 
+    private var inviteButton: UIButton!
+    private var createDateLabel: UILabel!
+    private var participantsCountLabel: UILabel!
+    private var getoutButton: UIButton!
+    private var notiButton: UIButton!
+    
     private var participantsTableView: UITableView!
     
     var tempList: BehaviorSubject<[String]> = .init(value: ["name1", "name2", "name3", "name4", "name5"])
@@ -34,10 +43,26 @@ final class SideMenuViewController: BaseViewController {
         self.bindState()
         self.bindAction()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ParticipationCodeVCDismissAction), 
+                                               name: .didDismissParticipationCodeVC, object: nil)
     }
     
     deinit {
         Log.rk("SideMenuVC Deinit!!")
+    }
+    
+    // MARK: - Helpers
+    
+    @objc private func doneAction() {
+        self.dimmingView.isHidden = true
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func ParticipationCodeVCDismissAction() {
+        
+        if dimmingView.isHidden == false {
+            self.dimmingView.isHidden = true
+        }
     }
     
 }
@@ -48,6 +73,35 @@ extension SideMenuViewController {
     
     private func bindAction() {
 
+        self.inviteButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                let vc = ParticipationCodeViewController()
+                vc.reactor = ParticipationCodeReactor()
+                            
+                let nav = UINavigationController(rootViewController: vc)
+                
+                if let sheet = nav.sheetPresentationController {
+                    sheet.detents = [
+                        .custom(resolver: { context in
+                            let height: CGFloat = 434
+                            return height
+                        })
+                    ]
+                    sheet.preferredCornerRadius = 15
+                }
+                
+                let doneButton = UIBarButtonItem(title: "완료", style: .done,
+                                                 target: owner,
+                                                 action: #selector(owner.doneAction))
+                doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
+                vc.navigationItem.rightBarButtonItem = doneButton
+                
+                self.dimmingView.isHidden = false
+                
+                owner.present(nav, animated: true)
+            }).disposed(by: disposeBag)
+        
     }
     
     private func bindState() {
@@ -88,7 +142,7 @@ extension SideMenuViewController {
             }
         }
         
-        let createDateLabel = UILabel().then {
+        self.createDateLabel = UILabel().then {
             $0.text = "2024.02.22"
             $0.font = .appleSDGothicNeo(.medium, size: 11)
             $0.textColor = .init(hexCode: "999999")
@@ -142,7 +196,7 @@ extension SideMenuViewController {
             }
         }
         
-        let participantsCountLabel = UILabel().then {
+        self.participantsCountLabel = UILabel().then {
             $0.text = "34명"
             $0.font = .appleSDGothicNeo(.regular, size: 12)
             $0.textColor = .init(hexCode: "999999")
@@ -154,7 +208,7 @@ extension SideMenuViewController {
             }
         }
         
-        let inviteButton = UIButton().then {
+        self.inviteButton = UIButton().then {
             $0.setImage(UIImage(named: "invite-icon"), for: .normal)
             $0.setTitle(" 초대하기", for: .normal)
             $0.setTitleColor(.white, for: .normal)
@@ -180,7 +234,7 @@ extension SideMenuViewController {
             }
         }
         
-        let getoutButton = UIButton().then {
+        self.getoutButton = UIButton().then {
             $0.setImage(UIImage(named: "getout-icon"), for: .normal)
             $0.tintColor = .clear
             bottomContainer.addSubview($0)
@@ -191,7 +245,7 @@ extension SideMenuViewController {
             }
         }
         
-        let notiButton = UIButton().then {
+        self.notiButton = UIButton().then {
             $0.setImage(UIImage(named: "bell-icon"), for: .normal)
             $0.tintColor = .clear
             bottomContainer.addSubview($0)
@@ -212,7 +266,7 @@ extension SideMenuViewController {
             }
         }
         
-        participantsTableView = UITableView().then {
+        self.participantsTableView = UITableView().then {
             $0.rowHeight = 50
             $0.separatorColor = .clear
             $0.allowsSelection = false
@@ -225,6 +279,18 @@ extension SideMenuViewController {
             }
         }
         
+        self.dimmingView = UIView().then {
+            $0.backgroundColor = .designColor(color: .black(0.5))
+            $0.alpha = 0.5
+            $0.isHidden = true
+            self.view.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        }
+        
     }
     
 }
+
+

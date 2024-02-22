@@ -59,6 +59,7 @@
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
 		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
+		5CC6308A2B86F18500551677 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC630892B86F18500551677 /* Notification+Extension.swift */; };
 		5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */; };
 		5CDF1BC42B86D4DA0054DD5F /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */; };
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
@@ -110,6 +111,7 @@
 		5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeViewController.swift; sourceTree = "<group>"; };
 		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
+		5CC630892B86F18500551677 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			children = (
 				5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */,
 				5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */,
+				5CC630892B86F18500551677 /* Notification+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
 				8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */,
 				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
+				5CC6308A2B86F18500551677 /* Notification+Extension.swift in Sources */,
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
 				8EB82D9A2B6B28FA0048BD43 /* ChatDateDisplayCell.swift in Sources */,
 				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,

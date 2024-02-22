@@ -167,7 +167,6 @@ class ChatViewController: BaseViewController, View {
         }
         
         self.dimmingView.isHidden = false
-        self.dimmingView.alpha = 0
         
         window.layoutIfNeeded()
 
@@ -178,8 +177,6 @@ class ChatViewController: BaseViewController, View {
             }
             
             window.layoutIfNeeded()
-            
-            self.dimmingView?.alpha = 0.5
         })
     }
 
@@ -248,12 +245,13 @@ extension ChatViewController {
         
         self.dimmingView = UIView().then {
             $0.backgroundColor = .designColor(color: .black(0.5))
+            $0.alpha = 0.5
             $0.isHidden = true
             self.view.addSubview($0)
             $0.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
-            
         }
+        
     }
 }
