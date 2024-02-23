@@ -9,15 +9,17 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import ReactorKit
 import RxGesture
 
-final class SideMenuViewController: BaseViewController {
+final class SideMenuViewController: BaseViewController, View {
     
     var disposeBag = DisposeBag()
     
     // MARK: - Properties
     
     private var dimmingView: UIView!
+    var roomId: Int?
 
     private var inviteButton: UIButton!
     private var createDateLabel: UILabel!
@@ -40,8 +42,14 @@ final class SideMenuViewController: BaseViewController {
         self.view.backgroundColor = .designColor(color: .white())
         self.setView()
         
-        self.bindState()
-        self.bindAction()
+        guard let reactor = self.reactor else { return }
+        self.bind(reactor: reactor)
+        
+        if let roomId = self.roomId {
+            reactor.action.onNext(.fetchChattingInfo(roomId: roomId))
+        } else {
+            GlobalFunctions.showToast(message: "roomId 가져오기 실패")
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(ParticipationCodeVCDismissAction), 
                                                name: .didDismissParticipationCodeVC, object: nil)
@@ -52,6 +60,12 @@ final class SideMenuViewController: BaseViewController {
     }
     
     // MARK: - Helpers
+    
+    func bind(reactor: SideMenuReactor) {
+        guard self.isViewLoaded else { return }
+        self.bindAction(reactor: reactor)
+        self.bindState(reactor: reactor)
+    }
     
     @objc private func doneAction() {
         self.dimmingView.isHidden = true
@@ -71,7 +85,7 @@ final class SideMenuViewController: BaseViewController {
 
 extension SideMenuViewController {
     
-    private func bindAction() {
+    private func bindAction(reactor: SideMenuReactor) {
 
         self.inviteButton.rx.tap
             .withUnretained(self)
@@ -97,14 +111,24 @@ extension SideMenuViewController {
                 doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
                 vc.navigationItem.rightBarButtonItem = doneButton
                 
-                self.dimmingView.isHidden = false
+                owner.dimmingView.isHidden = false
                 
                 owner.present(nav, animated: true)
             }).disposed(by: disposeBag)
         
     }
     
-    private func bindState() {
+    private func bindState(reactor: SideMenuReactor) {
+        
+        reactor.state.map{ $0.chattingInfo.first }
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe { owner, roomInfo in
+                Log.rk(roomInfo)
+                owner.createDateLabel.text = "\(roomInfo.created_at)"
+                owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
+            }.disposed(by: disposeBag)
         
         tempList.asObserver()
             .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { row , item , cell in

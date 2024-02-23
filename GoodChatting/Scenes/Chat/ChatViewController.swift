@@ -29,10 +29,17 @@ class ChatViewController: BaseViewController, View {
         guard let reactor = self.reactor else { return }
         bind(reactor: reactor)
         
+        self.sideMenuViewController.reactor = SideMenuReactor()
     }
     
     deinit {
         Log.rk("ChatVC Deinit!!")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        sideMenuViewController.view.removeFromSuperview()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -96,6 +103,13 @@ class ChatViewController: BaseViewController, View {
                 
             }.disposed(by: disposeBag)
         
+        reactor.state.map { $0.roomData.id }
+            .withUnretained(self)
+            .subscribe(onNext: { owner, roomId in
+                Log.rk("RoomId is \(roomId)")
+                self.sideMenuViewController.roomId = roomId
+            }).disposed(by: disposeBag)
+        
         chatView.messageTextField.rx.text
             .orEmpty
             .withUnretained(self)
@@ -137,6 +151,7 @@ class ChatViewController: BaseViewController, View {
                     // 애니메이션 완료 후 사이드 메뉴를 뷰 계층 구조에서 제거
                     window.removeFromSuperview()
                     owner.sideMenuViewController.removeFromParent()
+                    
                     owner.dimmingView.isHidden = true
                 }
             }).disposed(by: disposeBag)
@@ -157,7 +172,7 @@ class ChatViewController: BaseViewController, View {
         guard let window = self.sceneDelegate?.window else { return }
         window.addSubview(self.sideMenuViewController.view)
         self.addChild(self.sideMenuViewController)
-
+        
         // 사이드 메뉴의 뷰에 대한 초기 제약 조건 설정
         self.sideMenuViewController.view.snp.makeConstraints {
             $0.width.equalTo(window.frame.width * 0.65) // 화면 너비의 65%로 설정
@@ -167,17 +182,22 @@ class ChatViewController: BaseViewController, View {
         }
         
         self.dimmingView.isHidden = false
+        self.dimmingView.alpha = 0
         
         window.layoutIfNeeded()
+        self.dimmingView.alpha = 0.5
 
-        UIView.animate(withDuration: 0.3, animations: {
-            // 사이드 메뉴 노출시키도록 오른쪽 제약 조건 업데이트
-            self.sideMenuViewController.view.snp.updateConstraints {
-                $0.right.equalTo(window.snp.right) // 화면 오른쪽 끝으로 이동
-            }
-            
-            window.layoutIfNeeded()
-        })
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3, animations: {
+                // 사이드 메뉴 노출시키도록 오른쪽 제약 조건 업데이트
+                self.sideMenuViewController.view.snp.updateConstraints {
+                    $0.right.equalTo(window.snp.right) // 화면 오른쪽 끝으로 이동
+                }
+                
+                window.layoutIfNeeded()
+            })
+        }
+        
     }
 
 }
@@ -245,7 +265,6 @@ extension ChatViewController {
         
         self.dimmingView = UIView().then {
             $0.backgroundColor = .designColor(color: .black(0.5))
-            $0.alpha = 0.5
             $0.isHidden = true
             self.view.addSubview($0)
             $0.snp.makeConstraints {
