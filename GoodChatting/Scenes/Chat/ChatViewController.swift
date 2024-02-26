@@ -50,6 +50,19 @@ class ChatViewController: BaseViewController, View {
         guard self.isViewLoaded else { return }
         
         reactor.action.onNext(.fetchChatData)
+        reactor.action.onNext(.insertSubscribe)
+        
+        reactor.state.map(\.reload)
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, state in
+                if let state, state == true {
+                    DispatchQueue.main.async {
+                        owner.chatView.tableView.reloadData()
+                        owner.scrollToBottom()
+                    }
+                }
+            }).disposed(by: disposeBag)
         
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
@@ -78,8 +91,7 @@ class ChatViewController: BaseViewController, View {
             }).disposed(by: disposeBag)
         
         reactor.state.map(\.chatList)
-            .bind(to: chatView.tableView.rx.items) { [weak self]
-                cell, index, model -> UITableViewCell in
+            .bind(to: chatView.tableView.rx.items) { [weak self] cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
 //                let ss = reactor.currentState.chatList[index - 1]
@@ -131,6 +143,7 @@ class ChatViewController: BaseViewController, View {
                     
                     Log.cyo("touch Button")
                     reactor.action.onNext(.sendMessage(text: textMessage))
+                    owner.chatView.messageTextField.text = ""
                 }
             }).disposed(by: disposeBag)
         
@@ -199,7 +212,21 @@ class ChatViewController: BaseViewController, View {
         }
         
     }
-
+    
+    private func scrollToBottom() {
+        
+        let lastIndex = chatView.tableView.numberOfSections - 1
+        let lastRow = chatView.tableView.numberOfRows(inSection: lastIndex) - 1
+        
+        if lastIndex >= 0 && lastRow >= 0 {
+            let indexPath = IndexPath(row: lastRow, section: lastIndex)
+            chatView.tableView.scrollToRow(
+                at: indexPath,
+                at: .bottom,
+                animated: true
+            )
+        }
+    }
 }
 
 extension ChatViewController: UITextFieldDelegate {
@@ -207,10 +234,6 @@ extension ChatViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         chatView.messageTextField.becomeFirstResponder()
     }
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        chatView.messageTextField.becomeFirstResponder()
-//        return true
-//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         chatView.messageTextField.resignFirstResponder()
