@@ -116,11 +116,11 @@ final class HomeReactor: Reactor {
                                 Log.cyo("채팅방 생성 성공")
                             } else {
                                 Log.cyo("채팅방 생성 실패 \(status)")
-                                //TODO: 실패 에러 메시지 보여줄것인가?
+                                GlobalFunctions.showToast(message: "채팅방 생성 실패하였습니다.")
                             }
                         } catch {
                             Log.cyo("채팅방 생성 error \(error.localizedDescription)")
-                            //TODO: 실패 에러 메시지 보여줄것인가?
+                            GlobalFunctions.showToast(message: "채팅방 생성 실패하였습니다.")
                         }
                     }
                     
