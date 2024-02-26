@@ -241,10 +241,15 @@ final class JoinRoomView: UIView {
             var newPeopleArray = currentPeopleArray
             newPeopleArray.append(userId)
             
+            struct UpdateJoinRoomItem: Codable {
+                let people: [String]
+                let updated_at: Date
+            }
+            
             // people 컬럼 업데이트
             try await AuthManager.shared.client.database
                 .from("roomCYO")
-                .update(["people": newPeopleArray])
+                .update(UpdateJoinRoomItem(people: newPeopleArray, updated_at: Date()))
                 .eq("id", value: roomId)
                 .execute()
         } else {
