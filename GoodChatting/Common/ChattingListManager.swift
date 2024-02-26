@@ -97,6 +97,28 @@ class ChattingListManager {
         subject.onNext(.getList(list))
     }
     
+    func getCurrentChatRoomDetails(userId: String, roomId: Int) async throws -> [ChattingList] {
+        Log.rk("getCurrentChatRoomDetails")
+        
+        let data: [ChattingList] = try await supabase.database
+            .from("roomCYO")
+            .select(
+            """
+                *,
+                roomUserCYO (
+                    *
+                )
+            """
+            )
+        
+            .contains("people", value: [userId])    // 내가 참여한 방의 정보만 가져오기 ver.유저ID
+            .eq("id", value: roomId)    // 내가 입장한 방의 정보만 가져오기
+            .execute()
+            .value
+
+        return data
+    }
+        
     func addChattingTable(item: ChattingRoomItem) async throws -> Int {
         // id, createdAt,
         Log.cyo("addChattingTable(item: \(item))")

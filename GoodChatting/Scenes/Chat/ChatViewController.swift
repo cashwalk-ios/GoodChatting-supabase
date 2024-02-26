@@ -9,11 +9,17 @@ import UIKit
 import ReactorKit
 import RxSwift
 import RxCocoa
+import SnapKit
+import Then
 
 class ChatViewController: BaseViewController, View {
     
     var disposeBag = DisposeBag()
 
+    private var sideMenuViewController = SideMenuViewController()
+    private var dimmingView: UIView!
+    private var statusHeight: CGFloat?
+    
     private var chatView: ChatView!
     
     override func viewDidLoad() {
@@ -22,6 +28,18 @@ class ChatViewController: BaseViewController, View {
         setConfigure()
         guard let reactor = self.reactor else { return }
         bind(reactor: reactor)
+        
+        self.sideMenuViewController.reactor = SideMenuReactor()
+    }
+    
+    deinit {
+        Log.rk("ChatVC Deinit!!")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        sideMenuViewController.view.removeFromSuperview()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -85,6 +103,13 @@ class ChatViewController: BaseViewController, View {
                 
             }.disposed(by: disposeBag)
         
+        reactor.state.map { $0.roomData.id }
+            .withUnretained(self)
+            .subscribe(onNext: { owner, roomId in
+                Log.rk("RoomId is \(roomId)")
+                self.sideMenuViewController.roomId = roomId
+            }).disposed(by: disposeBag)
+        
         chatView.messageTextField.rx.text
             .orEmpty
             .withUnretained(self)
@@ -108,6 +133,29 @@ class ChatViewController: BaseViewController, View {
                     reactor.action.onNext(.sendMessage(text: textMessage))
                 }
             }).disposed(by: disposeBag)
+        
+        dimmingView.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                guard let window = owner.sceneDelegate?.window else { return }
+                
+                UIView.animate(withDuration: 0.3, animations: {
+                    // 사이드 메뉴를 화면 오른쪽 바깥으로 이동
+                    owner.sideMenuViewController.view.snp.updateConstraints {
+                        $0.right.equalTo(window.snp.right).offset(window.frame.width * 0.65)
+                    }
+                    window.layoutIfNeeded()
+                    owner.dimmingView.alpha = 0
+                }) { finished in
+                    // 애니메이션 완료 후 사이드 메뉴를 뷰 계층 구조에서 제거
+                    window.removeFromSuperview()
+                    owner.sideMenuViewController.removeFromParent()
+                    
+                    owner.dimmingView.isHidden = true
+                }
+            }).disposed(by: disposeBag)
+        
     }
     
     @objc
@@ -121,25 +169,37 @@ class ChatViewController: BaseViewController, View {
     }
     
     fileprivate func showSideMenu() {
-        let statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let bottomHeight = self.sceneDelegate?.window?.safeAreaInsets.bottom ?? 0
+        guard let window = self.sceneDelegate?.window else { return }
+        window.addSubview(self.sideMenuViewController.view)
+        self.addChild(self.sideMenuViewController)
         
-        let sideMenu = ChattingSideMenu(statusHeight: statusHeight, bottomHeight: bottomHeight)
-        self.sceneDelegate?.window?.addSubview(sideMenu)
-        
-        sideMenu.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        // 사이드 메뉴의 뷰에 대한 초기 제약 조건 설정
+        self.sideMenuViewController.view.snp.makeConstraints {
+            $0.width.equalTo(window.frame.width * 0.65) // 화면 너비의 65%로 설정
+            $0.height.equalTo(window)
+            $0.top.equalToSuperview().inset(statusHeight ?? 0)
+            $0.right.equalTo(window.snp.right).offset(window.frame.width * 0.65) // 초기에는 화면 오른쪽 바깥으로 설정
         }
         
-        if let reactor = self.reactor {
-            sideMenu.actionSubject
-                .map({ Reactor.Action.sideMenuAction(action: $0) })
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
+        self.dimmingView.isHidden = false
+        self.dimmingView.alpha = 0
+        
+        window.layoutIfNeeded()
+        self.dimmingView.alpha = 0.5
+
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3, animations: {
+                // 사이드 메뉴 노출시키도록 오른쪽 제약 조건 업데이트
+                self.sideMenuViewController.view.snp.updateConstraints {
+                    $0.right.equalTo(window.snp.right) // 화면 오른쪽 끝으로 이동
+                }
+                
+                window.layoutIfNeeded()
+            })
         }
         
-        sideMenu.showAnimation()
     }
+
 }
 
 extension ChatViewController: UITextFieldDelegate {
@@ -169,7 +229,9 @@ extension ChatViewController {
     
     private func setConfigure() {
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .designColor(color: .white())
+        
+        statusHeight = self.sceneDelegate?.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         
         chatView = ChatView().then {
             self.view.addSubview($0)
@@ -200,5 +262,15 @@ extension ChatViewController {
         self.chatView.tableView.register(ChatOtherCell.self, forCellReuseIdentifier: "otherChat")
         self.chatView.tableView.delegate = self
         self.chatView.messageTextField.delegate = self
+        
+        self.dimmingView = UIView().then {
+            $0.backgroundColor = .designColor(color: .black(0.5))
+            $0.isHidden = true
+            self.view.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        }
+        
     }
 }
