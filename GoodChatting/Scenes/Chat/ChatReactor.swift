@@ -126,8 +126,8 @@ final class ChatReactor: Reactor {
             let inputTimestamp = dateformatter.string(from: Date())
             
             let item = ChatMessageModel(id: UUID().uuidString,
-                                        room_id: 1,
-                                        user_id: "1",
+                                        room_id: currentState.roomData.id,
+                                        user_id: currentState.userData.id,
                                         message: message,
                                         read_users: nil,
                                         created_at: inputTimestamp)
@@ -216,7 +216,7 @@ extension ChatReactor {
             var messages: [ChatMessageModel] = try await client.database
                 .from("newmessageCYO")
                 .select()
-                .equals("room_id", value: "1")
+                .equals("room_id", value: "\(currentState.roomData.id)")
                 .execute()
                 .value
             
