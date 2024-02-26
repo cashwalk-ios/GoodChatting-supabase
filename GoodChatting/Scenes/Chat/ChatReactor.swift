@@ -59,18 +59,6 @@ final class ChatReactor: Reactor {
                         
                         let action = await self.channel.postgresChange(AnyAction.self, table: "newmessageCYO")
                         await self.channel.subscribe()
-                        
-//                        for await change in action {
-//                            do {
-////                                let update = try change.rawMessage.payload.decode(as: ChatMessageModel.self,
-////                                                                                  decoder: JSONDecoder())
-////                                Log.cyo(update)
-//                            } catch {
-//                                Log.cyo("12324")
-//                                observer.onError(error)
-//                            }
-//                        }
-                        
                         await self.subscribeBroadcast()
                         let database = await self.fetchDatabase()
                         
@@ -225,16 +213,14 @@ extension ChatReactor {
     @MainActor
     private func fetchDatabase() async -> [ChatMessageModel] {
         do {
-            let messages: [ChatMessageModel] = try await client.database
+            var messages: [ChatMessageModel] = try await client.database
                 .from("newmessageCYO")
                 .select()
                 .equals("room_id", value: "1")
                 .execute()
                 .value
             
-//            Log.cyo(messages)
-//            self.messages = messages.sorted(by: { $0.createdAt < $1.createdAt })
-            return messages
+            return messages.sorted(by: { $0.created_at < $1.created_at })
         } catch let error {
             print(error.localizedDescription)
         }

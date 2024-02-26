@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatMessageModel: Codable {
+struct ChatMessageModel: Codable, Equatable {
     let id: String
     let room_id: Int
     let user_id: String
