@@ -7,6 +7,7 @@
 
 import UIKit
 import KakaoSDKAuth
+import ReactorKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,54 +24,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navController
         self.window = window
         self.window?.makeKeyAndVisible()
-    }
-    
-    func navigateToHome(with userCYO: UserCYO?) {
-        let homeVC = HomeViewController()
-        homeVC.reactor = HomeReactor(userCYO: userCYO)
-        homeVC.sceneDelegate = self
-        window?.rootViewController = UINavigationController(rootViewController: homeVC)
-        window?.makeKeyAndVisible()
-    }
-    
-    func navigateToSplash() {
-        let splashVC = SplashViewController()
-        splashVC.sceneDelegate = self
-        window?.rootViewController = UINavigationController(rootViewController: splashVC)
-        window?.makeKeyAndVisible()
+        
+        // 앱이 꺼져있는 경우
+        if let urlContext = connectionOptions.urlContexts.first {
+            handleAppSchemes(connectionOptions.urlContexts)
+        }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 //        handleKakaoLoginURL(URLContexts)
         handleAppSchemes(URLContexts)
-    }
-    
-    // FIXME: 추후 Supabase에서 카카오 로그인을 Swift SDK로 지원하면 그때 추가
-//    fileprivate func handleKakaoLoginURL(_ URLContexts: Set<UIOpenURLContext>) {
-//        if let url = URLContexts.first?.url {
-//            if (AuthApi.isKakaoTalkLoginUrl(url)) {
-//                _ = AuthController.handleOpenUrl(url: url)
-//            }
-//        }
-//    }
-    
-    fileprivate func handleAppSchemes(_ URLContexts: Set<UIOpenURLContext>) {
-        if let urlContext = URLContexts.first {
-            let url = urlContext.url
-            Log.kkr("url: \(url)")
-            
-            if url.scheme == "goodchattingapp" {
-                guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-                      let queryItems = components.queryItems else { return }
-                
-                if let code = queryItems.first(where: { $0.name == "joinCode" })?.value {
-                    // TODO: 홈이 아니면 홈으로 보내고 채팅방 참여하기 팝업을 열어서 입력칸에 코드를 붙여 넣어준다.
-                    Log.kkr("Received code: \(code)")
-//                    let homeVC = HomeViewController()
-//                    homeVC.reactor?.action.onNext(.chattingAddAction(.joinRoom))
-                }
-            }
-        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -103,3 +66,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    
+    func navigateToHome(with userCYO: UserCYO?, joinCode: String? = nil) {
+        let homeVC = HomeViewController()
+        homeVC.reactor = HomeReactor(userCYO: userCYO)
+        homeVC.sceneDelegate = self
+        window?.rootViewController = UINavigationController(rootViewController: homeVC)
+        window?.makeKeyAndVisible()
+        
+        if let code = joinCode {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                homeVC.reactor?.action.onNext(.chattingAddAction(.joinRoom(code)))
+            }
+        }
+    }
+    
+    func navigateToSplash() {
+        let splashVC = SplashViewController()
+        splashVC.sceneDelegate = self
+        window?.rootViewController = UINavigationController(rootViewController: splashVC)
+        window?.makeKeyAndVisible()
+    }
+    
+    // FIXME: 추후 Supabase에서 카카오 로그인을 Swift SDK로 지원하면 그때 추가
+//    fileprivate func handleKakaoLoginURL(_ URLContexts: Set<UIOpenURLContext>) {
+//        if let url = URLContexts.first?.url {
+//            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+//                _ = AuthController.handleOpenUrl(url: url)
+//            }
+//        }
+//    }
+    
+    fileprivate func handleAppSchemes(_ URLContexts: Set<UIOpenURLContext>) {
+        if let urlContext = URLContexts.first {
+            let url = urlContext.url
+            Log.kkr("url: \(url)")
+            
+            if url.scheme == "goodchattingapp" {
+                guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                      let queryItems = components.queryItems else { return }
+                
+                let code = queryItems.first(where: { $0.name == "joinCode" })?.value
+                navigateToHome(with: UserCYO(id: UserSettings.userId ?? "", email: nil), joinCode: code)
+            }
+        }
+    }
+}
