@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import RxKeyboard
 
 class ChatViewController: BaseViewController, View {
     
@@ -109,7 +110,8 @@ class ChatViewController: BaseViewController, View {
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     
-                    cell.configure(messageModel: model)
+                    cell.configure(messageModel: model, 
+                                   otherModel: reactor.currentState.roomData.roomUserCYO ?? [])
                     return cell
                 }
                 
@@ -227,6 +229,23 @@ class ChatViewController: BaseViewController, View {
             )
         }
     }
+    
+    private func setKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: { [weak self] keyboardVisibleHeight in
+                guard let self else { return }
+                
+                let dynamicKeyboardHeight = keyboardVisibleHeight > 0 ? -keyboardVisibleHeight + self.chatView.safeAreaInsets.bottom : 0
+                
+                self.chatView.messageTextField.snp.updateConstraints {
+                    $0.bottom.equalTo(self.chatView.safeAreaLayoutGuide)
+                        .offset(dynamicKeyboardHeight)
+                }
+                
+                self.chatView.layoutIfNeeded()
+            }).disposed(by: disposeBag)
+    }
 }
 
 extension ChatViewController: UITextFieldDelegate {
@@ -295,5 +314,7 @@ extension ChatViewController {
             }
         }
         
+        // setting
+        self.setKeyboard()
     }
 }
