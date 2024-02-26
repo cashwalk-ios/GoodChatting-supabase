@@ -126,7 +126,7 @@ extension SideMenuViewController {
             .withUnretained(self)
             .subscribe { owner, roomInfo in
                 Log.rk(roomInfo)
-                owner.createDateLabel.text = "\(roomInfo.created_at)"
+                owner.createDateLabel.text = GlobalFunctions.getDateStr(date: roomInfo.created_at, format: "yyyy.MM.dd")
                 owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
             }.disposed(by: disposeBag)
         
