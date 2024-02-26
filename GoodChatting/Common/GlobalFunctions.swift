@@ -102,14 +102,14 @@ class GlobalFunctions {
         }
     }
     
-    /// 고유한 랜덤 코드 생성
-    ///
-    /// '-' 하이픈을 제거하고 어미에 'g.sh/'를 붙여 생성
+    /// 17자리 랜덤 코드 생성
     class func GenerateUniqueRandomCode() -> String {
-        let uniqueCode = UUID().uuidString
-        let removeHyphen = uniqueCode.replacingOccurrences(of: "-", with: "")
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+_"
+        let removeHyphen = String((0..<17).map{ _ in letters.randomElement()! })
         let addPrefix = "g.sh/" + removeHyphen
         return addPrefix
+        
+        // TODO: DB 중복 체크, 암호화/복호화
     }
     
     /// 공유하기 링크 생성
