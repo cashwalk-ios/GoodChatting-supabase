@@ -119,7 +119,7 @@ class ChatViewController: BaseViewController, View {
             .withUnretained(self)
             .subscribe(onNext: { owner, roomId in
                 Log.rk("RoomId is \(roomId)")
-                self.sideMenuViewController.roomId = roomId
+                owner.sideMenuViewController.roomId = roomId
             }).disposed(by: disposeBag)
         
         chatView.messageTextField.rx.text
