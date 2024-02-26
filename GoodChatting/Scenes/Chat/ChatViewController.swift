@@ -95,7 +95,7 @@ class ChatViewController: BaseViewController, View {
             .bind(to: chatView.tableView.rx.items) { [weak self] cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
-                if index > 2 {
+                if index > 2 && index != reactor.currentState.chatList.count - 1 {
                     let previousCell = reactor.currentState.chatList[index - 2].created_at
                     let currenctCell = reactor.currentState.chatList[index - 1].created_at
                     
@@ -118,7 +118,20 @@ class ChatViewController: BaseViewController, View {
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
                     Log.cyo(model)
-                    cell.configure(messageModel: model)
+                    
+                    var isCompare: Bool = false
+                    
+//                    if index > 2, reactor.currentState.chatList.count >  {
+//                        let previousCell = reactor.currentState.chatList[index - 2].created_at
+//                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
+//                        
+//                        isCompare = model.isCompareChatDate(
+//                            previousCellDate: previousCell,
+//                            currentCellDate: currenctCell
+//                        )
+//                    }
+                    
+                    cell.configure(messageModel: model, isCompare: isCompare)
                     return cell
                 case false:
                     /// 상대방 채팅

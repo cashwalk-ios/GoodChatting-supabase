@@ -11,6 +11,7 @@ import SnapKit
 final class ChatDateDisplayCell: UITableViewCell {
     
     let identifier: String = "ChatDate"
+    private var displayLabel: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,7 +24,7 @@ final class ChatDateDisplayCell: UITableViewCell {
     
     func setConfigure(displayText dateText: String) {
         
-        let _ = UILabel().then {
+        displayLabel = UILabel().then {
             self.addSubview($0)
             $0.text = dateText
             $0.font = UIFont.systemFont(ofSize: 10)
@@ -33,5 +34,11 @@ final class ChatDateDisplayCell: UITableViewCell {
                 make.height.equalTo(10)
             }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        displayLabel.text = nil
     }
 }
