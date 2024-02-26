@@ -128,6 +128,12 @@ extension ParticipationCodeViewController {
     }
     
     private func bindState(reactor: ParticipationCodeReactor) {
+     
+        reactor.state.map { $0.activeParticipationCode }
+            .withUnretained(self)
+            .subscribe(onNext: { owner, code in
+                owner.participationCode.text = code
+            }).disposed(by: disposeBag)
         
     }
     

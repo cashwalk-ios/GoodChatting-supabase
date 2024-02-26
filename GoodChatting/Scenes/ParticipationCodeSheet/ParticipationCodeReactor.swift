@@ -18,10 +18,14 @@ final class ParticipationCodeReactor: Reactor {
     }
     
     struct State {
-        
+        var activeParticipationCode: String
     }
     
-    let initialState: State = State()
+    let initialState: State
+    
+    init(activeParticipationCode: String) {
+        self.initialState = State(activeParticipationCode: activeParticipationCode)
+    }
     
     func mutate(action: Action) -> Observable<Mutation> {
         

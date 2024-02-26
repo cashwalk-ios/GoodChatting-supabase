@@ -19,6 +19,8 @@ final class SideMenuViewController: BaseViewController, View {
     // MARK: - Properties
     
     private var dimmingView: UIView!
+    
+    private var activeParticipationCode: String?
     var roomId: Int?
 
     private var inviteButton: UIButton!
@@ -89,7 +91,7 @@ extension SideMenuViewController {
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 let vc = ParticipationCodeViewController()
-                vc.reactor = ParticipationCodeReactor()
+                vc.reactor = ParticipationCodeReactor(activeParticipationCode: owner.activeParticipationCode ?? "")
                             
                 let nav = UINavigationController(rootViewController: vc)
                 
@@ -126,6 +128,8 @@ extension SideMenuViewController {
                 Log.rk(roomInfo)
                 owner.createDateLabel.text = GlobalFunctions.getDateStr(date: roomInfo.created_at, format: "yyyy.MM.dd")
                 owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
+                
+                owner.activeParticipationCode = roomInfo.active_participation_code
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.chattingInfo.first?.roomUserCYO }
