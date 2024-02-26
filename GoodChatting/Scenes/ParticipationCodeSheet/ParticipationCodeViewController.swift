@@ -75,7 +75,7 @@ extension ParticipationCodeViewController {
                 owner.setupGenerator()
                 owner.feedbackGenerator?.impactOccurred()
 
-                UIPasteboard.general.string = owner.participationCode.text
+                UIPasteboard.general.string = GlobalFunctions.makeShareLink(joinCode: owner.participationCode.text ?? "")
                 owner.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
 
             }).disposed(by: disposeBag)
@@ -105,9 +105,15 @@ extension ParticipationCodeViewController {
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 guard let participationCode = owner.participationCode.text else { return }
+                var participationCodeToShare = GlobalFunctions.makeShareLink(joinCode: participationCode)
                 
                 var stringToShare = [String]()
-                stringToShare.append("\(participationCode)")
+                stringToShare.append(
+                """
+                굿채팅의 세계로 초대합니다.
+                
+                참여 코드: \(participationCodeToShare)
+                """)
                 
                 let activityVC = UIActivityViewController(activityItems : stringToShare, applicationActivities: nil)
                 
@@ -128,6 +134,14 @@ extension ParticipationCodeViewController {
     }
     
     private func bindState(reactor: ParticipationCodeReactor) {
+     
+        reactor.state.map { $0.activeParticipationCode }
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, renewedCode in
+                owner.participationCode.text = renewedCode
+                
+            }).disposed(by: disposeBag)
         
     }
     
@@ -195,7 +209,7 @@ extension ParticipationCodeViewController {
             let menuItems: [UIMenuElement] = [
                 UIAction(title: "복사", image: UIImage(named: "copy_Icon"), handler: { [weak self] _ in
                     guard let self = self, let codeText = self.participationCode.text else { return }
-                    UIPasteboard.general.string = codeText
+                    UIPasteboard.general.string = GlobalFunctions.makeShareLink(joinCode: codeText)
                     self.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
                 }),
                 UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { [weak self] _ in
@@ -208,20 +222,8 @@ extension ParticipationCodeViewController {
                 }),
                 UIAction(title: "새로 발급", image: UIImage(named: "rotate_Icon"), attributes: .destructive, handler: { [weak self] _ in
                     guard let self else { return }
-                    // TODO: - Supabase에서 키 새로 발급하는 로직
-                    // Temp
-                    let tempRandomCode = [
-                        "g.sh/+3bNCRMGeF_3mOFU2",
-                        "g.sh/+6hBCXSGeF_4bOFU2",
-                        "g.sh/+8yKRWOEtIU_3dWRF9",
-                        "g.sh/+5rGXQCYtQZ_1dUGS2",
-                        "g.sh/+7nHUYVGeKJ_2fXRT3",
-                        "g.sh/+9mIVXDFtLQ_4gZSA4",
-                        "g.sh/+1oJWZEGuMP_5hTBV5",
-                        "g.sh/+2pKXYFHvNQ_6iUCW6",
-                        "g.sh/+4qLZYGIwOR_7jVDX7"
-                    ].randomElement()
-                    self.participationCode.text = tempRandomCode
+                    reactor?.action.onNext(.renewParticipationCode)
+
                     self.showToast(message: "참여 코드가 새로 발급되었습니다.", duration: 2.0)
                 })
             ]
@@ -237,7 +239,7 @@ extension ParticipationCodeViewController {
         }
 
         self.participationCode = UILabel().then {
-            $0.text = "g.sh/+3bNCRMGeF_3mOFU2"
+            $0.text = "Waiting..."
             $0.font = .appleSDGothicNeo(.medium, size: 17)
             $0.textColor = UIColor.designColor(color: .black())
             codeBoxView.addSubview($0)

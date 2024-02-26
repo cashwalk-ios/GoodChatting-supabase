@@ -11,4 +11,5 @@ extension Notification.Name {
     
     // 초대코드 바텀시트
     static let didDismissParticipationCodeVC = Notification.Name("didDismissParticipationCodeVC")
+    static let participationCodetoSideMenuVC = Notification.Name("participationCodetoSideMenuVC")
 }
