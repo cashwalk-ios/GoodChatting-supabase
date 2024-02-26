@@ -196,7 +196,7 @@ final class HomeViewController: BaseViewController, View {
                 UIAction(title: "로그아웃", attributes: .destructive , handler: { [weak self] _ in
                     guard let self else { return }
                     self.presentLogoutAlert()
-                    UserSettings.userId = nil
+                    UserSettings.userId = ""
                 }),
                 UIAction(title: "참여 코드 바텀시트", handler: { [weak self] _ in
                     guard let self else { return }
