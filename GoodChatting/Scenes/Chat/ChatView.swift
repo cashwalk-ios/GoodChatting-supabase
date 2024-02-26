@@ -67,7 +67,7 @@ extension ChatView {
         let sendButtonImage = UIImageView().then {
             sendButton.addSubview($0)
             $0.image = UIImage(named: "chatSendImage")
-            $0.isUserInteractionEnabled = true
+            $0.isUserInteractionEnabled = false
             $0.snp.makeConstraints { make in
                 make.centerX.centerY.equalTo(sendButton)
                 make.width.height.equalTo(15)
@@ -78,6 +78,7 @@ extension ChatView {
             self.addSubview($0)
             $0.backgroundColor = .white
             $0.separatorStyle = .none
+            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0)
             $0.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
                 make.bottom.equalTo(messageTextField.snp.top)

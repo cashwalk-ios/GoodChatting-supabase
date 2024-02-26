@@ -278,7 +278,8 @@ extension ChatViewController {
         chatView = ChatView().then {
             self.view.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+                make.left.right.equalToSuperview()
             }
         }
         
