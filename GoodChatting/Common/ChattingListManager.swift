@@ -62,19 +62,14 @@ class ChattingListManager {
         case let .update(action):
             let recode = action.record
             Log.cyo("V2 update recode \(recode)")
-            if let people = recode["people"]?.arrayValue {
-                if people.count == 0 {
-                    Log.cyo("채팅방 폭파")
-                    
-                } else if people.contains(where: { $0.stringValue ?? "" == userId }) {
-                    Log.cyo("채팅방 리스트만 갱신")
-                    
-                    Task { [weak self] in
-                        do {
-                            try await self?.getChattingList(userId: userId)
-                        } catch {
-                            Log.cyo("handleChangedRoom update error \(error.localizedDescription)")
-                        }
+            if let people = recode["people"]?.arrayValue, people.contains(where: { $0.stringValue ?? "" == userId }) {
+                Log.cyo("채팅방 리스트만 갱신")
+                
+                Task { [weak self] in
+                    do {
+                        try await self?.getChattingList(userId: userId)
+                    } catch {
+                        Log.cyo("handleChangedRoom update error \(error.localizedDescription)")
                     }
                 }
             }
@@ -82,22 +77,52 @@ class ChattingListManager {
         case let .delete(action):
             let recode = action.oldRecord
             Log.cyo("V2 delete recode \(recode)")
+            if let id = recode["id"]?.intValue, userRoomList.contains(where: { $0.id == id }) {
+                Task { [weak self] in
+                    do {
+                        try await self?.getChattingList(userId: userId)
+                    } catch {
+                        Log.cyo("handleChangedRoom update error \(error.localizedDescription)")
+                    }
+                }
+            }
         default:
             break
         }
     }
     
     func getoutRoom(userId: String, roomData: ChattingList) {
-        Task {
-            do {
-                try await deleteUserRoom(userId: userId, roomId: roomData.id)
-                if let item = roomData.roomUserCYO?.first(where: { $0.user_id ?? "" == userId }) {
-                    try await deleteUserNickName(item: item)
+        if (roomData.maker ?? "") == userId {
+            // 방 생성자 -> 방 폭파
+            // 방에 참여한 모든 데이터 삭제
+            // 메시지 삭제 : newmessageCYO
+            // 사람 삭제 : roomUserCYO
+            // 방 삭제 : roomCYO
+            Log.cyo("방 폭파")
+            Task {
+                do {
+                    try await deleteMessageInRoom(roomId: roomData.id)
+                    try await deleteNicknameInRoom(roomId: roomData.id)
+                    try await deleteRoom(item: roomData)
+                } catch {
+                    Log.cyo("getoutRoom maker User error \(error.localizedDescription)")
                 }
-                try await deleteUserInRoom(userId: userId, item: roomData)
-                try await getChattingList(userId: userId)
-            } catch {
-                Log.cyo("getoutRoom update error \(error.localizedDescription)")
+            }
+            
+        } else {
+            // 일반 참가자 -> 방 나가기
+            Log.cyo("방 나가기")
+            Task {
+                do {
+                    try await deleteUserRoom(userId: userId, roomId: roomData.id)
+                    if let item = roomData.roomUserCYO?.first(where: { $0.user_id ?? "" == userId }) {
+                        try await deleteUserNickName(item: item)
+                    }
+                    try await deleteUserInRoom(userId: userId, item: roomData)
+                    try await getChattingList(userId: userId)
+                } catch {
+                    Log.cyo("getoutRoom normal User error \(error.localizedDescription)")
+                }
             }
         }
     }
@@ -251,6 +276,20 @@ class ChattingListManager {
         Log.cyo("response \(response)")
     }
     
+    // roomUserCYO : 해당 방에 포함된 모든 닉네임 아이템 삭제
+    func deleteNicknameInRoom(roomId: Int) async throws {
+        Log.cyo("deleteNicknameInRoom(roomId: \(roomId))")
+        
+        let response = try await supabase
+            .database
+            .from("roomUserCYO")
+            .delete()
+            .eq("room_id", value: roomId)
+            .execute()
+        
+        Log.cyo("response \(response)")
+    }
+    
     // roomUserCYO: 방 나가기 후 해당 방에서 사용하고 있던 닉네임 아이템 삭제
     func deleteUserNickName(item: RoomUserCYO) async throws {
         Log.cyo("deleteUserNickName(item: \(item))")
@@ -265,17 +304,17 @@ class ChattingListManager {
         Log.cyo("response \(response)")
     }
     
-//    func insertChatList() async throws {
-//        let item = ChatMessageModel(id: 6,
-//                                    room_id: 1,
-//                                    user_id: 1,
-//                                    message: "HI",
-//                                    read_users: nil)
-//        
-//        let response = try await supabase
-//            .database
-//            .from("messageCYO")
-//            .insert(item)
-//            .execute()
-//    }
+    // newmessageCYO : 해당 방에 포함된 모든 메시지 아이템 삭제
+    func deleteMessageInRoom(roomId: Int) async throws {
+        Log.cyo("deleteMessageInRoom(roomId: \(roomId))")
+        
+        let response = try await supabase
+            .database
+            .from("newmessageCYO")
+            .delete()
+            .eq("room_id", value: roomId)
+            .execute()
+        
+        Log.cyo("response \(response)")
+    }
 }
