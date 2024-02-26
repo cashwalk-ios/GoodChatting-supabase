@@ -75,7 +75,7 @@ extension ParticipationCodeViewController {
                 owner.setupGenerator()
                 owner.feedbackGenerator?.impactOccurred()
 
-                UIPasteboard.general.string = owner.participationCode.text
+                UIPasteboard.general.string = GlobalFunctions.makeShareLink(joinCode: owner.participationCode.text ?? "")
                 owner.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
 
             }).disposed(by: disposeBag)
@@ -105,9 +105,15 @@ extension ParticipationCodeViewController {
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 guard let participationCode = owner.participationCode.text else { return }
+                var participationCodeToShare = GlobalFunctions.makeShareLink(joinCode: participationCode)
                 
                 var stringToShare = [String]()
-                stringToShare.append("\(participationCode)")
+                stringToShare.append(
+                """
+                굿채팅의 세계로 초대합니다.
+                
+                참여 코드: \(participationCodeToShare)
+                """)
                 
                 let activityVC = UIActivityViewController(activityItems : stringToShare, applicationActivities: nil)
                 
@@ -201,7 +207,7 @@ extension ParticipationCodeViewController {
             let menuItems: [UIMenuElement] = [
                 UIAction(title: "복사", image: UIImage(named: "copy_Icon"), handler: { [weak self] _ in
                     guard let self = self, let codeText = self.participationCode.text else { return }
-                    UIPasteboard.general.string = codeText
+                    UIPasteboard.general.string = GlobalFunctions.makeShareLink(joinCode: codeText)
                     self.showToast(message: "참여 코드가 복사되었어요.", duration: 1.5)
                 }),
                 UIAction(title: "코드 발급 기록", image: UIImage(named: "document_Icon"), handler: { [weak self] _ in
