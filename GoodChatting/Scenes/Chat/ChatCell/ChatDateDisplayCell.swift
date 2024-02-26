@@ -10,7 +10,7 @@ import SnapKit
 
 final class ChatDateDisplayCell: UITableViewCell {
     
-    let identifier: String = "123"
+    let identifier: String = "ChatDate"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,6 +26,7 @@ final class ChatDateDisplayCell: UITableViewCell {
         let _ = UILabel().then {
             self.addSubview($0)
             $0.text = dateText
+            $0.font = UIFont.systemFont(ofSize: 10)
             $0.textColor = .gray
             $0.snp.makeConstraints { make in
                 make.centerX.centerY.equalTo(self)

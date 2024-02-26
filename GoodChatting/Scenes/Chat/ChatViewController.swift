@@ -95,9 +95,23 @@ class ChatViewController: BaseViewController, View {
             .bind(to: chatView.tableView.rx.items) { [weak self] cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
-//                let ss = reactor.currentState.chatList[index - 1]
-                // 날짜 비교
-//                ss.created_at
+                if index > 2 {
+                    let previousCell = reactor.currentState.chatList[index - 2].created_at
+                    let currenctCell = reactor.currentState.chatList[index - 1].created_at
+                    
+                    let isBool = model.isCompareCreateDate(
+                        previousCellDate: previousCell,
+                        currentCellDate: currenctCell
+                    )
+                    
+                    switch isBool {
+                    case true:
+                        guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "ChatDate") as? ChatDateDisplayCell else { return UITableViewCell() }
+                        cell.setConfigure(displayText: model.displayDateCell)
+                        return cell
+                    case false: break
+                    }
+                }
                 
                 switch reactor.currentState.userData.id == model.user_id {
                 case true:
@@ -263,7 +277,7 @@ extension ChatViewController: UITextFieldDelegate {
 extension ChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 53
+        return 60
     }
 }
 
@@ -300,7 +314,7 @@ extension ChatViewController {
         rightBarButton.tintColor = .black
         
         navigationItem.rightBarButtonItem = rightBarButton
-//        self.chatView.tableView.register(ChatDateDisplayCell.self, forCellReuseIdentifier: "123")
+        self.chatView.tableView.register(ChatDateDisplayCell.self, forCellReuseIdentifier: "ChatDate")
         self.chatView.tableView.register(ChatMyCell.self, forCellReuseIdentifier: "myChat")
         self.chatView.tableView.register(ChatOtherCell.self, forCellReuseIdentifier: "otherChat")
         self.chatView.tableView.delegate = self
