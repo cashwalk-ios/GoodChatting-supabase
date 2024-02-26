@@ -60,11 +60,6 @@ final class HomeViewController: BaseViewController, View {
         self.bindState(reactor: reactor)
     }
     
-    // 참여코드 완료 버튼 액션(TEMP)
-    @objc private func doneAction() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     private func setupProperties() {
         self.view.backgroundColor = .designColor(color: .secondGray())
     }
@@ -197,31 +192,6 @@ final class HomeViewController: BaseViewController, View {
                     guard let self else { return }
                     self.presentLogoutAlert()
                     UserSettings.userId = ""
-                }),
-                UIAction(title: "참여 코드 바텀시트", handler: { [weak self] _ in
-                    guard let self else { return }
-                    let vc = ParticipationCodeViewController()
-                    vc.reactor = ParticipationCodeReactor()
-                    
-                    let nav = UINavigationController(rootViewController: vc)
-
-                    if let sheet = nav.sheetPresentationController {
-                        sheet.detents = [
-                            .custom(resolver: { context in
-                                let height: CGFloat = 434
-                                return height
-                            })
-                        ]
-                        sheet.preferredCornerRadius = 15
-                    }
-                    
-                    let doneButton = UIBarButtonItem(title: "완료", style: .done,
-                                                     target: self,
-                                                     action: #selector(self.doneAction))
-                    doneButton.tintColor = UIColor.init(hexCode: "5BD6FF")
-                    vc.navigationItem.rightBarButtonItem = doneButton
-                    
-                    self.present(nav, animated: true)
                 }),
                 UIAction(title: "블랙뷰 테스트(1.5초)", handler: { [weak self] _ in
                     guard let self else { return }
@@ -365,11 +335,12 @@ extension HomeViewController {
         reactor.state.map(\.isPresentJoinRoomPopup)
             .observe(on: MainScheduler.instance)
             .bind(with: self, onNext: { owner, isPresent in
-                owner.presentPopup(isPresent, owner, .join)
+                let joinCode = reactor.currentState.joinCode
+                owner.presentPopup(isPresent, owner, .join, joinCode)
             }).disposed(by: disposeBag)
     }
     
-    fileprivate func presentPopup(_ isPresent: Bool, _ owner: HomeViewController, _ popupType: ChatPopupType) {
+    fileprivate func presentPopup(_ isPresent: Bool, _ owner: HomeViewController, _ popupType: ChatPopupType, _ joinCode: String? = nil) {
         if isPresent {
             switch popupType {
             case .create:
@@ -383,6 +354,10 @@ extension HomeViewController {
             case .join:
                 owner.joinRoomPopup = JoinRoomView().then {
                     $0.reactor = owner.reactor
+                    if let joinCode = joinCode {
+                        $0.codeInputTextField.text = joinCode
+                        $0.setButtonState(isEnabled: true)
+                    }
                     owner.sceneDelegate?.window?.addSubview($0)
                     $0.snp.makeConstraints { make in
                         make.edges.equalToSuperview()

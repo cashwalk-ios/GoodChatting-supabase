@@ -467,11 +467,12 @@
 			};
 			buildConfigurationList = 5C0D0EDE2B469C3500D75348 /* Build configuration list for PBXProject "GoodChatting" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 5C0D0EDA2B469C3500D75348;
 			packageReferences = (

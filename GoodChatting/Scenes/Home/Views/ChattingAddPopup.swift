@@ -12,7 +12,7 @@ import ReactorKit
 class ChattingAddPopup: UIView {
     enum ChattingAddPopupAction {
         case makeRoom
-        case joinRoom
+        case joinRoom(String?)
     }
     
     var actionSubject = PublishSubject<ChattingAddPopupAction>.init()
@@ -76,7 +76,7 @@ class ChattingAddPopup: UIView {
             itemStack.addArrangedSubview($0)
         }
         
-        let _ = makeItem(type: .joinRoom).then {
+        let _ = makeItem(type: .joinRoom(nil)).then {
             itemStack.addArrangedSubview($0)
         }
         
@@ -131,7 +131,7 @@ class ChattingAddPopup: UIView {
             .withUnretained(self)
             .bind { owner, _ in
                 Log.cyo("참여하기 룸")
-                owner.actionSubject.onNext(.joinRoom)
+                owner.actionSubject.onNext(.joinRoom(nil))
                 owner.removeFromSuperview()
             }.disposed(by: disposeBag)
     }

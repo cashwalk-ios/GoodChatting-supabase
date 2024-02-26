@@ -285,7 +285,7 @@ extension JoinRoomView: UITextFieldDelegate {
         setButtonState(isEnabled: textCnt > 0)
     }
     
-    private func setButtonState(isEnabled: Bool) {
+    func setButtonState(isEnabled: Bool) {
         joinButton.isUserInteractionEnabled = isEnabled
         if isEnabled {
             joinButton.backgroundColor = .init(hexCode: "5BD6FF")

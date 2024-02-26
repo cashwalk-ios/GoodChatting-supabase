@@ -52,6 +52,7 @@ final class SplashViewController: BaseViewController {
                     if let currentSession = try await AuthManager.shared.getCurrentSession() {
                         // 자동 로그인 로직
                         let userCYO = try await self.fetchUserCYO(for: currentSession.id)
+                        UserSettings.userId = currentSession.id
                         self.sceneDelegate?.navigateToHome(with: userCYO.first)
                     } else {
                         // 세션 만료 처리

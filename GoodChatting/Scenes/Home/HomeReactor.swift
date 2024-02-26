@@ -25,7 +25,7 @@ final class HomeReactor: Reactor {
         case setChattingList([ChattingList])
         case setChattingAlarmStatus(alarm: Bool, roomId: Int)
         case presentCreateRoomPopup(Bool)
-        case presentJoinRoomPopup(Bool)
+        case presentJoinRoomPopup(Bool, String?)
     }
     
     struct State {
@@ -33,6 +33,7 @@ final class HomeReactor: Reactor {
         var isPresentCreateRoomPopup: Bool = false
         var isPresentJoinRoomPopup: Bool = false
         var userCYO: UserCYO?
+        var joinCode: String? = nil
     }
     
     var initialState: State// = State()
@@ -60,9 +61,9 @@ final class HomeReactor: Reactor {
             case .makeRoom:
                 Log.cyo("makeRoom")
                 return .just(Mutation.presentCreateRoomPopup(true))
-            case .joinRoom:
+            case .joinRoom(let code):
                 Log.cyo("joinRoom")
-                return .just(Mutation.presentJoinRoomPopup(true))
+                return .just(Mutation.presentJoinRoomPopup(true, code))
             }
             
         case .settingAction(let action):
@@ -130,7 +131,7 @@ final class HomeReactor: Reactor {
                 }
                 
             case .join:
-                return .just(Mutation.presentJoinRoomPopup(false))
+                return .just(Mutation.presentJoinRoomPopup(false, nil))
             }
         }
     }
@@ -151,8 +152,13 @@ final class HomeReactor: Reactor {
         case .presentCreateRoomPopup(let isPresent):
             newState.isPresentCreateRoomPopup = isPresent
             
-        case .presentJoinRoomPopup(let isPresent):
+        case .presentJoinRoomPopup(let isPresent, let code):
             newState.isPresentJoinRoomPopup = isPresent
+            if let code = code {
+                newState.joinCode = code
+            } else {
+                newState.joinCode = nil
+            }
         }
         
         return newState

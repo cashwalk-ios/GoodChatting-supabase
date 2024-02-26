@@ -186,7 +186,7 @@ class ChattingListTVCell: UITableViewCell {
                 return GlobalFunctions.getDateStr(date: updated_at, format: "MM월 dd일")
             } else {
 //                Log.cyo("올해아닌거 \(updated_at)")
-                return GlobalFunctions.getDateStr(date: updated_at, format: "yyyy. mm. dd.")
+                return GlobalFunctions.getDateStr(date: updated_at, format: "yyyy. MM. dd.")
             }
         }
     }

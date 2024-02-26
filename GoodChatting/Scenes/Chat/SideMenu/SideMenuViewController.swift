@@ -19,6 +19,10 @@ final class SideMenuViewController: BaseViewController, View {
     // MARK: - Properties
     
     private var dimmingView: UIView!
+    
+    var participationCodeReactor: ParticipationCodeReactor?
+
+    private var activeParticipationCode: String?
     var roomId: Int?
 
     private var inviteButton: UIButton!
@@ -49,8 +53,11 @@ final class SideMenuViewController: BaseViewController, View {
             GlobalFunctions.showToast(message: "roomId 가져오기 실패")
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ParticipationCodeVCDismissAction), 
+        NotificationCenter.default.addObserver(self, selector: #selector(participationCodeVCDismissAction),
                                                name: .didDismissParticipationCodeVC, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateActiveParticipationCode(_:)),
+                                               name: .participationCodetoSideMenuVC, object: nil)
+
     }
     
     deinit {
@@ -70,10 +77,16 @@ final class SideMenuViewController: BaseViewController, View {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc private func ParticipationCodeVCDismissAction() {
+    @objc private func participationCodeVCDismissAction() {
         
         if dimmingView.isHidden == false {
             self.dimmingView.isHidden = true
+        }
+    }
+    
+    @objc private func updateActiveParticipationCode(_ notification: Notification) {
+        if let newCode = notification.userInfo?["newCode"] as? String {
+            self.activeParticipationCode = newCode
         }
     }
     
@@ -88,9 +101,13 @@ extension SideMenuViewController {
         self.inviteButton.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
+                guard let roomId = owner.roomId else { return }
+                guard let activeParticipationCode = owner.activeParticipationCode else { return }
+                
                 let vc = ParticipationCodeViewController()
-                vc.reactor = ParticipationCodeReactor()
-                            
+                vc.reactor = ParticipationCodeReactor(roomId: roomId,
+                                                      activeParticipationCode: activeParticipationCode)
+                
                 let nav = UINavigationController(rootViewController: vc)
                 
                 if let sheet = nav.sheetPresentationController {
@@ -126,6 +143,8 @@ extension SideMenuViewController {
                 Log.rk(roomInfo)
                 owner.createDateLabel.text = GlobalFunctions.getDateStr(date: roomInfo.created_at, format: "yyyy.MM.dd")
                 owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
+                
+                owner.activeParticipationCode = roomInfo.active_participation_code
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.chattingInfo.first?.roomUserCYO }
