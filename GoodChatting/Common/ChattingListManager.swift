@@ -211,6 +211,7 @@ class ChattingListManager {
         temp.people?.removeAll(where: { $0 == userId })
         temp.roomUserCYO = nil
         temp.newmessageCYO = nil
+        temp.updated_at = Date()
         
         let response = try await supabase
             .database
