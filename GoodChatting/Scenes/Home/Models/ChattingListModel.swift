@@ -28,8 +28,10 @@ struct ChattingList: Codable {
     var updated_at: Date?
     var alarm: Bool?
     
-    var messageCYO: [MessageCYO]?
+    var newmessageCYO: [MessageCYO]?
     var roomUserCYO: [RoomUserCYO]?
+    
+    var active_participation_code: String?
 }
 
 struct MessageCYO: Codable {

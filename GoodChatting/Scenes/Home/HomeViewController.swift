@@ -196,7 +196,7 @@ final class HomeViewController: BaseViewController, View {
                 UIAction(title: "로그아웃", attributes: .destructive , handler: { [weak self] _ in
                     guard let self else { return }
                     self.presentLogoutAlert()
-                    UserSettings.userId = nil
+                    UserSettings.userId = ""
                 }),
                 UIAction(title: "참여 코드 바텀시트", handler: { [weak self] _ in
                     guard let self else { return }
@@ -270,7 +270,7 @@ final class HomeViewController: BaseViewController, View {
         self.present(alert, animated: true)
     }
     
-    fileprivate func presentDeleteAlert(roomId: Int) {
+    fileprivate func presentDeleteAlert(room: ChattingList?) {
         let blackView = BlackView(alphaValue: 0.7)
         blackView.show(onView: self.view)
         
@@ -282,7 +282,7 @@ final class HomeViewController: BaseViewController, View {
             firstActionHandler: { [weak self] in
                 blackView.hide()
                 guard let self else { return }
-                self.reactor?.action.on(.next(.chattingDelete(roomId: roomId)))
+                self.reactor?.action.on(.next(.chattingDelete(item: room)))
             },
             cancelActionMsg: "취소",
             cancelActionHandler: { blackView.hide() }
@@ -411,7 +411,7 @@ extension HomeViewController: UITableViewDelegate {
             success(true)
             
             guard let self else { return }
-            self.presentDeleteAlert(roomId: roomId)
+            self.presentDeleteAlert(room: room)
         }
         let getOutAction = UIContextualAction(style: .normal, title: nil, handler: getOutHandler)
 

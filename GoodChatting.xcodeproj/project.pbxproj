@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C3C612B5518AC0048B539 /* ChattingListTVCell.swift */; };
 		0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
-		0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */; };
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
@@ -69,6 +68,7 @@
 		5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */; };
 		8E1A16AD2B71BE1200D56EDE /* ChatOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AC2B71BE1200D56EDE /* ChatOtherCell.swift */; };
 		8E1A16AF2B74747200D56EDE /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AE2B74747200D56EDE /* ChatModel.swift */; };
+		8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatMyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatMyCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
@@ -84,7 +84,6 @@
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
 		02E447482B56021200002ABE /* ChattingListTempData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ChattingListTempData.json; sourceTree = "<group>"; };
 		02E4474B2B56035300002ABE /* ChattingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListModel.swift; sourceTree = "<group>"; };
-		02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenu.swift; sourceTree = "<group>"; };
 		02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenuCell.swift; sourceTree = "<group>"; };
 		0F0AD3522B652D8300045E07 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
@@ -144,6 +143,7 @@
 				0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
 				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
+				8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */,
 				0F84B7B72B54DDCD000EF575 /* Auth in Frameworks */,
 				0F84B7BB2B54DDCD000EF575 /* PostgREST in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
@@ -182,14 +182,6 @@
 				02E4474B2B56035300002ABE /* ChattingListModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		02F8CDC62B6B1D930010A66C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
@@ -395,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				5CDAA2942B85C3E900CD4ABD /* SideMenu */,
-				02F8CDC62B6B1D930010A66C /* Views */,
 				8EB55B692B5F82EE00008A6D /* ChatCell */,
 				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
 				8E7DFD142B6875560078230C /* ChatView.swift */,
@@ -453,6 +444,7 @@
 				0F84B7C02B54DDCD000EF575 /* Supabase */,
 				0F923CC62B67908000F7E0A0 /* GoogleSignIn */,
 				0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */,
+				8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -491,6 +483,7 @@
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -560,7 +553,6 @@
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
-				0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
 				5C0C12A12B50E04B0066FA69 /* UIFont+Extension.swift in Sources */,
 			);
@@ -842,6 +834,14 @@
 				minimumVersion = 4.0.4;
 			};
 		};
+		8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -944,6 +944,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
