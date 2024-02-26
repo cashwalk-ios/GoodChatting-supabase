@@ -153,20 +153,35 @@ final class JoinRoomView: UIView {
             .when(.ended)
             .filter { [weak self] _ in self?.codeInputTextField.text?.count ?? 0 > 0 }
             .observe(on: MainScheduler.instance)
-            .flatMapLatest { [weak self] _ -> Observable<Bool> in
+            .flatMapLatest { [weak self] _ -> Observable<(Bool, Int)> in
                 guard let self = self, let joinCode = self.codeInputTextField.text else {
-                    return .just(false)
+                    return .just((false, 0))
                 }
-                return self.checkJoinCode(joinCode: joinCode)
-                    .catchAndReturn(false)
+                return self.checkJoinCodeValidation(joinCode: joinCode)
+                    .catchAndReturn((false, 0))
             }
-            .subscribe(with: self, onNext: { owner, isValid in
+            .subscribe(with: self, onNext: { owner, validData in
+                let (isValid, roomId) = validData
                 if isValid {
-                    // TODO: 방 참여 성공 로직
+                    // 1. roomCYO라는 테이블에 people이라는 컬럼에 userId 추가
+                    Task {
+                        do {
+                            try await self.addUserToRoom(userId: UserSettings.userId ?? "", roomId: roomId)
+                            // TODO: 닉네임 생성해서 roomUserCYO에 추가 (addUserNickname() 메서드 사용)
+                            let nickname = "유저#\(arc4random_uniform(1000))"
+                            Log.kkr("생성된 닉네임: \(nickname)")
+                            try await ChattingListManager.shared.addUserNickname(
+                                userId: UserSettings.userId ?? "",
+                                roomId: roomId,
+                                nickName: nickname
+                            )
+                        } catch {
+                            Log.kkr("방에 유저 추가 실패: \(error)")
+                            GlobalFunctions.showToast(message: "\(error.localizedDescription)")
+                        }
+                    }
                     owner.reactor?.action.onNext(.closePopupView(.join))
-                    GlobalFunctions.showToast(message: "참여한 방에 진입하는 로직 추가")
-                    // 채팅방 DB에 people이라는 컬럼에 userId 추가
-                    // 닉네임 생성해서 roomUserCYO에 추가 (addUserNickname() 메서드 사용)
+                    // TODO: 참여한 방으로 이동하기 또는 홈 화면에 "참여한 채팅방" 목록 갱신하기
                 } else {
                     // 참여코드가 roomCYO DB에 없는 경우
                     owner.validView.isHidden = false
@@ -176,14 +191,16 @@ final class JoinRoomView: UIView {
             .disposed(by: disposeBag)
     }
     
-    private func checkJoinCode(joinCode: String) -> Observable<Bool> {
+    /// 참여코드 유효성 검사 후 Observable로 반환
+    private func checkJoinCodeValidation(joinCode: String) -> Observable<(Bool, Int)> {
         return Observable.create { [weak self] observer in
             Task {
                 do {
-                    let isValid = try await self?.selectJoinCode(code: joinCode) ?? false
+                    let isValid = try await self?.selectJoinCode(code: joinCode) ?? (false, 0)
                     observer.onNext(isValid)
                     observer.onCompleted()
                 } catch {
+                    Log.kkr("error: \(error.localizedDescription)")
                     observer.onError(error)
                 }
             }
@@ -192,7 +209,7 @@ final class JoinRoomView: UIView {
     }
     
     /// 입력한 참여코드가 roomCYO에 존재하는지 체크
-    private func selectJoinCode(code: String) async throws -> Bool {
+    private func selectJoinCode(code: String) async throws -> (Bool, Int) {
         let response: [ChattingList] = try await AuthManager.shared.client.database
             .from("roomCYO")
             .select("*")
@@ -200,9 +217,41 @@ final class JoinRoomView: UIView {
             .execute()
             .value
         
-        Log.kkr("참여코드 유효성 검사 결과: \(!response.isEmpty)")
-        return !response.isEmpty
+        Log.kkr("참여코드 유효성 검사 결과: \(!response.isEmpty), id: \(response)")
+        guard let id = response.first?.id else { return (false, 0) }
+        return ((!response.isEmpty), id)
     }
+    
+    /// 참여코드가 유효한 경우 방에 참여하고 해당 채팅방에 people에 내 userId 갱신
+    private func addUserToRoom(userId: String, roomId: Int) async throws {
+        Log.kkr("참여한 방 id: \(roomId), 유저 id: \(userId)")
+        // 현재 roomCYO 테이블의 people 컬럼 값을 가져옴
+        let response: [ChattingList] = try await AuthManager.shared.client.database
+            .from("roomCYO")
+            .select("*")  // FIXME: 왜 여기서 people만 조회하면 안되는거야..?
+            .eq("id", value: roomId)
+            .execute()
+            .value
+        
+        guard let currentPeopleArray = response.first?.people else { return }
+        Log.kkr("currentPeopleArray: \(currentPeopleArray)")
+
+        // 기존 people 배열에 userId가 존재하지 않는 경우에만 추가
+        if !currentPeopleArray.contains(userId) {
+            var newPeopleArray = currentPeopleArray
+            newPeopleArray.append(userId)
+            
+            // people 컬럼 업데이트
+            try await AuthManager.shared.client.database
+                .from("roomCYO")
+                .update(["people": newPeopleArray])
+                .eq("id", value: roomId)
+                .execute()
+        } else {
+            GlobalFunctions.showToast(message: "이미 참여한 방의 코드입니다.")
+        }
+    }
+
     
     private func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
