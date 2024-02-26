@@ -17,14 +17,13 @@ final class HomeReactor: Reactor {
         case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
         
         case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
-        case chattingDelete(roomId: Int)
+        case chattingDelete(item: ChattingList?)
         case closePopupView(ChatPopupType)
     }
     
     enum Mutation {
         case setChattingList([ChattingList])
         case setChattingAlarmStatus(alarm: Bool, roomId: Int)
-        case deleteChattingRoom(roomId: Int)
         case presentCreateRoomPopup(Bool)
         case presentJoinRoomPopup(Bool)
     }
@@ -89,9 +88,13 @@ final class HomeReactor: Reactor {
             //TODO: 채팅 알림 상태 바꾸기
             return .just(.setChattingAlarmStatus(alarm: alarm, roomId: roomId))
             
-        case .chattingDelete(let roomId):
+        case .chattingDelete(let item):
             //TODO: 채팅 방 삭제
-            return .just(.deleteChattingRoom(roomId: roomId))
+            if let item {
+                ChattingListManager.shared.getoutRoom(userId: currentState.userCYO?.id ?? "", roomData: item)
+            }
+            
+            return .empty()
             
         case .closePopupView(let popupType):
             switch popupType {
@@ -144,9 +147,6 @@ final class HomeReactor: Reactor {
             if let row = newState.chattingList.firstIndex(where: { $0.id == roomId }) {
                 newState.chattingList[row].alarm = alarm
             }
-            
-        case .deleteChattingRoom(let roomId):
-            newState.chattingList.removeAll(where: { $0.id == roomId })
             
         case .presentCreateRoomPopup(let isPresent):
             newState.isPresentCreateRoomPopup = isPresent
