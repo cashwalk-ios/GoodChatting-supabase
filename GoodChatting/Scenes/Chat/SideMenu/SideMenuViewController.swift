@@ -28,8 +28,6 @@ final class SideMenuViewController: BaseViewController, View {
     private var notiButton: UIButton!
     
     private var participantsTableView: UITableView!
-    
-    var tempList: BehaviorSubject<[String]> = .init(value: ["name1", "name2", "name3", "name4", "name5"])
 
     // MARK: - Lifecycle
     
@@ -130,9 +128,10 @@ extension SideMenuViewController {
                 owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
             }.disposed(by: disposeBag)
         
-        tempList.asObserver()
-            .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { row , item , cell in
-                cell.configuration(name: item)
+        reactor.state.map { $0.chattingInfo.first?.roomUserCYO }
+            .compactMap { $0 }
+            .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { row, item, cell in
+                cell.configuration(name: item.nickname ?? "")
             }.disposed(by: disposeBag)
         
     }
