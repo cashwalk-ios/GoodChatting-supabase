@@ -155,7 +155,8 @@ class ChattingListTVCell: UITableViewCell {
     
     func configuration(item: ChattingList) {
         mainImageView.image = UIImage(named: item.image ?? "")
-        dateLabel.text = "\(item.updated_at ?? Date())"
+//        dateLabel.text = "\(item.updated_at ?? Date())"
+        dateLabel.text = getDateStr(updated_at: item.updated_at ?? Date())
         titleLabel.text = item.title ?? ""
         lastestMessageLabel.text = item.newmessageCYO?.last?.message ?? ""
         numberOfPeopleLabel.text = "\(item.people?.count ?? 1)"
@@ -164,5 +165,29 @@ class ChattingListTVCell: UITableViewCell {
 //            unReadLabel.text = "\(unRead)"
 //            unReadLabel.isHidden = false
 //        }
+    }
+    
+    func getDateStr(updated_at: Date) -> String {
+        let date = Calendar.current.dateComponents([.day], from: updated_at, to: Date())
+        let day = date.day ?? 0
+        
+        if day == 0 {
+//            Log.cyo("오늘꺼")
+            return GlobalFunctions.getDateStr(date: updated_at, format: "a hh:mm")
+        } else if day == 1 {
+//            Log.cyo("어제꺼")
+            return "어제"
+        } else {
+            let todayYear = Calendar.current.dateComponents([.year], from: Date()).year ?? 0
+            let updateYear = Calendar.current.dateComponents([.year], from: updated_at).year ?? 0
+            
+            if todayYear == updateYear {
+//                Log.cyo("올해꺼")
+                return GlobalFunctions.getDateStr(date: updated_at, format: "MM월 dd일")
+            } else {
+//                Log.cyo("올해아닌거 \(updated_at)")
+                return GlobalFunctions.getDateStr(date: updated_at, format: "yyyy. mm. dd.")
+            }
+        }
     }
 }
