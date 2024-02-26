@@ -59,12 +59,17 @@
 		5CADF19B2B477E2E00317C70 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */; };
 		5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */; };
 		5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBDF3922B688B2B00A28347 /* BlackView.swift */; };
+		5CC6308A2B86F18500551677 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC630892B86F18500551677 /* Notification+Extension.swift */; };
+		5CC6308C2B86F6C400551677 /* SideMenuReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC6308B2B86F6C400551677 /* SideMenuReactor.swift */; };
+		5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */; };
+		5CDF1BC42B86D4DA0054DD5F /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */; };
 		5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */; };
 		5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */; };
 		5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */; };
 		5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */; };
 		8E1A16AD2B71BE1200D56EDE /* ChatOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AC2B71BE1200D56EDE /* ChatOtherCell.swift */; };
 		8E1A16AF2B74747200D56EDE /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AE2B74747200D56EDE /* ChatModel.swift */; };
+		8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatMyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatMyCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
@@ -108,6 +113,10 @@
 		5CB2DC202B690CD900187FD8 /* ParticipationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeViewController.swift; sourceTree = "<group>"; };
 		5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipationCodeReactor.swift; sourceTree = "<group>"; };
 		5CBDF3922B688B2B00A28347 /* BlackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackView.swift; sourceTree = "<group>"; };
+		5CC630892B86F18500551677 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		5CC6308B2B86F6C400551677 /* SideMenuReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuReactor.swift; sourceTree = "<group>"; };
+		5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		5CE2156A2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryViewController.swift; sourceTree = "<group>"; };
 		5CE2156D2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistoryReactor.swift; sourceTree = "<group>"; };
 		5CE2156F2B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeIssuanceHistorytableViewCell.swift; sourceTree = "<group>"; };
@@ -136,6 +145,7 @@
 				0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
 				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
+				8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */,
 				0F84B7B72B54DDCD000EF575 /* Auth in Frameworks */,
 				0F84B7BB2B54DDCD000EF575 /* PostgREST in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
@@ -349,8 +359,19 @@
 			children = (
 				5CADF19A2B477E2E00317C70 /* UIColor+Extension.swift */,
 				5C0C12A02B50E04B0066FA69 /* UIFont+Extension.swift */,
+				5CC630892B86F18500551677 /* Notification+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		5CDAA2942B85C3E900CD4ABD /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				5CDAA2952B85C40A00CD4ABD /* SideMenuViewController.swift */,
+				5CDF1BC32B86D4DA0054DD5F /* SideMenuCell.swift */,
+				5CC6308B2B86F6C400551677 /* SideMenuReactor.swift */,
+			);
+			path = SideMenu;
 			sourceTree = "<group>";
 		};
 		5CE2156C2B6B1E7800F4EB2A /* CodeIssuanceHistory */ = {
@@ -375,6 +396,7 @@
 		8EB55B682B5F82E500008A6D /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				5CDAA2942B85C3E900CD4ABD /* SideMenu */,
 				02F8CDC62B6B1D930010A66C /* Views */,
 				8EB55B692B5F82EE00008A6D /* ChatCell */,
 				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
@@ -433,6 +455,7 @@
 				0F84B7C02B54DDCD000EF575 /* Supabase */,
 				0F923CC62B67908000F7E0A0 /* GoogleSignIn */,
 				0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */,
+				8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -471,6 +494,7 @@
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -502,6 +526,7 @@
 				5CE2156E2B6B1E9F00F4EB2A /* CodeIssuanceHistoryReactor.swift in Sources */,
 				5C0D0EEB2B469C3500D75348 /* HomeViewController.swift in Sources */,
 				02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */,
+				5CDAA2962B85C40A00CD4ABD /* SideMenuViewController.swift in Sources */,
 				8E1A16AF2B74747200D56EDE /* ChatModel.swift in Sources */,
 				8E7DFD152B6875560078230C /* ChatView.swift in Sources */,
 				0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */,
@@ -509,6 +534,7 @@
 				5CE2156B2B6B1E4900F4EB2A /* CodeIssuanceHistoryViewController.swift in Sources */,
 				5C0C12942B50D37D0066FA69 /* Log.swift in Sources */,
 				8EB55B6B2B5F830500008A6D /* ChatMyCell.swift in Sources */,
+				5CDF1BC42B86D4DA0054DD5F /* SideMenuCell.swift in Sources */,
 				0F84B7B42B54AB7F000EF575 /* GlobalFunctions.swift in Sources */,
 				5CB2DC212B690CD900187FD8 /* ParticipationCodeViewController.swift in Sources */,
 				5CE215702B6B31BA00F4EB2A /* CodeIssuanceHistorytableViewCell.swift in Sources */,
@@ -518,8 +544,10 @@
 				0F68B2FB2B50ADFD00FE0390 /* SplashViewController.swift in Sources */,
 				8EB55B6F2B5F834B00008A6D /* ChatReactor.swift in Sources */,
 				5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */,
+				5CC6308A2B86F18500551677 /* Notification+Extension.swift in Sources */,
 				022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */,
 				8EB82D9A2B6B28FA0048BD43 /* ChatDateDisplayCell.swift in Sources */,
+				5CC6308C2B86F6C400551677 /* SideMenuReactor.swift in Sources */,
 				028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */,
 				8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */,
 				0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */,
@@ -818,6 +846,14 @@
 				minimumVersion = 4.0.4;
 			};
 		};
+		8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -920,6 +956,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

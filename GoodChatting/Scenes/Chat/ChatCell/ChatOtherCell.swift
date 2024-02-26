@@ -45,7 +45,8 @@ extension ChatOtherCell {
             $0.image = UIImage(named: "launch-icon")
             $0.snp.makeConstraints { make in
                 make.height.width.equalTo(30)
-                make.top.left.equalTo(self)
+                make.top.equalTo(self)
+                make.left.equalTo(self).offset(10)
             }
         }
         
