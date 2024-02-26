@@ -205,7 +205,8 @@ final class CreateRoomView: UIView {
         
         chatRoomTitle.rx.text
             .changed
-            .bind(with: self, onNext: { owner, title in
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self, onNext: { owner, title in
                 owner.titleSizeLabel.text = "\(title?.count ?? 0)/30"
             }).disposed(by: disposeBag)
     }
