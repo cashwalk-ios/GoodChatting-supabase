@@ -55,9 +55,9 @@ final class ChatReactor: Reactor {
                 
                 Task {
                     do {
-                        self.channel = await self.client.realtimeV2.channel("1")
+                        self.channel = await self.client.realtimeV2.channel("\(self.currentState.roomData.id)")
                         
-                        let action = await self.channel.postgresChange(AnyAction.self, table: "newmessageCYO")
+                        _ = await self.channel.postgresChange(AnyAction.self, table: "newmessageCYO")
                         await self.channel.subscribe()
                         await self.subscribeBroadcast()
                         let database = await self.fetchDatabase()
