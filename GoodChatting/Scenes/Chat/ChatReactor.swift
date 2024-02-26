@@ -125,8 +125,10 @@ final class ChatReactor: Reactor {
             dateformatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
             let inputTimestamp = dateformatter.string(from: Date())
             
+            let roomId = currentState.roomData.id
+            
             let item = ChatMessageModel(id: UUID().uuidString,
-                                        room_id: currentState.roomData.id,
+                                        room_id: roomId,
                                         user_id: currentState.userData.id,
                                         message: message,
                                         read_users: nil,
@@ -141,6 +143,14 @@ final class ChatReactor: Reactor {
                             .from("newmessageCYO")
                             .insert(item)
                             .execute()
+                        
+                        try await ChattingListManager.shared.supabase
+                            .database
+                            .from("roomCYO")
+                            .update(["updated_at": Date()])
+                            .eq("id", value: roomId)
+                            .execute()
+                        
                         observer.onNext(.mutateRequestMessage)
                         observer.onCompleted()
                     } catch {
