@@ -42,6 +42,10 @@ extension ChatView {
             $0.leftView = UIView(frame: CGRect(
                 x: 0, y: 0, width: 20, height: 40)
             )
+            $0.rightView = UIView(frame: CGRect(
+                x: 0, y: 0, width: 50, height: 40)
+            )
+            $0.rightViewMode = .always
             $0.leftViewMode = .always
             $0.placeholder = "메시지 보내기"
             $0.layer.cornerRadius = 20
