@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		022C3C622B5518AC0048B539 /* ChattingListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C3C612B5518AC0048B539 /* ChattingListTVCell.swift */; };
 		0270BF842B706A7C0024B83C /* ParticipationCodeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2DC222B690D7800187FD8 /* ParticipationCodeReactor.swift */; };
-		0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */; };
 		028532472B5769BD0080AC89 /* ChattingListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028532462B5769BD0080AC89 /* ChattingListManager.swift */; };
 		028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE772B54C19C005DE05A /* ViewRouter.swift */; };
 		028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE792B54C29E005DE05A /* BaseViewController.swift */; };
@@ -85,7 +84,6 @@
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
 		02E447482B56021200002ABE /* ChattingListTempData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ChattingListTempData.json; sourceTree = "<group>"; };
 		02E4474B2B56035300002ABE /* ChattingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListModel.swift; sourceTree = "<group>"; };
-		02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenu.swift; sourceTree = "<group>"; };
 		02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenuCell.swift; sourceTree = "<group>"; };
 		0F0AD3522B652D8300045E07 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
@@ -184,14 +182,6 @@
 				02E4474B2B56035300002ABE /* ChattingListModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		02F8CDC62B6B1D930010A66C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				02F8CDC72B6B1DA80010A66C /* ChattingSideMenu.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		0F68B2F92B50ADBC00FE0390 /* Scenes */ = {
@@ -397,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				5CDAA2942B85C3E900CD4ABD /* SideMenu */,
-				02F8CDC62B6B1D930010A66C /* Views */,
 				8EB55B692B5F82EE00008A6D /* ChatCell */,
 				8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */,
 				8E7DFD142B6875560078230C /* ChatView.swift */,
@@ -564,7 +553,6 @@
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
-				0270BF852B706A8A0024B83C /* ChattingSideMenu.swift in Sources */,
 				5C0D0EE92B469C3500D75348 /* SceneDelegate.swift in Sources */,
 				5C0C12A12B50E04B0066FA69 /* UIFont+Extension.swift in Sources */,
 			);
