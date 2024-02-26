@@ -98,14 +98,14 @@ class ChatViewController: BaseViewController, View {
                 // 날짜 비교
 //                ss.created_at
                 
-                switch model.user_id {
-                case "1":
+                switch reactor.currentState.userData.id == model.user_id {
+                case true:
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
                     Log.cyo(model)
                     cell.configure(messageModel: model)
                     return cell
-                default:
+                case false:
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     

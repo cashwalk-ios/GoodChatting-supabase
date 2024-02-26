@@ -54,7 +54,7 @@ extension ChatView {
         }
         
         sendButton = UIButton(type: .custom).then {
-            messageTextField.addSubview($0)
+            self.addSubview($0)
             $0.layer.cornerRadius = 15
             $0.backgroundColor = .gray
             $0.snp.makeConstraints { make in
