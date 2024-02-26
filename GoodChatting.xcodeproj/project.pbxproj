@@ -65,6 +65,7 @@
 		5CE215732B6B436000F4EB2A /* ExpiredCodeListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE215722B6B436000F4EB2A /* ExpiredCodeListModel.swift */; };
 		8E1A16AD2B71BE1200D56EDE /* ChatOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AC2B71BE1200D56EDE /* ChatOtherCell.swift */; };
 		8E1A16AF2B74747200D56EDE /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A16AE2B74747200D56EDE /* ChatModel.swift */; };
+		8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */; };
 		8E7DFD152B6875560078230C /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFD142B6875560078230C /* ChatView.swift */; };
 		8EB55B6B2B5F830500008A6D /* ChatMyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6A2B5F830500008A6D /* ChatMyCell.swift */; };
 		8EB55B6D2B5F832D00008A6D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB55B6C2B5F832D00008A6D /* ChatViewController.swift */; };
@@ -136,6 +137,7 @@
 				0F84B7BF2B54DDCD000EF575 /* Storage in Frameworks */,
 				0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */,
 				0F6EB7F22B50D9BD00BB3216 /* KakaoSDKCommon in Frameworks */,
+				8E1D24C62B8C23BB009A2AB6 /* RxKeyboard in Frameworks */,
 				0F84B7B72B54DDCD000EF575 /* Auth in Frameworks */,
 				0F84B7BB2B54DDCD000EF575 /* PostgREST in Frameworks */,
 				0F4BA56B2B4E830C009CC320 /* Then in Frameworks */,
@@ -433,6 +435,7 @@
 				0F84B7C02B54DDCD000EF575 /* Supabase */,
 				0F923CC62B67908000F7E0A0 /* GoogleSignIn */,
 				0F923CC82B67908000F7E0A0 /* GoogleSignInSwift */,
+				8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */,
 			);
 			productName = GoodChatting;
 			productReference = 5C0D0EE32B469C3500D75348 /* GoodChatting.app */;
@@ -471,6 +474,7 @@
 				0F6EB7E82B50D9BD00BB3216 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				0F84B7B52B54DDCD000EF575 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				0F923CC52B67908000F7E0A0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 5C0D0EE42B469C3500D75348 /* Products */;
 			projectDirPath = "";
@@ -818,6 +822,14 @@
 				minimumVersion = 4.0.4;
 			};
 		};
+		8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -920,6 +932,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C0C12A22B50EAC70066FA69 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		8E1D24C52B8C23BB009A2AB6 /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E1D24C42B8C23BB009A2AB6 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
