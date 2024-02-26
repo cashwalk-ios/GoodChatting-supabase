@@ -365,11 +365,12 @@ extension HomeViewController {
         reactor.state.map(\.isPresentJoinRoomPopup)
             .observe(on: MainScheduler.instance)
             .bind(with: self, onNext: { owner, isPresent in
-                owner.presentPopup(isPresent, owner, .join)
+                let joinCode = reactor.currentState.joinCode
+                owner.presentPopup(isPresent, owner, .join, joinCode)
             }).disposed(by: disposeBag)
     }
     
-    fileprivate func presentPopup(_ isPresent: Bool, _ owner: HomeViewController, _ popupType: ChatPopupType) {
+    fileprivate func presentPopup(_ isPresent: Bool, _ owner: HomeViewController, _ popupType: ChatPopupType, _ joinCode: String? = nil) {
         if isPresent {
             switch popupType {
             case .create:
@@ -383,6 +384,10 @@ extension HomeViewController {
             case .join:
                 owner.joinRoomPopup = JoinRoomView().then {
                     $0.reactor = owner.reactor
+                    if let joinCode = joinCode {
+                        $0.codeInputTextField.text = joinCode
+                        $0.setButtonState(isEnabled: true)
+                    }
                     owner.sceneDelegate?.window?.addSubview($0)
                     $0.snp.makeConstraints { make in
                         make.edges.equalToSuperview()
