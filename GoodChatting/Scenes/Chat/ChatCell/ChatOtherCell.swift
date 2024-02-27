@@ -24,11 +24,15 @@ class ChatOtherCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(messageModel model: ChatMessageModel) {
+    func configure(messageModel model: ChatMessageModel, otherModel someModel: [RoomUserCYO]) {
         
-        personName.text = "김아영"
-        personMessage.text = model.message
-        recievdDate.text = model.convertTimestamp
+        someModel.forEach {
+            if let roomUserId = $0.user_id, roomUserId == model.user_id {
+                personName.text = $0.nickname ?? "알 수 없음"
+                personMessage.text = model.message
+                recievdDate.text = model.convertTimestamp
+            }
+        }
     }
 
 }
@@ -52,9 +56,9 @@ extension ChatOtherCell {
         
         personName = UILabel().then {
             self.addSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 11)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 10)
             $0.snp.makeConstraints { make in
-                make.top.equalTo(self).offset(2)
+                make.top.equalTo(self).offset(4)
                 make.left.equalTo(personImageView.snp.right).offset(7)
                 make.height.equalTo(13)
             }
@@ -62,7 +66,9 @@ extension ChatOtherCell {
         
         let chatBaseView = UIStackView(arrangedSubviews: []).then {
             self.addSubview($0)
-            $0.backgroundColor = UIColor.lightGray
+            $0.backgroundColor = UIColor(
+                red: 244/255, green: 244/255, blue: 244/255, alpha: 1.0
+            )
             $0.layer.cornerRadius = 12
             $0.layer.maskedCorners = [
                 .layerMaxXMinYCorner,
@@ -78,13 +84,14 @@ extension ChatOtherCell {
             $0.snp.makeConstraints { make in
                 make.top.equalTo(personName.snp.bottom).offset(6)
                 make.left.equalTo(personName)
-                make.bottom.equalTo(self)
+                make.bottom.equalTo(self).offset(-5)
             }
         }
         
         personMessage = UILabel().then {
             chatBaseView.addArrangedSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 15)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 13)
+            $0.text = "[사용자가 방을 나갔습니다]"
         }
         
         recievdDate = UILabel().then {

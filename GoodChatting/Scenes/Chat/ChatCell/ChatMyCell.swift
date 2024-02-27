@@ -26,6 +26,15 @@ final class ChatMyCell: UITableViewCell {
         
         sendMessage.text = model.message
         sendDate.text = model.convertTimestamp
+        
+//        switch isCompare {
+//        case true:
+//            sendDate.text = ""
+//            sendDate.isHidden = true
+//        case false:
+//            sendDate.text = model.convertTimestamp
+//            sendDate.isHidden = false
+//        }
     }
 }
 
@@ -37,7 +46,7 @@ extension ChatMyCell {
         
         sendDate = UILabel().then {
             self.addSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 9)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 9)
             $0.textColor = UIColor(
                 red: 136/255, green: 136/255, blue: 136/255, alpha: 1.0
             )
@@ -68,14 +77,14 @@ extension ChatMyCell {
             $0.snp.makeConstraints { make in
                 make.left.equalTo(sendDate.snp.right).offset(6)
                 make.right.equalTo(self).offset(-10)
-                make.top.equalTo(self).offset(4)
-                make.bottom.equalTo(self).offset(-4)
+                make.top.equalTo(self).offset(10)
+                make.bottom.equalTo(self).offset(-10)
             }
         }
         
         sendMessage = UILabel().then {
             messageBaseView.addArrangedSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 15)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 13)
         }
     }
 }

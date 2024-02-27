@@ -13,12 +13,12 @@ final class HomeReactor: Reactor {
     
     enum Action {
         case chattingAddAction(ChattingAddPopup.ChattingAddPopupAction)
-        case settingAction(HomeViewController.SettingAction)
         case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
         
         case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
         case chattingDelete(item: ChattingList?)
         case closePopupView(ChatPopupType)
+        case successJoinChattingRoom(String)
     }
     
     enum Mutation {
@@ -26,6 +26,7 @@ final class HomeReactor: Reactor {
         case setChattingAlarmStatus(alarm: Bool, roomId: Int)
         case presentCreateRoomPopup(Bool)
         case presentJoinRoomPopup(Bool, String?)
+        case enterChattingRoom(String)
     }
     
     struct State {
@@ -34,6 +35,7 @@ final class HomeReactor: Reactor {
         var isPresentJoinRoomPopup: Bool = false
         var userCYO: UserCYO?
         var joinCode: String? = nil
+        var chatRoomTitle: String?
     }
     
     var initialState: State// = State()
@@ -64,19 +66,6 @@ final class HomeReactor: Reactor {
             case .joinRoom(let code):
                 Log.cyo("joinRoom")
                 return .just(Mutation.presentJoinRoomPopup(true, code))
-            }
-            
-        case .settingAction(let action):
-            switch action {
-            case .edit:
-                Log.cyo("seeting Edit")
-                return .empty()
-            case .sort:
-                Log.cyo("seeting Sort")
-                return .empty()
-            case .all_read:
-                Log.cyo("seeting All Read")
-                return .empty()
             }
             
         case .chattingListManagerAction(let action):
@@ -116,15 +105,18 @@ final class HomeReactor: Reactor {
                                 Log.cyo("채팅방 생성 성공")
                             } else {
                                 Log.cyo("채팅방 생성 실패 \(status)")
-                                //TODO: 실패 에러 메시지 보여줄것인가?
+                                GlobalFunctions.showToast(message: "채팅방 생성 실패하였습니다.")
                             }
                         } catch {
                             Log.cyo("채팅방 생성 error \(error.localizedDescription)")
-                            //TODO: 실패 에러 메시지 보여줄것인가?
+                            GlobalFunctions.showToast(message: "채팅방 생성 실패하였습니다.")
                         }
                     }
-                    
-                    return .just(Mutation.presentCreateRoomPopup(false))
+                    Log.kkr("방 만들기 팝업 닫기 & 만든 방으로 참여하기 - 방 이름: \(title)")
+                    return .concat([
+                        .just(Mutation.presentCreateRoomPopup(false)),
+                        .just(Mutation.enterChattingRoom(title))
+                    ])
                 } else {
                     Log.cyo("없음")
                     return .just(Mutation.presentCreateRoomPopup(false))
@@ -133,6 +125,10 @@ final class HomeReactor: Reactor {
             case .join:
                 return .just(Mutation.presentJoinRoomPopup(false, nil))
             }
+            
+        case .successJoinChattingRoom(let title):
+            Log.kkr("successJoinChattingRoom is called - title: \(title)")
+            return .just(.enterChattingRoom(title))
         }
     }
     
@@ -159,6 +155,9 @@ final class HomeReactor: Reactor {
             } else {
                 newState.joinCode = nil
             }
+            
+        case .enterChattingRoom(let roomTitle):
+            newState.chatRoomTitle = roomTitle
         }
         
         return newState

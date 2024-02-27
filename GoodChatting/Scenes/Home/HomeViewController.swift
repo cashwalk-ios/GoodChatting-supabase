@@ -16,9 +16,7 @@ import Supabase
 final class HomeViewController: BaseViewController, View {
     
     enum SettingAction: String {
-        case edit = "채팅방 편집"
-        case sort = "채팅방 정렬"
-        case all_read = "모두 읽기"
+        case logout = "로그아웃"
     }
     
     // MARK: - Properties
@@ -34,8 +32,6 @@ final class HomeViewController: BaseViewController, View {
     private var nothingListView: UIView!
     
     private var actionButtonForDebug: UIButton!
-    
-    var settingAction = PublishSubject<SettingAction>()
     
     var createRoomPopup: CreateRoomView?
     var joinRoomPopup: JoinRoomView?
@@ -94,9 +90,11 @@ final class HomeViewController: BaseViewController, View {
         var rightItems: [UIBarButtonItem] = []
         
         let settingItems: [UIAction] = [
-            UIAction(title: SettingAction.edit.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.edit) }),
-            UIAction(title: SettingAction.sort.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.sort) }),
-            UIAction(title: SettingAction.all_read.rawValue, handler: { [weak self] _ in self?.settingAction.onNext(.all_read) })
+            UIAction(title: SettingAction.logout.rawValue, attributes: .destructive , handler: { [weak self] _ in
+                guard let self else { return }
+                self.presentLogoutAlert()
+                UserSettings.userId = ""
+            })
         ]
         
         let _ = UIMenu(children: settingItems).then {
@@ -298,11 +296,6 @@ extension HomeViewController {
                 owner.showChattingAddPopup()
             }.disposed(by: disposeBag)
         
-        settingAction
-            .map { Reactor.Action.settingAction($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
         chattingListTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
@@ -334,9 +327,26 @@ extension HomeViewController {
         
         reactor.state.map(\.isPresentJoinRoomPopup)
             .observe(on: MainScheduler.instance)
-            .bind(with: self, onNext: { owner, isPresent in
+            .subscribe(with: self, onNext: { owner, isPresent in
                 let joinCode = reactor.currentState.joinCode
                 owner.presentPopup(isPresent, owner, .join, joinCode)
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.chatRoomTitle)
+            .distinctUntilChanged()
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self as HomeViewController, onNext: { owner, title in
+                guard let userData = reactor.currentState.userCYO, let title = title else { return }
+                Task {
+                    let chattingList: [ChattingList] = try await ChattingListManager.shared.selectRoom(roomTitle: title)
+                    Log.kkr("chattingList: \(chattingList.first?.title ?? "찾은 방이 없음 🥲")")
+                    let vc = ChatViewController()
+                    guard let chattingList = chattingList.first else { return }
+                    let reactor: ChatReactor = ChatReactor(roomTitle: title, roomData: chattingList, userData: userData)
+                    vc.reactor = reactor
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
             }).disposed(by: disposeBag)
     }
     

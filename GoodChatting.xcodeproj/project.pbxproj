@@ -15,7 +15,6 @@
 		028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */; };
 		02E447492B56021200002ABE /* ChattingListTempData.json in Resources */ = {isa = PBXBuildFile; fileRef = 02E447482B56021200002ABE /* ChattingListTempData.json */; };
 		02E4474C2B56035300002ABE /* ChattingListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4474B2B56035300002ABE /* ChattingListModel.swift */; };
-		02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */; };
 		0F0AD3532B652D8300045E07 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3522B652D8300045E07 /* AuthManager.swift */; };
 		0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */; };
 		0F4BA5632B4E82DD009CC320 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0F4BA5622B4E82DD009CC320 /* ReactorKit */; };
@@ -84,7 +83,6 @@
 		028ABE7C2B54D10E005DE05A /* ChattingAddPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingAddPopup.swift; sourceTree = "<group>"; };
 		02E447482B56021200002ABE /* ChattingListTempData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ChattingListTempData.json; sourceTree = "<group>"; };
 		02E4474B2B56035300002ABE /* ChattingListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListModel.swift; sourceTree = "<group>"; };
-		02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingSideMenuCell.swift; sourceTree = "<group>"; };
 		0F0AD3522B652D8300045E07 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0F0AD3542B6532CD00045E07 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
 		0F4EBF132B6FAAB100568AFF /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
@@ -402,7 +400,6 @@
 				8EB55B6A2B5F830500008A6D /* ChatMyCell.swift */,
 				8E1A16AC2B71BE1200D56EDE /* ChatOtherCell.swift */,
 				8EB82D992B6B28FA0048BD43 /* ChatDateDisplayCell.swift */,
-				02FD12D82B6CCB49007EBD06 /* ChattingSideMenuCell.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -550,7 +547,6 @@
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,
 				5CBDF3932B688B2B00A28347 /* BlackView.swift in Sources */,
 				0F0AD3552B6532CD00045E07 /* SignInWithApple.swift in Sources */,
-				02FD12D92B6CCB49007EBD06 /* ChattingSideMenuCell.swift in Sources */,
 				5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */,
 				028ABE7D2B54D10E005DE05A /* ChattingAddPopup.swift in Sources */,
 				5C0C12AB2B50F8D50066FA69 /* UserSettings.swift in Sources */,
@@ -690,13 +686,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = RYZ3RA62XL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -723,13 +720,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = RYZ3RA62XL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "GoodChatting/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

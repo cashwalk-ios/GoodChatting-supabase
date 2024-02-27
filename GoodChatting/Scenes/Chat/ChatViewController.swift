@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import RxKeyboard
 
 class ChatViewController: BaseViewController, View {
     
@@ -55,18 +56,6 @@ class ChatViewController: BaseViewController, View {
         reactor.action.onNext(.fetchChatData)
         reactor.action.onNext(.insertSubscribe)
         
-        reactor.state.map(\.reload)
-            .distinctUntilChanged()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, state in
-                if let state, state == true {
-                    DispatchQueue.main.async {
-                        owner.chatView.tableView.reloadData()
-                        owner.scrollToBottom()
-                    }
-                }
-            }).disposed(by: disposeBag)
-        
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
             .withUnretained(self)
@@ -97,22 +86,49 @@ class ChatViewController: BaseViewController, View {
             .bind(to: chatView.tableView.rx.items) { [weak self] cell, index, model -> UITableViewCell in
                 guard let self else { fatalError("self Error") }
                 
-//                let ss = reactor.currentState.chatList[index - 1]
-                // 날짜 비교
-//                ss.created_at
+                if index > 2 && index != reactor.currentState.chatList.count - 1 {
+                    let previousCell = reactor.currentState.chatList[index - 2].created_at
+                    let currenctCell = reactor.currentState.chatList[index - 1].created_at
+                    
+                    let isBool = model.isCompareCreateDate(
+                        previousCellDate: previousCell,
+                        currentCellDate: currenctCell
+                    )
+                    
+                    switch isBool {
+                    case true:
+                        guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "ChatDate") as? ChatDateDisplayCell else { return UITableViewCell() }
+                        cell.setConfigure(displayText: model.displayDateCell)
+                        return cell
+                    case false: break
+                    }
+                }
                 
                 switch reactor.currentState.userData.id == model.user_id {
                 case true:
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
-                    Log.cyo(model)
+                    
+//                    var isCompare: Bool = true
+//                    
+//                    if index > 2 {
+//                        let previousCell = reactor.currentState.chatList[index - 2].created_at
+//                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
+//                        
+//                        isCompare = model.isCompareChatDate(
+//                            previousCellDate: previousCell,
+//                            currentCellDate: currenctCell
+//                        )
+//                    }
+                    
                     cell.configure(messageModel: model)
                     return cell
                 case false:
                     /// 상대방 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "otherChat") as? ChatOtherCell else { return UITableViewCell() }
                     
-                    cell.configure(messageModel: model)
+                    cell.configure(messageModel: model, 
+                                   otherModel: reactor.currentState.roomData.roomUserCYO ?? [])
                     return cell
                 }
                 
@@ -123,6 +139,13 @@ class ChatViewController: BaseViewController, View {
             .subscribe(onNext: { owner, roomId in
                 Log.rk("RoomId is \(roomId)")
                 owner.sideMenuViewController.roomId = roomId
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.chatList)
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.scrollToBottom()
             }).disposed(by: disposeBag)
         
         chatView.messageTextField.rx.text
@@ -230,6 +253,33 @@ class ChatViewController: BaseViewController, View {
             )
         }
     }
+    
+    private func setKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: { [weak self] keyboardVisibleHeight in
+                guard let self else { return }
+                
+                var dynamicKeyboardHeight: CGFloat = 0
+                
+                if keyboardVisibleHeight > 0 {
+                    dynamicKeyboardHeight = -keyboardVisibleHeight + self.chatView.safeAreaInsets.bottom
+                    
+                    DispatchQueue.main.async {
+                        self.scrollToBottom()
+                    }
+                } else {
+                    dynamicKeyboardHeight = 0
+                }
+                
+                self.chatView.messageTextField.snp.updateConstraints {
+                    $0.bottom.equalTo(self.chatView.safeAreaLayoutGuide)
+                        .offset(dynamicKeyboardHeight)
+                }
+                
+                self.chatView.layoutIfNeeded()
+            }).disposed(by: disposeBag)
+    }
 }
 
 extension ChatViewController: UITextFieldDelegate {
@@ -247,7 +297,11 @@ extension ChatViewController: UITextFieldDelegate {
 extension ChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 53
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
     }
 }
 
@@ -262,7 +316,8 @@ extension ChatViewController {
         chatView = ChatView().then {
             self.view.addSubview($0)
             $0.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+                make.left.right.equalToSuperview()
             }
         }
         
@@ -283,7 +338,7 @@ extension ChatViewController {
         rightBarButton.tintColor = .black
         
         navigationItem.rightBarButtonItem = rightBarButton
-//        self.chatView.tableView.register(ChatDateDisplayCell.self, forCellReuseIdentifier: "123")
+        self.chatView.tableView.register(ChatDateDisplayCell.self, forCellReuseIdentifier: "ChatDate")
         self.chatView.tableView.register(ChatMyCell.self, forCellReuseIdentifier: "myChat")
         self.chatView.tableView.register(ChatOtherCell.self, forCellReuseIdentifier: "otherChat")
         self.chatView.tableView.delegate = self
@@ -298,5 +353,7 @@ extension ChatViewController {
             }
         }
         
+        // setting
+        self.setKeyboard()
     }
 }

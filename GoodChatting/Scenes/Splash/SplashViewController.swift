@@ -50,10 +50,16 @@ final class SplashViewController: BaseViewController {
             Task {
                 do {
                     if let currentSession = try await AuthManager.shared.getCurrentSession() {
-                        // 자동 로그인 로직
-                        let userCYO = try await self.fetchUserCYO(for: currentSession.id)
-                        UserSettings.userId = currentSession.id
-                        self.sceneDelegate?.navigateToHome(with: userCYO.first)
+                        let isEmptyUserId = try await AuthManager.shared.selectUserIdFromUserCYO(userId: currentSession.id)
+                        if isEmptyUserId {
+                            try await AuthManager.shared.signOut()
+                            self.navigateToLogin()
+                        } else {
+                            // 자동 로그인 로직
+                            let userCYO = try await self.fetchUserCYO(for: currentSession.id)
+                            UserSettings.userId = currentSession.id
+                            self.sceneDelegate?.navigateToHome(with: userCYO.first)
+                        }
                     } else {
                         // 세션 만료 처리
                         self.navigateToLogin()
@@ -82,9 +88,6 @@ final class SplashViewController: BaseViewController {
     private func navigateToLogin() {
         let vc = LoginViewController()
         vc.reactor = LoginReactor()
-        
-//        let vc = ChatViewController()
-//        vc.reactor = ChatReactor(roomTitle: "123")
         
         if let sceneDelegate = self.sceneDelegate {
             ViewRouter.presentToNextViewController(from: self, to: vc, sceneDelegate: sceneDelegate)
