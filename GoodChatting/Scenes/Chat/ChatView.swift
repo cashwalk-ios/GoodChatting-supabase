@@ -42,6 +42,10 @@ extension ChatView {
             $0.leftView = UIView(frame: CGRect(
                 x: 0, y: 0, width: 20, height: 40)
             )
+            $0.rightView = UIView(frame: CGRect(
+                x: 0, y: 0, width: 50, height: 40)
+            )
+            $0.rightViewMode = .always
             $0.leftViewMode = .always
             $0.placeholder = "메시지 보내기"
             $0.layer.cornerRadius = 20
@@ -67,7 +71,7 @@ extension ChatView {
         let sendButtonImage = UIImageView().then {
             sendButton.addSubview($0)
             $0.image = UIImage(named: "chatSendImage")
-            $0.isUserInteractionEnabled = true
+            $0.isUserInteractionEnabled = false
             $0.snp.makeConstraints { make in
                 make.centerX.centerY.equalTo(sendButton)
                 make.width.height.equalTo(15)
@@ -78,6 +82,7 @@ extension ChatView {
             self.addSubview($0)
             $0.backgroundColor = .white
             $0.separatorStyle = .none
+            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0)
             $0.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
                 make.bottom.equalTo(messageTextField.snp.top)

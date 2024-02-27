@@ -24,11 +24,15 @@ class ChatOtherCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(messageModel model: ChatMessageModel) {
+    func configure(messageModel model: ChatMessageModel, otherModel someModel: [RoomUserCYO]) {
         
-        personName.text = "김아영"
-        personMessage.text = model.message
-        recievdDate.text = model.convertTimestamp
+        someModel.forEach {
+            if let roomUserId = $0.user_id, roomUserId == model.user_id {
+                personName.text = $0.nickname ?? "알 수 없음"
+                personMessage.text = model.message
+                recievdDate.text = model.convertTimestamp
+            }
+        }
     }
 
 }
