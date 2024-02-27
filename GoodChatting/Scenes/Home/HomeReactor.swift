@@ -13,7 +13,6 @@ final class HomeReactor: Reactor {
     
     enum Action {
         case chattingAddAction(ChattingAddPopup.ChattingAddPopupAction)
-        case settingAction(HomeViewController.SettingAction)
         case chattingListManagerAction(ChattingListManager.ChattingListManagerAction)
         
         case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
@@ -67,19 +66,6 @@ final class HomeReactor: Reactor {
             case .joinRoom(let code):
                 Log.cyo("joinRoom")
                 return .just(Mutation.presentJoinRoomPopup(true, code))
-            }
-            
-        case .settingAction(let action):
-            switch action {
-            case .edit:
-                Log.cyo("seeting Edit")
-                return .empty()
-            case .sort:
-                Log.cyo("seeting Sort")
-                return .empty()
-            case .all_read:
-                Log.cyo("seeting All Read")
-                return .empty()
             }
             
         case .chattingListManagerAction(let action):
