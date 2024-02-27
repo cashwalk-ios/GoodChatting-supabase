@@ -58,7 +58,7 @@ extension ChatOtherCell {
             self.addSubview($0)
             $0.font = UIFont.systemFont(ofSize: 11)
             $0.snp.makeConstraints { make in
-                make.top.equalTo(self).offset(2)
+                make.top.equalTo(self).offset(4)
                 make.left.equalTo(personImageView.snp.right).offset(7)
                 make.height.equalTo(13)
             }
@@ -66,7 +66,9 @@ extension ChatOtherCell {
         
         let chatBaseView = UIStackView(arrangedSubviews: []).then {
             self.addSubview($0)
-            $0.backgroundColor = UIColor.lightGray
+            $0.backgroundColor = UIColor(
+                red: 244/255, green: 244/255, blue: 244/255, alpha: 1.0
+            )
             $0.layer.cornerRadius = 12
             $0.layer.maskedCorners = [
                 .layerMaxXMinYCorner,
@@ -82,7 +84,7 @@ extension ChatOtherCell {
             $0.snp.makeConstraints { make in
                 make.top.equalTo(personName.snp.bottom).offset(6)
                 make.left.equalTo(personName)
-                make.bottom.equalTo(self)
+                make.bottom.equalTo(self).offset(-5)
             }
         }
         
