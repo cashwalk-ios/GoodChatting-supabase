@@ -29,6 +29,7 @@ final class CreateRoomView: UIView {
         self.setupViews()
         self.bindView()
         self.addTapGesture()
+        self.registerKeyboardNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +38,7 @@ final class CreateRoomView: UIView {
     
     deinit {
         Log.kkr("\(self)")
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupProperties() {
@@ -220,6 +222,25 @@ final class CreateRoomView: UIView {
         self.endEditing(true)
     }
     
+    private func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.frame.origin.y == 0 {
+                self.frame.origin.y -= keyboardSize.height / 3
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        if self.frame.origin.y != 0 {
+            self.frame.origin.y = 0
+        }
+    }
+
 }
 
 extension CreateRoomView: UITextFieldDelegate {
