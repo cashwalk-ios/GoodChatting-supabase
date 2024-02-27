@@ -271,15 +271,20 @@ final class JoinRoomView: UIView {
     
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.frame.origin.y == 0 {
-                self.frame.origin.y -= keyboardSize.height / 5
+            if self.transform.ty == 0 {
+                let moveDistance = -keyboardSize.height / 4
+                UIView.animate(withDuration: 0.3) {
+                    self.transform = CGAffineTransform(translationX: 0, y: moveDistance)
+                }
             }
         }
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
-        if self.frame.origin.y != 0 {
-            self.frame.origin.y = 0
+        if self.transform.ty != 0 {
+            UIView.animate(withDuration: 0.3) {
+                self.transform = .identity
+            }
         }
     }
 }
@@ -292,7 +297,11 @@ extension JoinRoomView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         underline.backgroundColor = .init(hexCode: "E0E0E0")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -308,5 +317,5 @@ extension JoinRoomView: UITextFieldDelegate {
             joinButton.backgroundColor = .init(hexCode: "999999")
         }
     }
-
+    
 }
