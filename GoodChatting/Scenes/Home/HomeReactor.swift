@@ -19,6 +19,7 @@ final class HomeReactor: Reactor {
         case chattingAlarmStatusChange(alarm: Bool, roomId: Int)
         case chattingDelete(item: ChattingList?)
         case closePopupView(ChatPopupType)
+        case successJoinChattingRoom(String)
     }
     
     enum Mutation {
@@ -26,6 +27,7 @@ final class HomeReactor: Reactor {
         case setChattingAlarmStatus(alarm: Bool, roomId: Int)
         case presentCreateRoomPopup(Bool)
         case presentJoinRoomPopup(Bool, String?)
+        case enterChattingRoom(String)
     }
     
     struct State {
@@ -34,6 +36,7 @@ final class HomeReactor: Reactor {
         var isPresentJoinRoomPopup: Bool = false
         var userCYO: UserCYO?
         var joinCode: String? = nil
+        var chatRoomTitle: String?
     }
     
     var initialState: State// = State()
@@ -123,8 +126,11 @@ final class HomeReactor: Reactor {
                             GlobalFunctions.showToast(message: "채팅방 생성 실패하였습니다.")
                         }
                     }
-                    
-                    return .just(Mutation.presentCreateRoomPopup(false))
+                    Log.kkr("방 만들기 팝업 닫기 & 만든 방으로 참여하기 - 방 이름: \(title)")
+                    return .concat([
+                        .just(Mutation.presentCreateRoomPopup(false)),
+                        .just(Mutation.enterChattingRoom(title))
+                    ])
                 } else {
                     Log.cyo("없음")
                     return .just(Mutation.presentCreateRoomPopup(false))
@@ -133,6 +139,10 @@ final class HomeReactor: Reactor {
             case .join:
                 return .just(Mutation.presentJoinRoomPopup(false, nil))
             }
+            
+        case .successJoinChattingRoom(let title):
+            Log.kkr("successJoinChattingRoom is called - title: \(title)")
+            return .just(.enterChattingRoom(title))
         }
     }
     
@@ -159,6 +169,9 @@ final class HomeReactor: Reactor {
             } else {
                 newState.joinCode = nil
             }
+            
+        case .enterChattingRoom(let roomTitle):
+            newState.chatRoomTitle = roomTitle
         }
         
         return newState

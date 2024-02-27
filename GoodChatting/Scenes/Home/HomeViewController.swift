@@ -364,9 +364,26 @@ extension HomeViewController {
         
         reactor.state.map(\.isPresentJoinRoomPopup)
             .observe(on: MainScheduler.instance)
-            .bind(with: self, onNext: { owner, isPresent in
+            .subscribe(with: self, onNext: { owner, isPresent in
                 let joinCode = reactor.currentState.joinCode
                 owner.presentPopup(isPresent, owner, .join, joinCode)
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.chatRoomTitle)
+            .distinctUntilChanged()
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self as HomeViewController, onNext: { owner, title in
+                guard let userData = reactor.currentState.userCYO, let title = title else { return }
+                Task {
+                    let chattingList: [ChattingList] = try await ChattingListManager.shared.selectRoom(roomTitle: title)
+                    Log.kkr("chattingList: \(chattingList.first?.title ?? "찾은 방이 없음 🥲")")
+                    let vc = ChatViewController()
+                    guard let chattingList = chattingList.first else { return }
+                    let reactor: ChatReactor = ChatReactor(roomTitle: title, roomData: chattingList, userData: userData)
+                    vc.reactor = reactor
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
             }).disposed(by: disposeBag)
     }
     

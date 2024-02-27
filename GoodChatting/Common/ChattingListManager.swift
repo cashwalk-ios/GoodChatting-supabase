@@ -317,4 +317,16 @@ class ChattingListManager {
         
         Log.cyo("response \(response)")
     }
+    
+    func selectRoom(roomTitle: String) async throws -> [ChattingList] {
+        let response: [ChattingList] = try await supabase
+            .database
+            .from("roomCYO")
+            .select("*")
+            .eq("title", value: roomTitle)
+            .execute()
+            .value
+        
+        return response
+    }
 }

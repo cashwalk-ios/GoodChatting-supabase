@@ -165,11 +165,11 @@ final class JoinRoomView: UIView {
             .subscribe(with: self, onNext: { owner, validData in
                 let (isValid, roomId) = validData
                 if isValid {
-                    // 1. roomCYO라는 테이블에 people이라는 컬럼에 userId 추가
+                    // roomCYO라는 테이블에 people이라는 컬럼에 userId 추가
                     Task {
                         do {
                             try await self.addUserToRoom(userId: UserSettings.userId ?? "", roomId: roomId)
-                            // TODO: 닉네임 생성해서 roomUserCYO에 추가 (addUserNickname() 메서드 사용)
+                            // 닉네임 생성해서 roomUserCYO에 추가
                             let nickname = "유저#\(arc4random_uniform(1000))"
                             Log.kkr("생성된 닉네임: \(nickname)")
                             try await ChattingListManager.shared.addUserNickname(
@@ -177,13 +177,17 @@ final class JoinRoomView: UIView {
                                 roomId: roomId,
                                 nickName: nickname
                             )
+                            
+                            // 참여한 방으로 이동
+                            let roomTitle: String = try await self.selectRoomTitle(roomId: roomId)
+                            Log.kkr("roomTitle: \(roomTitle)")
+                            owner.reactor?.action.onNext(.successJoinChattingRoom(roomTitle))
                         } catch {
                             Log.kkr("방에 유저 추가 실패: \(error)")
                             GlobalFunctions.showToast(message: "\(error.localizedDescription)")
                         }
                     }
                     owner.reactor?.action.onNext(.closePopupView(.join))
-                    // TODO: 참여한 방으로 이동하기 또는 홈 화면에 "참여한 채팅방" 목록 갱신하기
                 } else {
                     // 참여코드가 roomCYO DB에 없는 경우
                     owner.validView.isHidden = false
@@ -237,7 +241,7 @@ final class JoinRoomView: UIView {
         
         guard let currentPeopleArray = response.first?.people else { return }
         Log.kkr("currentPeopleArray: \(currentPeopleArray)")
-
+        
         // 기존 people 배열에 userId가 존재하지 않는 경우에만 추가
         if !currentPeopleArray.contains(userId) {
             var newPeopleArray = currentPeopleArray
@@ -253,7 +257,18 @@ final class JoinRoomView: UIView {
             GlobalFunctions.showToast(message: "이미 참여한 방의 코드입니다.")
         }
     }
-
+    
+    private func selectRoomTitle(roomId: Int) async throws -> String {
+        let response: [ChattingList] = try await AuthManager.shared.client.database
+            .from("roomCYO")
+            .select("*")
+            .eq("id", value: roomId)
+            .execute()
+            .value
+        Log.kkr("select room title: \(response)")
+        return response.first?.title ?? ""
+    }
+    
     
     private func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -272,7 +287,7 @@ final class JoinRoomView: UIView {
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.transform.ty == 0 {
-                let moveDistance = -keyboardSize.height / 4
+                let moveDistance = -keyboardSize.height / 5
                 UIView.animate(withDuration: 0.3) {
                     self.transform = CGAffineTransform(translationX: 0, y: moveDistance)
                 }
