@@ -108,21 +108,20 @@ class ChatViewController: BaseViewController, View {
                 case true:
                     /// 나의 채팅
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
-                    Log.cyo(model)
                     
-                    var isCompare: Bool = true
+//                    var isCompare: Bool = true
+//                    
+//                    if index > 2 {
+//                        let previousCell = reactor.currentState.chatList[index - 2].created_at
+//                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
+//                        
+//                        isCompare = model.isCompareChatDate(
+//                            previousCellDate: previousCell,
+//                            currentCellDate: currenctCell
+//                        )
+//                    }
                     
-                    if index > 2 {
-                        let previousCell = reactor.currentState.chatList[index - 2].created_at
-                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
-                        
-                        isCompare = model.isCompareChatDate(
-                            previousCellDate: previousCell,
-                            currentCellDate: currenctCell
-                        )
-                    }
-                    
-                    cell.configure(messageModel: model, isCompare: isCompare)
+                    cell.configure(messageModel: model)
                     return cell
                 case false:
                     /// 상대방 채팅

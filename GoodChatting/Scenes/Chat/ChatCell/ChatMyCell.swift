@@ -22,18 +22,19 @@ final class ChatMyCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(messageModel model: ChatMessageModel, isCompare: Bool) {
+    func configure(messageModel model: ChatMessageModel) {
         
         sendMessage.text = model.message
+        sendDate.text = model.convertTimestamp
         
-        switch isCompare {
-        case true:
-            sendDate.text = ""
-            sendDate.isHidden = true
-        case false:
-            sendDate.text = model.convertTimestamp
-            sendDate.isHidden = false
-        }
+//        switch isCompare {
+//        case true:
+//            sendDate.text = ""
+//            sendDate.isHidden = true
+//        case false:
+//            sendDate.text = model.convertTimestamp
+//            sendDate.isHidden = false
+//        }
     }
 }
 
