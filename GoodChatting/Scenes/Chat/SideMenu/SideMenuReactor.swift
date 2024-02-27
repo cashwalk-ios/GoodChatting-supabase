@@ -13,6 +13,7 @@ final class SideMenuReactor: Reactor {
     
     enum Action {
         case fetchChattingInfo(roomId: Int)
+        case getOutChattingRoom(item: ChattingList?)
     }
     
     enum Mutation {
@@ -43,6 +44,13 @@ final class SideMenuReactor: Reactor {
                     }
                     return Disposables.create()
                 }
+            
+        case .getOutChattingRoom(let item):
+            if let item {
+                ChattingListManager.shared.getoutRoom(userId: UserSettings.userId ?? "", roomData: item)
+            }
+            
+            return .empty()
         }
     }
     
