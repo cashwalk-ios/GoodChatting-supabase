@@ -178,6 +178,11 @@ final class HomeViewController: BaseViewController, View {
         }
         
         self.actionButtonForDebug = UIButton().then {
+            #if DEBUG
+            $0.isHidden = false
+            #else
+            $0.isHidden = true
+            #endif
             $0.setImage(UIImage(named: "debug-Icon"), for: .normal)
             
             let menuItems: [UIMenuElement] = [
