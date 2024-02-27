@@ -76,8 +76,8 @@ extension ChatMyCell {
             $0.snp.makeConstraints { make in
                 make.left.equalTo(sendDate.snp.right).offset(6)
                 make.right.equalTo(self).offset(-10)
-                make.top.equalTo(self).offset(4)
-                make.bottom.equalTo(self).offset(-4)
+                make.top.equalTo(self).offset(10)
+                make.bottom.equalTo(self).offset(-10)
             }
         }
         
