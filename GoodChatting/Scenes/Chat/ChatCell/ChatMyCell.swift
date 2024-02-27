@@ -22,10 +22,21 @@ final class ChatMyCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(messageModel model: ChatMessageModel) {
+    func configure(messageModel model: ChatMessageModel, isCompare: Bool) {
         
         sendMessage.text = model.message
-        sendDate.text = model.convertTimestamp
+        Log.cyo("chat_message: \(model.message)")
+        Log.cyo("chat_time: \(model.convertTimestamp)")
+        Log.cyo("chat_isHidden: \(isCompare)")
+        
+        switch isCompare {
+        case true:
+            sendDate.text = ""
+            sendDate.isHidden = true
+        case false:
+            sendDate.text = model.convertTimestamp
+            sendDate.isHidden = false
+        }
     }
 }
 

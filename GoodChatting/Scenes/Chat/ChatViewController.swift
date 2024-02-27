@@ -119,17 +119,17 @@ class ChatViewController: BaseViewController, View {
                     guard let cell = self.chatView.tableView.dequeueReusableCell(withIdentifier: "myChat") as? ChatMyCell else { return UITableViewCell() }
                     Log.cyo(model)
                     
-                    var isCompare: Bool = false
+                    var isCompare: Bool = true
                     
-//                    if index > 2, reactor.currentState.chatList.count >  {
-//                        let previousCell = reactor.currentState.chatList[index - 2].created_at
-//                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
-//                        
-//                        isCompare = model.isCompareChatDate(
-//                            previousCellDate: previousCell,
-//                            currentCellDate: currenctCell
-//                        )
-//                    }
+                    if index > 2 {
+                        let previousCell = reactor.currentState.chatList[index - 2].created_at
+                        let currenctCell = reactor.currentState.chatList[index - 1].created_at
+                        
+                        isCompare = model.isCompareChatDate(
+                            previousCellDate: previousCell,
+                            currentCellDate: currenctCell
+                        )
+                    }
                     
                     cell.configure(messageModel: model, isCompare: isCompare)
                     return cell
@@ -291,6 +291,10 @@ extension ChatViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
     }
 }
 

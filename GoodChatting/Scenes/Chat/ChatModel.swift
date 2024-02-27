@@ -37,7 +37,7 @@ struct ChatMessageModel: Codable, Equatable {
         return stringToDate
     }
     
-    /// 채팅 시간 노출 프로퍼ㅣ
+    /// 채팅 시간 노출 프로퍼티
     var convertTimestamp: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "a H:mm"
@@ -65,5 +65,20 @@ struct ChatMessageModel: Codable, Equatable {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy년 MM월 dd일"
         return dateformatter.string(from: convertDate)
+    }
+    
+    /// 채팅 시간 비교
+    func isCompareChatDate(previousCellDate: String, currentCellDate: String) -> Bool {
+        
+        let previousDate = convertDate(dateString: previousCellDate)
+        let currentDate = convertDate(dateString: currentCellDate)
+
+        let priviousHour = Calendar.current.component(.hour, from: previousDate)
+        let currentHour = Calendar.current.component(.hour, from: currentDate)
+        
+        let priviousMinute = Calendar.current.component(.minute, from: previousDate)
+        let currentMinute = Calendar.current.component(.minute, from: currentDate)
+        
+        return priviousHour == currentHour && priviousMinute == currentMinute
     }
 }
