@@ -45,7 +45,7 @@ extension ChatMyCell {
         
         sendDate = UILabel().then {
             self.addSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 9)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 9)
             $0.textColor = UIColor(
                 red: 136/255, green: 136/255, blue: 136/255, alpha: 1.0
             )
@@ -83,7 +83,7 @@ extension ChatMyCell {
         
         sendMessage = UILabel().then {
             messageBaseView.addArrangedSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 15)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 13)
         }
     }
 }

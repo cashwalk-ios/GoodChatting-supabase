@@ -56,7 +56,7 @@ extension ChatOtherCell {
         
         personName = UILabel().then {
             self.addSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 11)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 10)
             $0.snp.makeConstraints { make in
                 make.top.equalTo(self).offset(4)
                 make.left.equalTo(personImageView.snp.right).offset(7)
@@ -90,7 +90,7 @@ extension ChatOtherCell {
         
         personMessage = UILabel().then {
             chatBaseView.addArrangedSubview($0)
-            $0.font = UIFont.systemFont(ofSize: 15)
+            $0.font = UIFont.appleSDGothicNeo(.medium, size: 13)
         }
         
         recievdDate = UILabel().then {
