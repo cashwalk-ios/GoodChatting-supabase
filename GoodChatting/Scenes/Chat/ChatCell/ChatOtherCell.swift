@@ -91,6 +91,7 @@ extension ChatOtherCell {
         personMessage = UILabel().then {
             chatBaseView.addArrangedSubview($0)
             $0.font = UIFont.appleSDGothicNeo(.medium, size: 13)
+            $0.text = "[사용자가 방을 나갔습니다]"
         }
         
         recievdDate = UILabel().then {
