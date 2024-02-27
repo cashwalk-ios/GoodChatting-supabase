@@ -16,7 +16,7 @@ final class SideMenuCell: UITableViewCell {
     // MARK: - Properties
     
     var thumnailImageView: UIImageView!
-    var crownImageView: UIImageView! // me or 방장 아이콘
+    var roomManagerImageView: UIImageView!
     var nameLabel: UILabel!
     
     // MARK: - Lifecycle
@@ -35,10 +35,7 @@ final class SideMenuCell: UITableViewCell {
     }
     
     // MARK: - Helpers
-    
-    func configuration(name: String) {
-        nameLabel.text = name
-    }
+
 }
 
 // MARK: - Layout
@@ -47,16 +44,34 @@ extension SideMenuCell {
     
     private func setView() {
         
-        self.thumnailImageView = UIImageView().then {
-            $0.image = UIImage(named: "chatRoomProfileImage")
-            $0.backgroundColor = .lightGray
-            $0.layer.cornerRadius = 8
-            $0.clipsToBounds = true
+        let thumnailImageContainer = UIView().then {
             self.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.left.equalToSuperview().inset(10)
                 $0.size.equalTo(32)
+            }
+        }
+        
+        self.thumnailImageView = UIImageView().then {
+            $0.image = UIImage(named: "chatRoomProfileImage")
+            $0.backgroundColor = .lightGray
+            $0.layer.cornerRadius = 8
+            $0.clipsToBounds = true
+            thumnailImageContainer.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.centerX.centerY.equalToSuperview()
+                $0.size.equalTo(32)
+            }
+        }
+        
+        self.roomManagerImageView = UIImageView().then {
+            $0.image = UIImage(named: "crown_Icon")
+            $0.isHidden = true
+            thumnailImageContainer.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.bottom.equalToSuperview().offset(2)
+                $0.right.equalToSuperview().offset(4)
             }
         }
         
@@ -67,7 +82,7 @@ extension SideMenuCell {
             self.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
-                $0.left.equalTo(thumnailImageView.snp.right).offset(9)
+                $0.left.equalTo(thumnailImageContainer.snp.right).offset(9)
             }
         }
         
