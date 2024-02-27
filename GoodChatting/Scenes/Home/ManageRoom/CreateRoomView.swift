@@ -29,6 +29,7 @@ final class CreateRoomView: UIView {
         self.setupViews()
         self.bindView()
         self.addTapGesture()
+        self.registerKeyboardNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +38,7 @@ final class CreateRoomView: UIView {
     
     deinit {
         Log.kkr("\(self)")
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupProperties() {
@@ -205,7 +207,8 @@ final class CreateRoomView: UIView {
         
         chatRoomTitle.rx.text
             .changed
-            .bind(with: self, onNext: { owner, title in
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self, onNext: { owner, title in
                 owner.titleSizeLabel.text = "\(title?.count ?? 0)/30"
             }).disposed(by: disposeBag)
     }
@@ -219,6 +222,30 @@ final class CreateRoomView: UIView {
         self.endEditing(true)
     }
     
+    private func registerKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.transform.ty == 0 {
+                let moveDistance = -keyboardSize.height / 4
+                UIView.animate(withDuration: 0.3) {
+                    self.transform = CGAffineTransform(translationX: 0, y: moveDistance)
+                }
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        if self.transform.ty != 0 {
+            UIView.animate(withDuration: 0.3) {
+                self.transform = .identity
+            }
+        }
+    }
+
 }
 
 extension CreateRoomView: UITextFieldDelegate {
@@ -228,7 +255,11 @@ extension CreateRoomView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         underline.backgroundColor = .init(hexCode: "E0E0E0")
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
