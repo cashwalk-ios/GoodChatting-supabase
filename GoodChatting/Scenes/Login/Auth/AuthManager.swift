@@ -54,4 +54,17 @@ class AuthManager {
         }
     }
     
+    /// userCYO 테이블에 userId가 비어있는지 체크
+    func selectUserIdFromUserCYO(userId: String) async throws -> Bool {
+        let response: [UserCYO] = try await client.database
+            .from("userCYO")
+            .select("id")
+            .eq("id", value: userId)
+            .execute()
+            .value
+        
+        Log.kkr("response: \(response)")
+        return response.isEmpty
+    }
+    
 }
