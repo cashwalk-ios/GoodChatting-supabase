@@ -10,7 +10,6 @@ import SnapKit
 
 final class ChatDateDisplayCell: UITableViewCell {
     
-    let identifier: String = "ChatDate"
     private var displayLabel: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -23,6 +22,8 @@ final class ChatDateDisplayCell: UITableViewCell {
     }
     
     func setConfigure(displayText dateText: String) {
+        
+        self.selectionStyle = .none
         
         displayLabel = UILabel().then {
             self.addSubview($0)

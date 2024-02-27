@@ -25,9 +25,6 @@ final class ChatMyCell: UITableViewCell {
     func configure(messageModel model: ChatMessageModel, isCompare: Bool) {
         
         sendMessage.text = model.message
-        Log.cyo("chat_message: \(model.message)")
-        Log.cyo("chat_time: \(model.convertTimestamp)")
-        Log.cyo("chat_isHidden: \(isCompare)")
         
         switch isCompare {
         case true:

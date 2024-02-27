@@ -27,9 +27,6 @@ class ChatOtherCell: UITableViewCell {
     func configure(messageModel model: ChatMessageModel, otherModel someModel: [RoomUserCYO]) {
         
         someModel.forEach {
-            Log.cyo("chat_id: \($0.user_id)")
-            Log.cyo("user_id: \(model.user_id)")
-            
             if let roomUserId = $0.user_id, roomUserId == model.user_id {
                 personName.text = $0.nickname ?? "알 수 없음"
                 personMessage.text = model.message

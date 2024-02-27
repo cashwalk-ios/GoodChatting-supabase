@@ -37,7 +37,7 @@ final class ChatReactor: Reactor {
         var userData: UserCYO
     }
     
-    var initialState: State// = State()
+    var initialState: State
     
     init(roomTitle: String, roomData: ChattingList, userData: UserCYO) {
         initialState = State(chattingRoomTitle: roomTitle, roomData: roomData, userData: userData)
@@ -111,7 +111,6 @@ final class ChatReactor: Reactor {
                             }
                             
                         } catch {
-                            Log.cyo("insert_Error")
                             observer.onError(error)
                         }
                     }
@@ -204,18 +203,6 @@ extension ChatReactor {
                     print("no payload")
                     return
                 }
-                
-                switch payload {
-                case .object(let jsonObject):
-                    
-                    break
-//                    ChatMessageModel
-                    
-//                    let message = Message(jsonObject: jsonObject)
-//                    self.messages.append(message)
-                default:
-                    return
-                }
             }
         }
     }
@@ -223,7 +210,7 @@ extension ChatReactor {
     @MainActor
     private func fetchDatabase() async -> [ChatMessageModel] {
         do {
-            var messages: [ChatMessageModel] = try await client.database
+            let messages: [ChatMessageModel] = try await client.database
                 .from("newmessageCYO")
                 .select()
                 .equals("room_id", value: "\(currentState.roomData.id)")
