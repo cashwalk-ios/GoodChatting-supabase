@@ -23,6 +23,7 @@ final class SideMenuViewController: BaseViewController, View {
     var participationCodeReactor: ParticipationCodeReactor?
 
     private var activeParticipationCode: String?
+    private var roomMakerId: String?
     var roomId: Int?
 
     private var inviteButton: UIButton!
@@ -169,12 +170,22 @@ extension SideMenuViewController {
                 owner.participantsCountLabel.text = "\(roomInfo.people?.count ?? 0)명"
                 
                 owner.activeParticipationCode = roomInfo.active_participation_code
+                owner.roomMakerId = roomInfo.maker
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.chattingInfo.first?.roomUserCYO }
             .compactMap { $0 }
-            .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { row, item, cell in
-                cell.configuration(name: item.nickname ?? "")
+            .bind(to: participantsTableView.rx.items(cellIdentifier: SideMenuCell.cellIdentifier, cellType: SideMenuCell.self)) { [weak self] row, item, cell in
+                guard let self else { return }
+                
+                cell.nameLabel.text = item.nickname
+                
+                let isRoomMaker = (self.roomMakerId == item.user_id)
+                cell.roomManagerImageView.isHidden = !isRoomMaker
+                
+                let isMe = (UserSettings.userId == item.user_id )
+                cell.meImageView.isHidden = !isMe
+                
             }.disposed(by: disposeBag)
         
     }
@@ -358,5 +369,3 @@ extension SideMenuViewController {
     }
     
 }
-
-
