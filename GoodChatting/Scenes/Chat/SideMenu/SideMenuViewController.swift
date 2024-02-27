@@ -183,6 +183,9 @@ extension SideMenuViewController {
                 let isRoomMaker = (self.roomMakerId == item.user_id)
                 cell.roomManagerImageView.isHidden = !isRoomMaker
                 
+                let isMe = (UserSettings.userId == item.user_id )
+                cell.meImageView.isHidden = !isMe
+                
             }.disposed(by: disposeBag)
         
     }

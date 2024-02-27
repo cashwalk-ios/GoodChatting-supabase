@@ -17,6 +17,7 @@ final class SideMenuCell: UITableViewCell {
     
     var thumnailImageView: UIImageView!
     var roomManagerImageView: UIImageView!
+    var meImageView: UIImageView!
     var nameLabel: UILabel!
     
     // MARK: - Lifecycle
@@ -67,6 +68,16 @@ extension SideMenuCell {
         
         self.roomManagerImageView = UIImageView().then {
             $0.image = UIImage(named: "crown_Icon")
+            $0.isHidden = true
+            thumnailImageContainer.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.top.equalToSuperview().offset(-2)
+                $0.right.equalToSuperview().offset(4)
+            }
+        }
+        
+        self.meImageView = UIImageView().then {
+            $0.image = UIImage(named: "me_Icon")
             $0.isHidden = true
             thumnailImageContainer.addSubview($0)
             $0.snp.makeConstraints {
