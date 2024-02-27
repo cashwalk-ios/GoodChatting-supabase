@@ -30,7 +30,6 @@ final class ChatReactor: Reactor {
         var chattingRoomTitle: String = ""
         var roomPeopleCount: Int = 10
         var chatList: [ChatMessageModel] = []
-        var reload: Bool?
         
         var roomData: ChattingList
         var userData: UserCYO
@@ -172,7 +171,6 @@ final class ChatReactor: Reactor {
         case .mutateRequestMessage: break
         case .mutateReload(let chatModel):
             state.chatList.append(chatModel)
-            state.reload = true
         }
         
         return state
