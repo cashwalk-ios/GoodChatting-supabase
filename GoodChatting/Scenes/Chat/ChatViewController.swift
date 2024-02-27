@@ -56,18 +56,6 @@ class ChatViewController: BaseViewController, View {
         reactor.action.onNext(.fetchChatData)
         reactor.action.onNext(.insertSubscribe)
         
-        reactor.state.map(\.reload)
-            .distinctUntilChanged()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, state in
-                if let state, state == true {
-                    DispatchQueue.main.async {
-                        owner.chatView.tableView.reloadData()
-                        owner.scrollToBottom()
-                    }
-                }
-            }).disposed(by: disposeBag)
-        
         reactor.state.map(\.chattingRoomTitle)
             .distinctUntilChanged()
             .withUnretained(self)
@@ -152,6 +140,13 @@ class ChatViewController: BaseViewController, View {
             .subscribe(onNext: { owner, roomId in
                 Log.rk("RoomId is \(roomId)")
                 owner.sideMenuViewController.roomId = roomId
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map(\.chatList)
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.scrollToBottom()
             }).disposed(by: disposeBag)
         
         chatView.messageTextField.rx.text
@@ -266,7 +261,17 @@ class ChatViewController: BaseViewController, View {
             .drive(onNext: { [weak self] keyboardVisibleHeight in
                 guard let self else { return }
                 
-                let dynamicKeyboardHeight = keyboardVisibleHeight > 0 ? -keyboardVisibleHeight + self.chatView.safeAreaInsets.bottom : 0
+                var dynamicKeyboardHeight: CGFloat = 0
+                
+                if keyboardVisibleHeight > 0 {
+                    dynamicKeyboardHeight = -keyboardVisibleHeight + self.chatView.safeAreaInsets.bottom
+                    
+                    DispatchQueue.main.async {
+                        self.scrollToBottom()
+                    }
+                } else {
+                    dynamicKeyboardHeight = 0
+                }
                 
                 self.chatView.messageTextField.snp.updateConstraints {
                     $0.bottom.equalTo(self.chatView.safeAreaLayoutGuide)
