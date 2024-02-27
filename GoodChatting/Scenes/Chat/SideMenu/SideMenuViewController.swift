@@ -90,6 +90,23 @@ final class SideMenuViewController: BaseViewController, View {
         }
     }
     
+    private func presentDeleteAlert(room: ChattingList?) {
+        let alert = GlobalFunctions.makeAlert(
+            title: "채팅방 나가기",
+            message: "채팅방을 나가실 경우\n대화내용이 모두 삭제됩니다.",
+            firstActionMsg: "나가기",
+            firstActionStyle: .destructive,
+            firstActionHandler: { [weak self] in
+                guard let self else { return }
+                self.reactor?.action.on(.next(.getOutChattingRoom(item: room)))
+                
+                NotificationCenter.default.post(name: .getOutRoom, object: nil)
+            },
+            cancelActionMsg: "취소"
+        )
+        self.present(alert, animated: true)
+    }
+    
 }
 
 // MARK: - bind
@@ -129,6 +146,13 @@ extension SideMenuViewController {
                 owner.dimmingView.isHidden = false
                 
                 owner.present(nav, animated: true)
+            }).disposed(by: disposeBag)
+        
+        self.getoutButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                let room = reactor.currentState.chattingInfo.first
+                owner.presentDeleteAlert(room: room)
             }).disposed(by: disposeBag)
         
     }
