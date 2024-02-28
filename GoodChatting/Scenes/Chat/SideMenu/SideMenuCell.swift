@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class SideMenuCell: UITableViewCell {
     
@@ -15,10 +17,17 @@ final class SideMenuCell: UITableViewCell {
     
     // MARK: - Properties
     
+    var disposeBag = DisposeBag()
+    
     var thumnailImageView: UIImageView!
     var roomManagerImageView: UIImageView!
     var meImageView: UIImageView!
     var nameLabel: UILabel!
+    var editNameButton: UIButton!
+    
+    var tapEditNameButton: ControlEvent<Void> {
+        return editNameButton.rx.tap
+    }
     
     // MARK: - Lifecycle
     
@@ -32,7 +41,9 @@ final class SideMenuCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         
+        disposeBag = DisposeBag() // 셀이 재사용될 준비될 때, disposeBag을 새로 할당하여 이전에 구독했던 이벤트들이 셀이 재사용될 때 취소되도록
     }
     
     // MARK: - Helpers
@@ -46,7 +57,7 @@ extension SideMenuCell {
     private func setView() {
         
         let thumnailImageContainer = UIView().then {
-            self.addSubview($0)
+            self.contentView.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.left.equalToSuperview().inset(10)
@@ -90,13 +101,22 @@ extension SideMenuCell {
             $0.text = "이름"
             $0.font = .appleSDGothicNeo(.regular, size: 12)
             $0.textColor = .black
-            self.addSubview($0)
+            self.contentView.addSubview($0)
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.left.equalTo(thumnailImageContainer.snp.right).offset(9)
             }
         }
         
+        self.editNameButton = UIButton().then {
+            $0.setImage(UIImage(named: "edit_Icon"), for: .normal)
+            self.contentView.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.size.equalTo(20)
+                $0.right.equalToSuperview().inset(10)
+                $0.centerY.equalToSuperview()
+            }
+        }
+        
     }
-    
 }

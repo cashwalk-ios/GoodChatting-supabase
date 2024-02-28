@@ -227,6 +227,22 @@ class ChattingListManager {
         Log.cyo("deleteChattingRoomInDatabase(roomId: \(roomId))")
     }
     
+    func changeNickname(changedName: String, roomUserData: RoomUserCYO) async throws -> Int {
+        Log.rk("changeNickname(roomUserData: \(roomUserData)")
+        
+        let response = try await supabase
+            .database
+            .from("roomUserCYO")
+            .update(["nickname": changedName])
+            .eq("id", value: roomUserData.id)
+            .execute()
+        
+        Log.rk("response = \(response)")
+        
+        return response.status
+        
+    }
+    
     // userCYO: 유저 테이블 룸ID 추가
     func updateUserRoom(userId: String, roomId: Int) async throws {
         Log.cyo("updateUserRoom(roomId: \(roomId))")

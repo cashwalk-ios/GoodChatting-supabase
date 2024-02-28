@@ -33,6 +33,8 @@ final class SideMenuViewController: BaseViewController, View {
     private var notiButton: UIButton!
     
     private var participantsTableView: UITableView!
+    
+    private var editNamePopUpView: CustomPopUpView?
 
     // MARK: - Lifecycle
     
@@ -185,8 +187,31 @@ extension SideMenuViewController {
                 
                 let isMe = (UserSettings.userId == item.user_id )
                 cell.meImageView.isHidden = !isMe
+                cell.editNameButton.isHidden = !isMe
+                
+                cell.tapEditNameButton.subscribe(with: self, onNext: { owner, _ in
+                    
+                    owner.editNamePopUpView = CustomPopUpView().then {
+                        $0.sideMenuReactor = owner.reactor
+                        $0.configureForEditName()
+                        
+                        guard let window = owner.sceneDelegate?.window else { return }
+                        window.addSubview($0)
+                        $0.snp.makeConstraints {
+                            $0.edges.equalToSuperview()
+                        }
+                    }
+                }).disposed(by: cell.disposeBag)
                 
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isPresentEditNamePopup }
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self, onNext: { owner, isPresent in
+                if !isPresent {
+                    owner.editNamePopUpView?.removeFromSuperview()
+                }
+            }).disposed(by: disposeBag)
         
     }
     

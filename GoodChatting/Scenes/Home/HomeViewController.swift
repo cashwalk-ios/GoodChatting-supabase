@@ -33,7 +33,7 @@ final class HomeViewController: BaseViewController, View {
     
     private var actionButtonForDebug: UIButton!
     
-    var createRoomPopup: CreateRoomView?
+    var createRoomPopup: CustomPopUpView?
     var joinRoomPopup: JoinRoomView?
     
     // MARK: - LifeCycles
@@ -354,8 +354,8 @@ extension HomeViewController {
         if isPresent {
             switch popupType {
             case .create:
-                owner.createRoomPopup = CreateRoomView().then {
-                    $0.reactor = owner.reactor
+                owner.createRoomPopup = CustomPopUpView().then {
+                    $0.homeReactor = owner.reactor
                     owner.sceneDelegate?.window?.addSubview($0)
                     $0.snp.makeConstraints { make in
                         make.edges.equalToSuperview()
