@@ -191,7 +191,7 @@ extension SideMenuViewController {
                 
                 cell.tapEditNameButton.subscribe(with: self, onNext: { owner, _ in
                     
-                    self.editNamePopUpView = CustomPopUpView().then {
+                    owner.editNamePopUpView = CustomPopUpView().then {
                         $0.sideMenuReactor = owner.reactor
                         $0.configureForEditName()
                         
@@ -201,9 +201,6 @@ extension SideMenuViewController {
                             $0.edges.equalToSuperview()
                         }
                     }
-                    
-                    
-                    
                 }).disposed(by: cell.disposeBag)
                 
             }.disposed(by: disposeBag)
