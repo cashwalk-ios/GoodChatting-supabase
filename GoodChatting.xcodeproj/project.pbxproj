@@ -42,7 +42,7 @@
 		0FAC4F012B4FABAE00639E98 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F002B4FABAE00639E98 /* RxRelay */; };
 		0FAC4F032B4FABAE00639E98 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0FAC4F022B4FABAE00639E98 /* RxSwift */; };
 		0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC4F062B4FC45400639E98 /* LoginViewController.swift */; };
-		0FD6233C2B6B66C30043C9BC /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */; };
+		0FD6233C2B6B66C30043C9BC /* CustomPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD6233B2B6B66C30043C9BC /* CustomPopUpView.swift */; };
 		5C0C12942B50D37D0066FA69 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12932B50D37D0066FA69 /* Log.swift */; };
 		5C0C12982B50D9CB0066FA69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12972B50D9CB0066FA69 /* LoginView.swift */; };
 		5C0C129A2B50D9D60066FA69 /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0C12992B50D9D60066FA69 /* LoginReactor.swift */; };
@@ -92,7 +92,7 @@
 		0F8E4FD12B687C4A001395D2 /* GoodChatting.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoodChatting.entitlements; sourceTree = "<group>"; };
 		0F923CCA2B679A3100F7E0A0 /* SignInWithGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithGoogle.swift; sourceTree = "<group>"; };
 		0FAC4F062B4FC45400639E98 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
+		0FD6233B2B6B66C30043C9BC /* CustomPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpView.swift; sourceTree = "<group>"; };
 		5C0C12932B50D37D0066FA69 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5C0C12972B50D9CB0066FA69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C0C12992B50D9D60066FA69 /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 		0FD6233A2B6B669D0043C9BC /* ManageRoom */ = {
 			isa = PBXGroup;
 			children = (
-				0FD6233B2B6B66C30043C9BC /* CreateRoomView.swift */,
+				0FD6233B2B6B66C30043C9BC /* CustomPopUpView.swift */,
 				0F4EBF132B6FAAB100568AFF /* JoinRoomView.swift */,
 			);
 			path = ManageRoom;
@@ -541,7 +541,7 @@
 				028ABE7A2B54C29E005DE05A /* BaseViewController.swift in Sources */,
 				0F4EBF142B6FAAB100568AFF /* JoinRoomView.swift in Sources */,
 				028ABE782B54C19C005DE05A /* ViewRouter.swift in Sources */,
-				0FD6233C2B6B66C30043C9BC /* CreateRoomView.swift in Sources */,
+				0FD6233C2B6B66C30043C9BC /* CustomPopUpView.swift in Sources */,
 				5C0C12A92B50F0690066FA69 /* HomeReactor.swift in Sources */,
 				0F6EB7E72B50D60A00BB3216 /* Constants.swift in Sources */,
 				0FAC4F072B4FC45400639E98 /* LoginViewController.swift in Sources */,

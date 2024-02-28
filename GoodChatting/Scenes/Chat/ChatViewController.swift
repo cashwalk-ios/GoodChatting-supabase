@@ -31,6 +31,7 @@ class ChatViewController: BaseViewController, View {
         bind(reactor: reactor)
         
         self.sideMenuViewController.reactor = SideMenuReactor()
+        self.sideMenuViewController.sceneDelegate = self.sceneDelegate
         
         NotificationCenter.default.addObserver(self, selector: #selector(backAction(_:)),
                                                name: .getOutRoom, object: nil)

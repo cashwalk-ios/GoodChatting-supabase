@@ -14,14 +14,18 @@ final class SideMenuReactor: Reactor {
     enum Action {
         case fetchChattingInfo(roomId: Int)
         case getOutChattingRoom(item: ChattingList?)
+        
+        case closePopupView(type: EditNamePopupType)
     }
     
     enum Mutation {
         case setChattingInfo([ChattingList])
+        case presentEditNamePopup(Bool)
     }
     
     struct State {
         var chattingInfo: [ChattingList] = []
+        var isPresentEditNamePopup: Bool = false
     }
     
     var initialState = State()
@@ -51,6 +55,17 @@ final class SideMenuReactor: Reactor {
             }
             
             return .empty()
+            
+        case .closePopupView(let popUpType):
+            switch popUpType {
+            case .change(let name):
+                // TODO: - Supabase 닉네임 변경 로직
+                Log.rk("닉네임 변경하기 버튼 클릭됨")
+                return .just(.presentEditNamePopup(false))
+            case .close:
+                return .just(.presentEditNamePopup(false))
+            }
+            
         }
     }
     
@@ -62,6 +77,8 @@ final class SideMenuReactor: Reactor {
         case .setChattingInfo(let data):
             newState.chattingInfo = data
             
+        case .presentEditNamePopup(let isPresent):
+            newState.isPresentEditNamePopup = isPresent
         }
         
         return newState
@@ -69,6 +86,7 @@ final class SideMenuReactor: Reactor {
     
 }
 
-extension SideMenuReactor {
-
+enum EditNamePopupType {
+    case change(name: String?)
+    case close
 }

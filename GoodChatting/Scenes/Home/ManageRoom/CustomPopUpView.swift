@@ -1,5 +1,5 @@
 //
-//  CreateRoomViewController.swift
+//  CustomPopUpView.swift
 //  GoodChatting
 //
 //  Created by 김광록 on 2/1/24.
@@ -11,17 +11,20 @@ import Then
 import RxSwift
 import RxGesture
 
-final class CreateRoomView: UIView {
+final class CustomPopUpView: UIView {
     
     var disposeBag = DisposeBag()
     var closeButton: UIView!
-    var createButton: UIView!
+    var doneButton: UIView!
+    var doneButtonLabel: UILabel!
     var profileImage: UIImageView!
     var camIcon: UIImageView!
-    var chatRoomTitle: UITextField!
+    var popUpTextField: UITextField!
     var underline: UIView!
     var titleSizeLabel: UILabel!
-    var reactor: HomeReactor?
+    
+    var homeReactor: HomeReactor?
+    var sideMenuReactor: SideMenuReactor?
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -39,6 +42,11 @@ final class CreateRoomView: UIView {
     deinit {
         Log.kkr("\(self)")
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func configureForEditName() {
+        self.popUpTextField.placeholder = "변경할 닉네임을 입력해주세요."
+        self.doneButtonLabel.text = "닉네임 변경하기"
     }
     
     private func setupProperties() {
@@ -101,7 +109,7 @@ final class CreateRoomView: UIView {
         
         // 하단 버튼
         
-        createButton = UIView().then {
+        doneButton = UIView().then {
             $0.backgroundColor = .init(hexCode: "999999")
             $0.layer.cornerRadius = 8
             $0.isUserInteractionEnabled = false
@@ -114,11 +122,11 @@ final class CreateRoomView: UIView {
             }
         }
         
-        _ = UILabel().then {
+        self.doneButtonLabel = UILabel().then {
             $0.text = "채팅방 만들기"
             $0.textColor = .white
             $0.font = .appleSDGothicNeo(.semiBold, size: 16)
-            createButton.addSubview($0)
+            doneButton.addSubview($0)
             $0.snp.makeConstraints { make in
                 make.center.equalToSuperview()
             }
@@ -168,7 +176,7 @@ final class CreateRoomView: UIView {
             }
         }
         
-        chatRoomTitle = UITextField().then {
+        popUpTextField = UITextField().then {
             $0.placeholder = "채팅방 이름을 입력해주세요."
             $0.font = .appleSDGothicNeo(.semiBold, size: 16)
             $0.delegate = self
@@ -193,19 +201,20 @@ final class CreateRoomView: UIView {
         closeButton.rx.tapGesture()
             .when(.ended)
             .subscribe(with: self, onNext: { owner, _ in
-                owner.reactor?.action.onNext(.closePopupView(.create(title: nil, image: nil)))
+                owner.homeReactor?.action.onNext(.closePopupView(.create(title: nil, image: nil)))
+                owner.sideMenuReactor?.action.onNext(.closePopupView(type: .close))
             }).disposed(by: disposeBag)
         
-        createButton.rx.tapGesture()
+        doneButton.rx.tapGesture()
             .when(.ended)
-            .filter { [weak self] _ in self?.chatRoomTitle.text?.count ?? 0 > 0 }
-            .withUnretained(self)
+            .filter { [weak self] _ in self?.popUpTextField.text?.count ?? 0 > 0 }
             .subscribe(with: self, onNext: { owner, _ in
-                let title = owner.chatRoomTitle.text ?? ""
-                owner.reactor?.action.onNext(.closePopupView(.create(title: title, image: "template01")))
+                let inputText = owner.popUpTextField.text ?? ""
+                owner.homeReactor?.action.onNext(.closePopupView(.create(title: inputText, image: "template01")))
+                owner.sideMenuReactor?.action.onNext(.closePopupView(type: .change(name: inputText)))
             }).disposed(by: disposeBag)
         
-        chatRoomTitle.rx.text
+        popUpTextField.rx.text
             .changed
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { owner, title in
@@ -248,7 +257,7 @@ final class CreateRoomView: UIView {
 
 }
 
-extension CreateRoomView: UITextFieldDelegate {
+extension CustomPopUpView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         underline.backgroundColor = .init(hexCode: "5BD6FF")
     }
@@ -276,11 +285,11 @@ extension CreateRoomView: UITextFieldDelegate {
     }
     
     private func setButtonState(isEnabled: Bool) {
-        createButton.isUserInteractionEnabled = isEnabled
+        doneButton.isUserInteractionEnabled = isEnabled
         if isEnabled {
-            createButton.backgroundColor = .init(hexCode: "5BD6FF")
+            doneButton.backgroundColor = .init(hexCode: "5BD6FF")
         } else {
-            createButton.backgroundColor = .init(hexCode: "999999")
+            doneButton.backgroundColor = .init(hexCode: "999999")
         }
     }
 }
